@@ -1,0 +1,144 @@
+@use "colors" as *;
+@use "mixins" as *;
+
+$main-font: "IBM Plex Mono";
+$inline-padding: 5px;
+$border-radius: 5px;
+
+
+
+* {
+    padding: 0;
+    margin: 0;
+    border: 0;
+}
+
+body {
+    height: 100vh;
+    width: 100vw;
+    background-color: $term-white-off;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.window {
+    @include font-settings();
+    background-color: $term-grey-mid;
+    height: 700px;
+    width: 1100px;
+    display: flex;
+    flex-direction: column;
+    border-radius: $border-radius;
+    border-style: solid;
+    border-color: $term-grey-mid;
+    border-width: 5px;
+
+}
+
+.navbar {
+    @include font-settings();
+    background-color: $term-black;
+    width: fit-content;
+    padding-inline: $inline-padding;
+    border-top-left-radius: $border-radius;
+    border-top-right-radius: $border-radius;
+    text-align: center;
+    font-size: 1em;
+    &:hover{
+        text-decoration: underline;
+    }
+    .window-title{
+        display: flex;
+        
+        .close{
+            // TODO: work on this   
+            padding-left: $inline-padding;
+            height: 30px;
+            padding: $inline-padding;
+            font-size: 1em;
+            text-align: center;
+            &:hover{
+                cursor: pointer;
+            }
+        }   
+    }
+}
+
+.terminal-content{
+    overflow-y: scroll;
+    z-index: 10;
+    padding: $inline-padding;
+    height: 100%;
+    background-color: $term-black;
+    border-radius: $border-radius;
+    border-top-left-radius: 0;
+}
+
+.terminal-lines {
+    list-style: none;
+    padding-left: 0;
+}
+
+
+.line {
+    color: $term-white;
+    display: flex;
+    
+    .line-content{
+        @include text-overflows();
+        width: 100%;
+    }
+    &.multiline {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+.output { 
+    color: $term-yellow-light;
+    padding-inline-start: $inline-padding;
+}
+
+.primary-prompt {
+    padding-inline-start: $inline-padding;
+    display: flex;
+    flex-direction: row;
+    .username{
+        color: $term-green-pale;
+        &::after{
+            content: "\00a0";
+        }
+    }
+    
+    .current-directory{
+        color: $term-orange-warm;
+        display: flex;
+        &::after {
+            content: "$";
+            padding-inline-end: $inline-padding;
+            color: $term-blue-light;
+        }
+    }
+}
+
+
+
+.terminal-output {
+    padding-left:$inline-padding ;
+}
+.terminal-input {
+    display: flex;
+}
+.input-feild{
+    @include font-settings();
+    @include text-overflows();
+
+    background-color: $term-black;
+    width: 100%;
+
+    &:focus{
+        outline: none;
+    }
+}

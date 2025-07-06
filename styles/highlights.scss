@@ -1,0 +1,9 @@
+@use "colors" as *;
+
+span {
+    @each $name, $color in $term-colors {
+        &.#{$name} {
+            color: $color;
+        }
+    }
+}

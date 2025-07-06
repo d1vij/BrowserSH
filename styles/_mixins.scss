@@ -1,0 +1,12 @@
+@use "colors" as *;
+@mixin text-overflows {
+    overflow-wrap: anywhere;
+    word-spacing: normal;
+}
+
+@mixin font-settings() {
+    font-family: "IBM Plex Mono";
+    font-weight: normal;
+    font-size: 1em;
+    color: $term-white;
+}

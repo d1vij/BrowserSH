@@ -1,0 +1,40 @@
+body {
+    height: 100vh;
+    width: 100vw;
+}
+.editable {
+    background-color: rgb(255, 169, 169);
+    height: 100px;
+    width: 500px;
+    font-size: large;
+    caret-color: transparent;
+
+    &:focus {
+        outline: none;
+    }
+}
+@mixin caret-appearance {
+    height: 20px;
+    width: 10px;
+    background-color: rgba(60, 60, 60, 0.411);
+    animation: blink  1s steps(1) infinite;
+    padding: 0;
+}
+
+
+#caret {
+    @include caret-appearance();
+
+    pointer-events: none;
+    position: absolute;
+}
+
+
+@keyframes blink {
+    0%,50% {
+        opacity: 0;
+    }
+    50.1%,100% {
+        opacity: 1;
+    }
+}
