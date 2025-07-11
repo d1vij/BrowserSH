@@ -1,0 +1,2 @@
+1.Unexpected exception (Uncaught TypeError: can't access property 0, /(?:\w+\s+)?\w+[\'\"]\w+(?:\s+\w+)?/i.exec(...) is null)
+    when command contains quotes in pattern -> '"' or "'" or """"
