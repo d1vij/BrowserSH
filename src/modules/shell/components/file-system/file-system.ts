@@ -10,6 +10,7 @@ import {
     NodeIsFileError,
     NodeWithSameNameExistsError
 } from "./errors";
+import { dir } from "console";
 
 
 function nodeNamesFrom(path: string): Array<string> {
@@ -18,11 +19,12 @@ function nodeNamesFrom(path: string): Array<string> {
 
 
 export class FileSystem {
+    // NON-INSTANTIABLE
     /**
      * Creates and appends a new DirectoryNode Object in parent's child nodes. Returns reference object to the created object
      * Throws error if node with same name (case sensistive) exists in current directory, pass overwrite=true to enable forced overwriting
      */
-    public static createEmptyDirectory(parent: DirectoryNode, name: string, overwrite: boolean = false): DirectoryNode {
+    public static createDirectory(parent: DirectoryNode, name: string, overwrite: boolean = false): DirectoryNode {
         if (parent.type == "file") throw new NodeIsFileError(`${parent.name} is a file`);
 
         const nodeExists = parent.children.some(node => node.name === name);
@@ -39,6 +41,30 @@ export class FileSystem {
         
         return _dir;
     }
+
+    /**
+     * Creates nested directories based on given path and parent
+     */
+    public static createDirectoryByPath(path:string, parent:DirectoryNode, overwrite = false): DirectoryNode{
+        const directoryNames = path.split("/").filter(Boolean);
+        console.log(directoryNames)
+        // checking if any of node from provided path exists ??
+        // let curr = parent.children.find(node => (node.name == directoryNames[0] && node.type == "directory")) as DirectoryNode | undefined
+        // for(const name in directoryNames){
+        //     if(curr === undefined) break;
+        //     curr = curr?.children.find(node => node.name == name && node.type == "directory") as DirectoryNode;
+        // }
+
+        let pre = parent;
+        for(const name of    directoryNames){
+            // TODO: add error handling
+            pre = this.createDirectory(pre,name);
+        }
+
+        return pre;
+    }
+    
+    
 
     /**
      * Creates and appends a new FileNode Object in parent's child nodes. Returns reference object to the created object
@@ -63,9 +89,9 @@ export class FileSystem {
     /**
      * Traverses and returns indent-formatted tree-like string of all nodes within a root node
      */
-    public static traverse(root: DirectoryNode, maxDepth = Infinity, __depth = 0, __output: string = ""): string {
+    public static traverseAndList(root: DirectoryNode, maxDepth = Infinity, __depth = 0, __output: string = ""): string {
         // TODO: add output format ? string or array
-        return __traverse(root, maxDepth, __depth, __output);
+        return root.name + __traverse(root, maxDepth, __depth, __output);
     }
 
     public static getNodeByPath(path: string, root: DirectoryNode): FSNode | undefined {
@@ -73,27 +99,39 @@ export class FileSystem {
         return __getNodeByPath(nodeNames, root);
     }
 
+    public static getPathFromNode(node:FSNode, endNode?:string): string{
+        const __path = []
+        let curr:FSNode | null = node ;
+        // FIXME: vvvvvvvvvvv
+        while(curr != null || curr?.name !== endNode){
+            __path.push(curr.name);
+            curr = curr.parent;
+        }
+        return __path
+                    .reverse()
+                    .join("/");
+    }
+    
 }
 
 function __traverse(root: DirectoryNode, maxDepth: number, __depth = 0, __output = "") {
-
     // checking if current depth doesnt exceed maximum depth
     if (__depth > maxDepth) return __output;
 
     if (root.type === "file") throw new NodeIsDirectoryError(`${root.name} is a file`);
-
-    const indent = '\n' + "  ".repeat(__depth);
-
+    
+    const indent = '\n ' + "|  ".repeat(__depth) + '|-- ';
+    
     for (const node of root.children) {
         if (node.type === "directory") {
             __output += indent + node.name;
-            return __traverse(node as DirectoryNode, maxDepth, ++__depth, __output);
-
+            __output = __traverse(node as DirectoryNode, maxDepth, __depth + 1, __output);
+            
         } else {
             __output += indent + node.name;
         }
     }
-
+    
     return __output;
 }
 

@@ -8,15 +8,15 @@ import {
 } from "../modules/shell/core/tokenizer.js"
 
 
-function test(description, fn) {
-    try {
-        fn();
-        console.log(`✅ ${description}`);
-    } catch (err) {
-        console.error(`❌ ${description}`);
-        console.error(err.message);
+    function test(description, fn) {
+        try {
+            fn();
+            console.log(`✅ ${description}`);
+        } catch (err) {
+            console.error(`❌ ${description}`);
+            console.error(err.message);
+        }
     }
-}
 
 // -- Valid test cases --
 
