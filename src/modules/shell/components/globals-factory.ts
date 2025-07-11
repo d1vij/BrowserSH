@@ -24,7 +24,7 @@ export class GlobalsFactory {
         });
 
         // TODO: Add modifiable user initialization here vvv
-        this.user = new UserFactory("divij");
-        this.vars = new VariableSystemFactory({"ping":"pong"});
+        this.user = new UserFactory("divij@ubuntu");
+        this.vars = new VariableSystemFactory();
     }
 }

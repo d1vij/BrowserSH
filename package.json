@@ -12,5 +12,18 @@
     "sass": "^1.89.2",
     "typescript": "~5.8.3",
     "vite": "^6.3.5"
-  }
+  },
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/d1vij/web-terminal.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/d1vij/web-terminal/issues"
+  },
+  "homepage": "https://github.com/d1vij/web-terminal#readme",
+  "description": ""
 }

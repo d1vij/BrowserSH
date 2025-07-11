@@ -1,7 +1,0 @@
-
-export enum TokenizerReturnStatusCodes {
-    SUCCESS,
-    ERROR_COMMAND_STARTS_WITH_QUOTES,
-    ERROR_TOKEN_CONTAINS_QUOTE_IN_MIDDLE,
-    ERROR_QUOTE_UNPAIRED
-}

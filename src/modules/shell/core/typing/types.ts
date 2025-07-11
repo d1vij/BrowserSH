@@ -11,6 +11,6 @@ export type TParsedCommand = {
     options: Record<TOption, string>// color: red, bold: true
 }
 
-export type Ttokens = Array<string>
+export type Tokens = Array<string>
 
 export type TQuote = '"' | "'"

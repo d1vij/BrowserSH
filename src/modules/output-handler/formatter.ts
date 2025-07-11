@@ -1,4 +1,4 @@
-import { Global } from "../../main";
+import { __shell } from "../../main";
 
 export class OutputTemplates {
     // always the final step in output pipeline
@@ -8,11 +8,11 @@ export class OutputTemplates {
         return `
         <li class="line">
           <div class="primary-prompt">
-            <span class="username">${Global.user.username}</span>
-            <span class="current-directory">${Global.fs.currentDirectory}</span>
-          <div class="line-content">${content}</div>
-        </li>
-    `
+          <span class="username">${__shell.globals.user.username}</span>
+          <span class="current-directory">${__shell.globals.fs.currentDirectory || "~\\"}</span>
+            <div class="line-content">${content}</div>
+            </li>
+            `
     }
 
 
@@ -34,6 +34,7 @@ export class OutputTemplates {
             `;
         }
     }
+    
 }    
 
 /**

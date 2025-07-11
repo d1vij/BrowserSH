@@ -3,7 +3,7 @@ import { KnownCommands } from "./modules/commands/known-commands";
 import { OutputTemplates } from "./modules/output-handler/formatter";
 import { TerminalOutputHandler } from "./modules/output-handler/terminal-output-handler";
 import { UserInputHandler } from "./modules/output-handler/user-input-handler";
-import { parseCommand } from "./modules/shell/processor/parser-legacy";
+import { parseCommand } from "./modules/shell/core/parser-legacy";
 
 /**
  * Processes command

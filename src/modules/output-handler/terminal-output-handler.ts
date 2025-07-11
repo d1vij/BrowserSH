@@ -17,10 +17,15 @@ export class TerminalOutputHandler{
         terminalLinesList.innerHTML = "";
         return;
     }
+
     public static commandNotFoundError(command:string){
         const errorMessage = addColor(`-${command} : command not found`, Colors.red);
         terminalLinesList.innerHTML += OutputTemplates.standardTerminalOutput(errorMessage);
         return;
     }
     
+    public static standardError(errorMessages: Array<string>) {
+        terminalLinesList.innerHTML += OutputTemplates.standardTerminalOutput(errorMessages!.map(ln => addColor(ln, Colors.red)));
+        return;
+    }
 }

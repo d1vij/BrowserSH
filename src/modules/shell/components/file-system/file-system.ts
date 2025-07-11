@@ -1,4 +1,4 @@
-// core file system logic
+// core file system logic, implemented using nested linked lists orabstract data tree
 
 import type {
     DirectoryNode,
@@ -22,7 +22,7 @@ export class FileSystem {
      * Creates and appends a new DirectoryNode Object in parent's child nodes. Returns reference object to the created object
      * Throws error if node with same name (case sensistive) exists in current directory, pass overwrite=true to enable forced overwriting
      */
-    public static createDirectory(parent: DirectoryNode, name: string, overwrite: boolean = false): DirectoryNode {
+    public static createEmptyDirectory(parent: DirectoryNode, name: string, overwrite: boolean = false): DirectoryNode {
         if (parent.type == "file") throw new NodeIsFileError(`${parent.name} is a file`);
 
         const nodeExists = parent.children.some(node => node.name === name);
@@ -34,7 +34,9 @@ export class FileSystem {
             type: "directory",
             children: []
         } as DirectoryNode
+
         parent.children.push(_dir);
+        
         return _dir;
     }
 
