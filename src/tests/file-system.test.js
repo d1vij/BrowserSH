@@ -43,6 +43,7 @@ file_system_1.FileSystem.createDirectoryByPath("/not/get/created", __dir.parent)
 file_system_1.FileSystem.createDirectoryByPath("/sibling/to/should", __dir.parent.parent.parent);
 console.log(file_system_1.FileSystem.traverseAndList(root));
 console.log(file_system_1.FileSystem.getPathFromNode(__dir));
+console.log((file_system_1.FileSystem.getNodeByPath("/", root)));
 // test("Creating directory node", ()=>{
 // 
 // })

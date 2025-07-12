@@ -8,7 +8,8 @@
  * 5. All quotes must be paired
  */
 
-import type { TQuote, TCommand, Tokens } from "./typing/types";
+import { CommandContainsUnpairedQuoteError, CommandStartsWithQuotesError, TokenContainsQuoteInMiddleErrror } from "./__errors";
+import type { TQuote, TCommand, Tokens } from "./__typing";
 
 function startsWithQuote(str: string): boolean {
 
@@ -154,24 +155,3 @@ export function tokenize(command: TCommand): Tokens {
 
 // -- -- -- 
 
-export class CommandStartsWithQuotesError extends Error {
-    constructor(message: string) {
-        super(`CommandStartsWithQuotesError: ${message}`);
-        this.name = 'CommandStartsWithQuotesError';
-        Object.setPrototypeOf(this, new.target.prototype);
-    }
-}
-export class TokenContainsQuoteInMiddleErrror extends Error {
-    constructor(message: string) {
-        super(`TokenContainsQuoteInMiddleErrror: ${message}`);
-        this.name = 'TokenContainsQuoteInMiddleErrror';
-        Object.setPrototypeOf(this, new.target.prototype);
-    }
-}
-export class CommandContainsUnpairedQuoteError extends Error {
-    constructor(message: string) {
-        super(`CommandContainsUnpairedQuoteError: ${message}`);
-        this.name = 'CommandContainsUnpairedQuoteError';
-        Object.setPrototypeOf(this, new.target.prototype);
-    }
-}

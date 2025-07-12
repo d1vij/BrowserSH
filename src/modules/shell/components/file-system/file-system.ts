@@ -4,14 +4,12 @@ import type {
     DirectoryNode,
     FileNode,
     FSNode
-} from "./typing";
+} from "../__typing";
 import {
     NodeIsDirectoryError,
     NodeIsFileError,
     NodeWithSameNameExistsError
-} from "./errors";
-import { dir } from "console";
-
+} from "../__errors";
 
 function nodeNamesFrom(path: string): Array<string> {
     return path.split("/").filter(Boolean); //only have non empty node names
@@ -48,13 +46,14 @@ export class FileSystem {
     public static createDirectoryByPath(path:string, parent:DirectoryNode, overwrite = false): DirectoryNode{
         const directoryNames = path.split("/").filter(Boolean);
         console.log(directoryNames)
+        // FIXME: add overwrtie
         // checking if any of node from provided path exists ??
         // let curr = parent.children.find(node => (node.name == directoryNames[0] && node.type == "directory")) as DirectoryNode | undefined
         // for(const name in directoryNames){
         //     if(curr === undefined) break;
         //     curr = curr?.children.find(node => node.name == name && node.type == "directory") as DirectoryNode;
         // }
-
+        overwrite = !overwrite;
         let pre = parent;
         for(const name of    directoryNames){
             // TODO: add error handling
@@ -99,16 +98,18 @@ export class FileSystem {
         return __getNodeByPath(nodeNames, root);
     }
 
-    public static getPathFromNode(node:FSNode, endNode?:string): string{
+    public static getPathFromNode(node:FSNode): string{
         const __path = []
         let curr:FSNode | null = node ;
-        // FIXME: vvvvvvvvvvv
-        while(curr != null || curr?.name !== endNode){
-            __path.push(curr.name);
-            curr = curr.parent;
+        
+        while(curr!=null){
+            __path.push(curr.name.trim());
+            curr = curr?.parent;
         }
+        
         return __path
                     .reverse()
+                    .filter(Boolean)
                     .join("/");
     }
     

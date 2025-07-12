@@ -2,9 +2,10 @@
  * (semantics)
  */
 
-import type { Tokens } from "./typing/types"
 import { __shell } from "../../../main";
-import { VariableDoesNotExistsError } from "../components/variables-factory";
+import type { parserResults } from "./__typing";
+import type { Tokens } from "./__typing"
+import { VariableDoesNotExistsError } from "../components/__errors";
 
 
 export const varNameRegex = /\$([^\s]+)/g
@@ -12,15 +13,8 @@ export const varNameRegex = /\$([^\s]+)/g
 export const escapeRegex = /\\([^\s])/g
 
 
-const DELIM = ' '
+// const DELIM = ' '
 
-
-export interface parserResults {
-    type: "command" | "variable-assignment"
-    command?: string; //name of primary command
-    tokens?: Tokens;
-
-}
 
 export function parse(tokens: Tokens): parserResults {
 
@@ -45,18 +39,14 @@ export function parse(tokens: Tokens): parserResults {
 
     // escaping backslash characters (un-nessasary for anything other than escacaping $ signs)
     tokens = tokens.map(token => token.replace(escapeRegex, "$1"))
-    
-    console.log(tokens);
-    const primaryCommand = tokens[0].trim()
-    return {};
+    console.log(tokens)
+
+    return {
+        type: "command",
+        command: tokens[0].trim(),
+        tokens: tokens.slice(1)
+    };
 }
-
-export function extractFlags(tokens: Tokens) {
-
-}
-
-
-
 
 function isVariableAssignment(tokens: Tokens): boolean {
     const _namePrefixTokMatch = Boolean(varNameRegex.exec(tokens[0]));

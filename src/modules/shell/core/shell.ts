@@ -1,17 +1,20 @@
 // main executor shell 
 
 import { GlobalsFactory } from "../components/globals-factory";
-import { CommandContainsUnpairedQuoteError, CommandStartsWithQuotesError, TokenContainsQuoteInMiddleErrror, tokenize } from "./tokenizer";
-import type { TCommand, Tokens } from "./typing/types";
+import { tokenize } from "./tokenizer";
+import { VariableValueIsMultipleWords, CommandContainsUnpairedQuoteError, CommandStartsWithQuotesError, TokenContainsQuoteInMiddleErrror, UndefinedCommandError, } from "./__errors"
+import type { TCommand, Tokens } from "./__typing";
 import { addColor, OutputTemplates } from "../../output-handler/formatter";
-import { Colors} from "../../output-handler/typing/enums";
+import { Colors } from "../../output-handler/typing/enums";
 import { TerminalOutputHandler } from "../../output-handler/terminal-output-handler";
 import { UserInputHandler } from "../../output-handler/user-input-handler";
-import { parse, type parserResults } from "./parser";
-import { VariableDoesNotExistsError } from "../components/variables-factory";
-import { assignVariable, VariableValueIsMultipleWords } from "./executor";
+import { parse } from "./parser";
+import type { parserResults } from "./__typing";
+import { VariableDoesNotExistsError } from "../components/__errors";
+import { execute } from "./executor";
+import { FileSystem } from "../components/file-system/file-system";
 
-const __debugTrue = "true"
+const __debugMode = "true"
 
 
 export class Shell {
@@ -28,60 +31,73 @@ export class Shell {
     constructor() {
         // initializes a new shell 
         this.globals = new GlobalsFactory();
-        this.globals.vars.set("__debug",__debugTrue)
+
+        // initial stuff
+        this.globals.vars.set("__debug", __debugMode);
+        this.globals.vars.set("ping", "pong");
+
+        const __test_dir = FileSystem.createDirectoryByPath("/temp/content", this.globals.fs.filesystem);
+        FileSystem.createFile(__test_dir, "test.txt", "Hello World!");
+        const __home = FileSystem.createDirectoryByPath("/home/", this.globals.fs.filesystem);
+        FileSystem.createFile(__home, "info.txt", "Linux Bash terminal Emulated purely on browser")
+
     }
     public process() {
         const command = UserInputHandler.getUserInput();
-        
-        // command.replace(/(\\)/g, "//");
-        
+
         TerminalOutputHandler.printToTerminal(OutputTemplates.userInputPreview(command));
         UserInputHandler.clearUserInput();
-        
+
         let toks: Tokens = [];
         try {
             toks = tokenize(command);
-            console.log(toks);
-
-        } catch (err:any) {
+        } catch (err: any) {
             handleTokenizationErrors(err, command)
             return;
         }
 
         let results: parserResults;
-        try{
+        try {
             results = parse(toks);
-        } catch(err){
-            handleParserErrors(err)
+        } catch (err) {
+            handleParserErrors(err);
             return;
         }
 
-        try{
-            if(results.type=="variable-assignment" && results.tokens){
-                console.log("var assingment")
-                assignVariable(results.tokens);
-            }
-        }catch(err){
-            if(err instanceof VariableValueIsMultipleWords){
-                TerminalOutputHandler.standardError([
-                    `VariableValueIsMultipleWords: variables cannot be set values as multiple tokens, pass multiple words in quotations as single token.`
-                ])
-            }
+        try {
+            execute(results);
+        } catch (err) {
+            handleExecutorErrors(err);
+            return;
         }
     }
 }
 
-function handleParserErrors(err:any){
-    if(err instanceof VariableDoesNotExistsError){
-        TerminalOutputHandler.standardError([
+function handleExecutorErrors(err: any) {
+    if (err instanceof VariableValueIsMultipleWords) {
+        TerminalOutputHandler.standardErrorOutput([
+            `VariableValueIsMultipleWords: variables cannot be set values as multiple tokens, pass multiple words in quotations as single token.`
+        ])
+    }
+    if(err instanceof UndefinedCommandError){
+        TerminalOutputHandler.standardErrorOutput([
+            `UndefinedCommandError: Command ${addColor(err.command, Colors.yellow_light)} does not exsits!`
+        ])
+    }
+}
+
+
+function handleParserErrors(err: any) {
+    if (err instanceof VariableDoesNotExistsError) {
+        TerminalOutputHandler.standardErrorOutput([
             `VariableDoesNotExistsError: Variable with name ${err.varName} does not exists !`
         ])
     }
 }
 
-function handleTokenizationErrors(err:Error, command:TCommand) {
+function handleTokenizationErrors(err: Error, command: TCommand) {
     if (err instanceof CommandStartsWithQuotesError) {
-        TerminalOutputHandler.standardError([
+        TerminalOutputHandler.standardErrorOutput([
             "TokenizationError: Command starts with quotations",
             `${addColor(command, Colors.yellow_light)}, cannot start with quotations`
         ])
@@ -89,21 +105,21 @@ function handleTokenizationErrors(err:Error, command:TCommand) {
     }
     else if (err instanceof TokenContainsQuoteInMiddleErrror) {
         const errAt = /(?:\w+\s+)?\w+[\'\"]\w+(?:\s+\w+)?/i.exec(command)![0];
-        TerminalOutputHandler.standardError([
+        TerminalOutputHandler.standardErrorOutput([
             "TokenizationError: Command contains quote in middle",
             `Error at ${addColor(errAt, Colors.yellow_light)} in command ${command}`
         ])
         return;
     }
     else if (err instanceof CommandContainsUnpairedQuoteError) {
-        TerminalOutputHandler.standardError([
+        TerminalOutputHandler.standardErrorOutput([
             "TokenizationError: Command contains unpaired quote",
             addColor("TODO: BEAUTIFY", Colors.yellow_light)
         ])
         return;
     }
     else {
-        TerminalOutputHandler.standardError(['unexpected error', err as any]) //FIXME: err as any
+        TerminalOutputHandler.standardErrorOutput(['unexpected error', err as any]) //FIXME: err as any
         return;
     }
 }

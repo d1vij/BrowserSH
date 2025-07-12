@@ -24,7 +24,7 @@ export class TerminalOutputHandler{
         return;
     }
     
-    public static standardError(errorMessages: Array<string>) {
+    public static standardErrorOutput(errorMessages: Array<string>) {
         terminalLinesList.innerHTML += OutputTemplates.standardTerminalOutput(errorMessages!.map(ln => addColor(ln, Colors.red)));
         return;
     }

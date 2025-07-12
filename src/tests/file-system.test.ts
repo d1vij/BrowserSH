@@ -1,8 +1,7 @@
 import {deepStrictEqual} from "assert";
 import {FileSystem} from "../modules/shell/components/file-system/file-system";
 import { FileSystemFactory } from "../modules/shell/components/file-system/file-system-factory";
-import type { DirectoryNode, FileNode } from "../modules/shell/components/file-system/typing";
-import { log } from "console";
+import type { DirectoryNode, FileNode } from "../modules/shell/components/__typing";
 
 const root = {
     type: "directory",
@@ -48,6 +47,7 @@ FileSystem.createDirectoryByPath("/not/get/created", __dir.parent!);
 FileSystem.createDirectoryByPath("/sibling/to/should", __dir.parent!.parent!.parent!);
 console.log(FileSystem.traverseAndList(root))
 console.log(FileSystem.getPathFromNode(__dir));
+console.log((FileSystem.getNodeByPath("/", root)))
 
 // test("Creating directory node", ()=>{
 
