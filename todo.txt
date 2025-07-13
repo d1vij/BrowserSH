@@ -1,0 +1,2 @@
+1. add text displaying time taken to execute the previous command - could be handled in parser,
+2. up arrow to get last command - using some kind of command stack ??
