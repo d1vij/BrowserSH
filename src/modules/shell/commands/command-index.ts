@@ -1,6 +1,5 @@
 import { AbstractCommand } from "./AbstractCommand";
 
-import { Dummy } from "./commands/dummy";
 import { Echo } from "./commands/echo";
 import { Help } from "./commands/help";
 import { Clear } from "./commands/clear";
@@ -12,7 +11,6 @@ const commandIndex = new Map<string, CommandConstructor>([
     ["help", Help],
     ["clear", Clear],
     ["math", MathCommand],
-    ["dummy", Dummy],
 ] as [string, CommandConstructor][]);
 
 export function getCommandConstructor(name: string) {

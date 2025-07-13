@@ -21,12 +21,12 @@ export class Clear extends AbstractCommand{
             this.handleErrors(err);
         }
     }
-    public info(): string {
-        return `${addColor("clear", Colors.blue_cool)}: clears terminal screen`;
+    public info(): string[] {
+        return [`${addColor("clear", Colors.blue_cool)}: clears terminal screen`];
     }
 
-    public usage(): string {
-        return `${addColor("clear", Colors.blue_cool)}`;
+    public usage(): string[] {
+        return [`${addColor("clear", Colors.blue_cool)}`];
     }
     public handleErrors(err: any): void {
         TerminalOutputHandler.standardErrorOutput([

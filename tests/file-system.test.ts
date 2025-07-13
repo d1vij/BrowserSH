@@ -14,12 +14,12 @@ const __fs = new FileSystemFactory({
     initialStructure: root,
     initialDirectory: "/"
 })
-    
-function test(description, fn) {
+__fs;
+function test(description:any, fn:any) {
     try {
         fn();
         console.log(`✅ ${description}`);
-    } catch (err) {
+    } catch (err:any) {
         console.error(`❌ ${description}`);
         console.error(err.message);
     }
