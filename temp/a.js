@@ -17,7 +17,7 @@ function containsUnescapedQuoteInMiddle(str) {
 function endsWithQuote(str) {
     return /(?<!\\)[\'\"]$/.test(str);
 }
-
+p
 export function tokenize(command) {
     let currentToken = '';
     let lastSeenQuote = undefined;

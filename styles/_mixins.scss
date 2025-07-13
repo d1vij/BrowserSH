@@ -10,3 +10,10 @@
     font-size: 1em;
     color: $term-white;
 }
+
+@mixin circle-buttons-color-and-hover($color) {
+    background-color: $color;
+        &:hover {
+            background-color: darken($color, $amount: 5%);
+        }
+}

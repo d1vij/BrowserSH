@@ -8,3 +8,5 @@ export const terminalLinesList = document.querySelector("ol.terminal-lines") as 
 
 export const terminalInputDiv = document.querySelector("div.terminal-input") as HTMLDivElement;
 export const terminalInputFeild = document.querySelector("div.input-feild") as HTMLInputElement;
+export const primaryPrompt_username = document.querySelector("span.username") as HTMLSpanElement;
+export const primaryPrompt_current_directory = document.querySelector("span.current-directory") as HTMLSpanElement;

@@ -1,18 +1,34 @@
 // main executor shell 
 
-import { GlobalsFactory } from "../components/globals-factory";
-import { tokenize } from "./tokenizer";
-import { VariableValueIsMultipleWords, CommandContainsUnpairedQuoteError, CommandStartsWithQuotesError, TokenContainsQuoteInMiddleErrror, UndefinedCommandError, } from "./__errors"
-import type { TCommand, Tokens } from "./__typing";
-import { addColor, OutputTemplates } from "../../output-handler/formatter";
-import { Colors } from "../../output-handler/typing/enums";
-import { TerminalOutputHandler } from "../../output-handler/terminal-output-handler";
-import { UserInputHandler } from "../../output-handler/user-input-handler";
 import { parse } from "./parser";
-import type { parserResults } from "./__typing";
-import { VariableDoesNotExistsError } from "../components/__errors";
 import { execute } from "./executor";
+import { tokenize } from "./tokenizer";
+import type { parserResults } from "./__typing";
+import { Colors } from "../../output-handler/typing/enums";
+import { GlobalsFactory } from "../components/globals-factory";
 import { FileSystem } from "../components/file-system/file-system";
+import { VariableDoesNotExistsError } from "../components/__errors";
+import { UserInputHandler } from "../../output-handler/user-input-handler";
+import { TerminalOutputHandler } from "../../output-handler/terminal-output-handler";
+
+import type {
+    TCommand,
+    Tokens
+} from "./__typing";
+import {
+    addColor,
+    OutputTemplates,
+    updatePrimaryPrompt
+} from "../../output-handler/formatter";
+
+import {
+    VariableValueIsMultipleWords,
+    CommandContainsUnpairedQuoteError,
+    CommandStartsWithQuotesError,
+    TokenContainsQuoteInMiddleErrror,
+    UndefinedCommandError
+} from "./__errors"
+
 
 const __debugMode = "true"
 
@@ -35,6 +51,7 @@ export class Shell {
         // initial stuff
         this.globals.vars.set("__debug", __debugMode);
         this.globals.vars.set("ping", "pong");
+        this.globals.vars.set("username", "divij");
 
         const __test_dir = FileSystem.createDirectoryByPath("/temp/content", this.globals.fs.filesystem);
         FileSystem.createFile(__test_dir, "test.txt", "Hello World!");
@@ -47,6 +64,7 @@ export class Shell {
 
         TerminalOutputHandler.printToTerminal(OutputTemplates.userInputPreview(command));
         UserInputHandler.clearUserInput();
+        updatePrimaryPrompt()
 
         let toks: Tokens = [];
         try {
@@ -74,12 +92,18 @@ export class Shell {
 }
 
 function handleExecutorErrors(err: any) {
-    if (err instanceof VariableValueIsMultipleWords) {
+    console.log(err);
+    console.log(err instanceof VariableValueIsMultipleWords); // false?
+    console.log(err.constructor.name); // "VariableValueIsMultipleWords"
+    console.log(Object.getPrototypeOf(err)); // should point to the correct class
+
+
+    if (err instanceof VariableValueIsMultipleWords || err.name === "VariableValueIsMultipleWords") {
         TerminalOutputHandler.standardErrorOutput([
             `VariableValueIsMultipleWords: variables cannot be set values as multiple tokens, pass multiple words in quotations as single token.`
         ])
     }
-    if(err instanceof UndefinedCommandError){
+    else if (err instanceof UndefinedCommandError) {
         TerminalOutputHandler.standardErrorOutput([
             `UndefinedCommandError: Command ${addColor(err.command, Colors.yellow_light)} does not exsits!`
         ])

@@ -2,39 +2,48 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- style script -->
-  <script type="module" src="src/styles.ts"></script>
-  <!-- script -->
-  <script type="module" src="src/main.ts" defer></script>
-  <!-- IBM Plex Mono Static -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap"
-    rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- style script -->
+    <script type="module" src="src/styles.ts"></script>
+    <!-- script -->
+    <script type="module" src="src/main.ts" defer></script>
+    <!-- IBM Plex Mono Static -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap"
+        rel="stylesheet">
 
-  <title>Terminal</title>
+    <title>Terminal</title>
 </head>
 
 <body>
-  <div class="window">
-    <div class="navbar">
-      <div class="window-title">
-        <p class="title">Terminal Emulation</p><button type="button" class="close">×</button>
-      </div>
-    </div>
-    <div class="terminal-content">
+    <div class="window">
+        <div class="navbar">
+            <div class="window-title">
+                <p class="title">BETS</p>
+                <div class="close">x</div>
+            </div>
+            <div class="window-controls">
+                <div class="minimize"></div>
+                <div class="windowed"></div>
+                <div class="close"></div>
+            </div>
+        </div>
+        
+        <div class="terminal-content">
 
-      <ol class="terminal-lines"></ol>
-      <div class="terminal-input">
-        <div class="primary-prompt">
-          <span class="username">d1vij@ubuntu</span>
-          <span class="current-directory">~/</span></div>
-        <div class="input-feild" contenteditable=""></div>
-      </div>
+            <ol class="terminal-lines"></ol>
+            <div class="terminal-input">
+                <div class="primary-prompt">
+                    <span class="username">STARTING</span>
+                    <span class="current-directory">SHELL</span>
+                </div>
+                <div class="input-feild" contenteditable=""></div>
+            </div>
+        </div>
     </div>
-  </div>
 </body>
+
 </html>

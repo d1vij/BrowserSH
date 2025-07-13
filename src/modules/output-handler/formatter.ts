@@ -1,3 +1,4 @@
+import { primaryPrompt_current_directory, primaryPrompt_username } from "../../domElements";
 import { __shell } from "../../main";
 
 export class OutputTemplates {
@@ -8,8 +9,8 @@ export class OutputTemplates {
         return `
         <li class="line">
           <div class="primary-prompt">
-          <span class="username">${__shell.globals.user.username}</span>
-          <span class="current-directory">${__shell.globals.fs.currentDirectory || "~\\"}</span>
+          <span class="username">${__shell.globals.vars.get("username")}</span>
+          <span class="current-directory">${__shell.globals.fs.currentDirectory}</span>
             <div class="line-content">${content}</div>
             </li>
             `
@@ -37,13 +38,23 @@ export class OutputTemplates {
     
 }    
 
+export function updatePrimaryPrompt(){
+    primaryPrompt_username.innerText = __shell.globals.vars.get("username") || "USERNAME_NOT_SET";
+    primaryPrompt_current_directory.innerText = __shell.globals.fs.currentDirectory;
+}
+
 /**
  * Returns span enclosed string having provided color.
  * DONOT USE RETURN AS STRING
  */
-export function addColor(content: string, color: string) {
-    return `<span class="${color}">${content}</span>`;
+
+export function addColor(content: string, color: string): string;
+export function addColor(content: Array<string>, color: string): string[]
+export function addColor(content: Array<string> | string, color: string): string | string[] {
+    if(Array.isArray(content)) return content.map(line => `<span class="${color}">${line}</span>` );
+    else return `<span class="${color}">${content}</span>`;
 }
+
 export function cleanUserInput(inputString: string) {
     // TODO: add funcitonality
     return inputString.trim();

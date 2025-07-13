@@ -9,12 +9,15 @@ import { getCommandConstructor } from "../commands/command-index";
 
 export function execute(results: parserResults){
     if(results.type=="variable-assignment" && results.tokens){
-        assignVariable(results.tokens)
+        console.log("va ")
+        assignVariable(results.tokens);
+        return;
     }
     else if (results.type=="command" && results.command && results.tokens){
         const cmdConstruct = getCommandConstructor(results.command)
         
         if(cmdConstruct === undefined) throw new UndefinedCommandError(results.command);
+        
 
         const instance = new cmdConstruct();
         instance.execute(results.tokens);
@@ -28,7 +31,9 @@ export function execute(results: parserResults){
 
 
 function assignVariable(tokens: Tokens) {
-    if (tokens.length > 3) throw new VariableValueIsMultipleWords(tokens.toString()); //multi word values to be enclosed in quotations
+    console.log("in here")
+    if (tokens.length > 3) throw new VariableValueIsMultipleWords(""); //multi word values to be enclosed in quotations
+    
     const name = varNameRegex.exec(tokens[0])![1]
     const value = tokens[2]
     __shell.globals.vars.set(name, value);

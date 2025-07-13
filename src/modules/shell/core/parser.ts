@@ -8,19 +8,34 @@ import type { Tokens } from "./__typing"
 import { VariableDoesNotExistsError } from "../components/__errors";
 
 
-export const varNameRegex = /\$([^\s]+)/g
+export const varNameRegex = /\$([^\s]+)/
 // export const escapedVariableRegex = /(?<!\\)\$(.*\b)/g
 export const escapeRegex = /\\([^\s])/g
 
 
-// const DELIM = ' '
+const SPACE = ' '
 
+function insertVar(token: string) {
+    // FIXME: Optimize since time complexity is o(n^2)
+    const toks = token.split(SPACE).filter(Boolean);
+
+    for (let i = 0; i < toks.length; i++) {
+        toks[i] = toks[i].replace(varNameRegex, (_, name) => {
+            const value = __shell.globals.vars.get(name);
+            if (value === undefined) throw new VariableDoesNotExistsError(name, name)
+            return value;
+        })
+    }
+    
+    return toks.join(SPACE);
+}
 
 export function parse(tokens: Tokens): parserResults {
 
     // check 1 - is command  a variable assignment?
     // eg $name = divij
     if (isVariableAssignment(tokens)) {
+        tokens[2] = insertVar(tokens[2]);
         return {
             type: "variable-assignment",
             tokens: tokens
@@ -28,13 +43,7 @@ export function parse(tokens: Tokens): parserResults {
     }
 
     // variable insertions
-    tokens = tokens.map((token) => {
-        return token.replace(varNameRegex, (_, name) => {
-            const value = __shell.globals.vars.get(name);
-            if (value === undefined) throw new VariableDoesNotExistsError(name, name)
-            return value;
-        })
-    })
+    tokens = tokens.map(insertVar)
 
 
     // escaping backslash characters (un-nessasary for anything other than escacaping $ signs)

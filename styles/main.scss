@@ -16,7 +16,7 @@ $border-radius: 5px;
 body {
     height: 100vh;
     width: 100vw;
-    background-color: $term-white-off;
+    background-color: $term-white;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -30,50 +30,127 @@ body {
     width: 1100px;
     display: flex;
     flex-direction: column;
+    gap: 2px;
+
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
     border-radius: $border-radius;
     border-style: solid;
     border-color: $term-grey-mid;
-    border-width: 5px;
+    border-width: 4px;
 
 }
 
 .navbar {
     @include font-settings();
-    background-color: $term-black;
-    width: fit-content;
-    padding-inline: $inline-padding;
-    border-top-left-radius: $border-radius;
-    border-top-right-radius: $border-radius;
+    width: 100%;
+    height: 32px;
+    // padding-inline: $inline-padding;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+
     text-align: center;
     font-size: 1em;
-    &:hover{
-        text-decoration: underline;
-    }
-    .window-title{
+
+    .window-title {
+        height: 100%;
+        width: 220px;
+        border-radius: 5px;
+        background-color: $term-black;
+
         display: flex;
-        
-        .close{
-            // TODO: work on this   
-            padding-left: $inline-padding;
+        flex-direction: row;
+        align-items: center;
+        padding-left: $inline-padding;
+        transition: all 150ms ease-in-out;
+        justify-content: space-between;
+        box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+        &:hover {
+            cursor: pointer;
+        }
+
+        p.title {
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+
+        .close {
             height: 30px;
+            width: 30px;
+            color: inherit;
+            background-color: transparent;
             padding: $inline-padding;
-            font-size: 1em;
-            text-align: center;
+            font-size: 1.2em;
+
+            // text-align: center;
+
+        }
+    }
+
+    .window-controls {
+        display: flex;
+        flex-direction: row;
+        width: fit-content;
+        height: fit-content;
+        align-items: center;
+        padding: $inline-padding;
+        
+        
+        .minimize,
+        .windowed,
+        .close {
+            margin-inline: $inline-padding;
+            
+            height: 22px;
+            width: 22px;
+            border-radius: 100%;
+
+            @include font-settings();
+            font-size: 1.5em;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            
+            transition: all 100ms ease-in-out;
+
+            border-style: solid;
+            border-color: #1c1c1c80; //80% opacity $term-black
+
+            border-width: 2px;
+            box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+
             &:hover{
                 cursor: pointer;
             }
-        }   
+
+        }
+        
+        .minimize{
+            @include circle-buttons-color-and-hover($term-green-dark)
+        }
+        .windowed{
+            @include circle-buttons-color-and-hover($term-yellow-ochre)
+        }
+        .close{
+            @include circle-buttons-color-and-hover($term-red)
+        }
+        
     }
 }
 
-.terminal-content{
+.terminal-content {
     overflow-y: scroll;
     z-index: 10;
     padding: $inline-padding;
     height: 100%;
+
     background-color: $term-black;
     border-radius: $border-radius;
-    border-top-left-radius: 0;
+
+    border-top-left-radius: -10;
 }
 
 .terminal-lines {
@@ -85,18 +162,23 @@ body {
 .line {
     color: $term-white;
     display: flex;
-    
-    .line-content{
+
+    .line-content {
+        white-space: pre;
+        
         @include text-overflows();
         width: 100%;
+        display: flex;  
+        flex-direction: row;
     }
+
     &.multiline {
         display: flex;
         flex-direction: column;
     }
 }
 
-.output { 
+.output {
     color: $term-yellow-light;
     padding-inline-start: $inline-padding;
 }
@@ -105,19 +187,22 @@ body {
     padding-inline-start: $inline-padding;
     display: flex;
     flex-direction: row;
-    .username{
+
+    .username {
         color: $term-green-pale;
-        &::after{
+
+        &::after {
             content: "\00a0";
         }
     }
-    
-    .current-directory{
+
+    .current-directory {
         color: $term-orange-warm;
         display: flex;
+
         &::after {
             content: "$";
-            padding-inline-end: $inline-padding;
+            padding-inline: $inline-padding;
             color: $term-blue-light;
         }
     }
@@ -126,19 +211,21 @@ body {
 
 
 .terminal-output {
-    padding-left:$inline-padding ;
+    padding-left: $inline-padding ;
 }
+
 .terminal-input {
     display: flex;
 }
-.input-feild{
+
+.input-feild {
     @include font-settings();
     @include text-overflows();
 
     background-color: $term-black;
     width: 100%;
 
-    &:focus{
+    &:focus {
         outline: none;
     }
 }
