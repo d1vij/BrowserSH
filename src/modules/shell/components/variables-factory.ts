@@ -1,6 +1,6 @@
 // TODO: implement this using custom hashmap ??
 export class VariableSystemFactory {
-    private variables: Map<string, string>;
+    public variables: Map<string, string>;
     constructor(predefined?: Map<string, string>) {
         this.variables = predefined || new Map<string, string>();
     }
