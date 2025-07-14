@@ -53,19 +53,19 @@ export class Shell {
         this.globals.vars.set("ping", "pong");
         this.globals.vars.set("username", "divij");
 
-        const __test_dir = FileSystem.createDirectoryByPath("/temp/content", this.globals.fs.filesystem);
+        const __test_dir = FileSystem.createDirectoryByPath("/temp/content", this.globals.fs.root);
         FileSystem.createFile(__test_dir, "test.txt", "Hello World!");
-        const __home = FileSystem.createDirectoryByPath("/home/", this.globals.fs.filesystem);
+        const __home = FileSystem.createDirectoryByPath("/home/", this.globals.fs.root);
         FileSystem.createFile(__home, "info.txt", "Linux Bash terminal Emulated purely on browser")
-
+        console.log(this.globals.fs.root);
     }
     public process() {
         const command = UserInputHandler.getUserInput();
 
         TerminalOutputHandler.printToTerminal(OutputTemplates.userInputPreview(command));
         UserInputHandler.clearUserInput();
-        updatePrimaryPrompt()
-
+        
+        
         let toks: Tokens = [];
         try {
             toks = tokenize(command);
@@ -81,23 +81,19 @@ export class Shell {
             handleParserErrors(err);
             return;
         }
-
+        
         try {
             execute(results);
         } catch (err) {
             handleExecutorErrors(err);
             return;
         }
+        
+        updatePrimaryPrompt()
     }
 }
 
 function handleExecutorErrors(err: any) {
-    console.log(err);
-    console.log(err instanceof VariableValueIsMultipleWords); // false?
-    console.log(err.constructor.name); // "VariableValueIsMultipleWords"
-    console.log(Object.getPrototypeOf(err)); // should point to the correct class
-
-
     if (err instanceof VariableValueIsMultipleWords || err.name === "VariableValueIsMultipleWords") {
         TerminalOutputHandler.standardErrorOutput([
             `VariableValueIsMultipleWords: variables cannot be set values as multiple tokens, pass multiple words in quotations as single token.`

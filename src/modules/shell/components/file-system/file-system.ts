@@ -11,9 +11,12 @@ import {
     NodeWithSameNameExistsError
 } from "../__errors";
 
-function nodeNamesFrom(path: string): Array<string> {
+export function nodeNamesFrom(path: string): Array<string> {
     return path.split("/").filter(Boolean); //only have non empty node names
 }
+
+export const PARENT_IDENTIFIER = "..";
+export const SELF_IDENTIFIER = ".";
 
 
 export class FileSystem {
@@ -45,7 +48,8 @@ export class FileSystem {
      */
     public static createDirectoryByPath(path:string, parent:DirectoryNode, overwrite = false): DirectoryNode{
         const directoryNames = path.split("/").filter(Boolean);
-        console.log(directoryNames)
+        // console.log(directoryNames)
+        
         // FIXME: add overwrtie
         // checking if any of node from provided path exists ??
         // let curr = parent.children.find(node => (node.name == directoryNames[0] && node.type == "directory")) as DirectoryNode | undefined
@@ -88,13 +92,18 @@ export class FileSystem {
     /**
      * Traverses and returns indent-formatted tree-like string of all nodes within a root node
      */
-    public static traverseAndList(root: DirectoryNode, maxDepth = Infinity, __depth = 0, __output: string = ""): string {
-        // TODO: add output format ? string or array
-        return root.name + __traverse(root, maxDepth, __depth, __output);
+    public static traverseAndList(root: DirectoryNode, maxDepth = Infinity, __depth = 0, __output: Array<string> = []):string[] {
+        return [root.name, ...__traverse(root, maxDepth, __depth, __output)];
     }
 
-    public static getNodeByPath(path: string, root: DirectoryNode): FSNode | undefined {
-        const nodeNames = nodeNamesFrom(path);
+    public static getNodeByPath(path: Array<string>, root:DirectoryNode): FSNode | undefined;
+    public static getNodeByPath(path: string, root: DirectoryNode): FSNode | undefined;
+    public static getNodeByPath(path: string | Array<string>, root: DirectoryNode): FSNode | undefined {
+
+        
+        let nodeNames;
+        if(!Array.isArray(path)) nodeNames = nodeNamesFrom(path);
+        else nodeNames = path;
         return __getNodeByPath(nodeNames, root);
     }
 
@@ -115,21 +124,21 @@ export class FileSystem {
     
 }
 
-function __traverse(root: DirectoryNode, maxDepth: number, __depth = 0, __output = "") {
+function __traverse(root: DirectoryNode, maxDepth: number, __depth = 0, __output: Array<string>) {
     // checking if current depth doesnt exceed maximum depth
     if (__depth > maxDepth) return __output;
 
     if (root.type === "file") throw new NodeIsDirectoryError(`${root.name} is a file`);
     
-    const indent = '\n ' + "|  ".repeat(__depth) + '|-- ';
+    const indent = "|  ".repeat(__depth) + '|-- ';
     
     for (const node of root.children) {
         if (node.type === "directory") {
-            __output += indent + node.name;
+            __output.push(indent + node.name);
             __output = __traverse(node as DirectoryNode, maxDepth, __depth + 1, __output);
             
         } else {
-            __output += indent + node.name;
+            __output.push(indent + node.name);
         }
     }
     
@@ -137,12 +146,22 @@ function __traverse(root: DirectoryNode, maxDepth: number, __depth = 0, __output
 }
 
 function __getNodeByPath(nodeNames: Array<string>, root: DirectoryNode): FSNode | undefined {
+    
     let current: DirectoryNode = root;
-
+    let next;
     for (let part of nodeNames) {
-        if (current.type === "file") undefined;
+        if (current.type === "file") return undefined;
+        if(part === PARENT_IDENTIFIER){
+            // cd into parent
+            next = current.parent;
+        }
+        else if(part === SELF_IDENTIFIER){
+            // unintuitive but yeah
+            next = current;
+        } else{
+            next = current.children.find(node => node.name === part); //is case sensitive
+        }
 
-        const next = current.children.find(node => node.name === part); //is case sensitive
         if (!next) return undefined;
 
         // @ts-ignore

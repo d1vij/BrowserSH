@@ -8,9 +8,9 @@ export class FileSystemFactory {
     /**
      * The root node
      */
-    public filesystem: DirectoryNode;
-    public currentDirectory: string;
+    public root: DirectoryNode;
 
+    public currentDirectoryNode: DirectoryNode;
     constructor(config: IFsFactoryConfig) {
         /**
          * Ideally the initial fs structure should be
@@ -21,9 +21,7 @@ export class FileSystemFactory {
                 children: []
             } 
         */
-           this.filesystem = config.initialStructure
-
-           
-           this.currentDirectory = config.initialDirectory || "/";
+           this.root = config.initialStructure
+           this.currentDirectoryNode = this.root;
         }
 }

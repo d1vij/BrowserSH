@@ -15,12 +15,11 @@ export class GlobalsFactory {
     constructor() {
         this.fs = new FileSystemFactory({
             initialStructure: {
-                name:"/",
+                name:"root",
                 type:"directory",
                 parent: null,
                 children:[],
-            },
-            initialDirectory:"/"
+            }
         });
 
         // TODO: Add modifiable user initialization here vvv

@@ -68,3 +68,25 @@ export class IncorrectArgumentsCountError extends Error {
         Object.setPrototypeOf(this, new.target.prototype);
     }
 }
+
+//fs
+export class NodeNotFoundError extends Error {
+    public path: string;
+    constructor(path: string) {
+        super(`NodeNotFoundError: ${path}`);
+        this.path = path;
+        this.name = 'NodeNotFoundError';
+        Object.setPrototypeOf(this, new.target.prototype);
+    }
+}
+
+//list
+export class InvalidListableItemError extends Error {
+    public itemName;
+    constructor(itemNamePassed: string) {
+        super(`InvalidListItemError: ${ itemNamePassed }`);
+        this.itemName = itemNamePassed;
+        this.name = 'InvalidListItemError';
+        Object.setPrototypeOf(this, new.target.prototype);
+    }
+}

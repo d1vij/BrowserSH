@@ -48,7 +48,8 @@ export function parse(tokens: Tokens): parserResults {
 
     // escaping backslash characters (un-nessasary for anything other than escacaping $ signs)
     tokens = tokens.map(token => token.replace(escapeRegex, "$1"))
-    console.log(tokens)
+    
+    // console.log(tokens)
 
     return {
         type: "command",

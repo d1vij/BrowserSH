@@ -21,13 +21,27 @@ export class Echo extends AbstractCommand {
         }
     }
     public info(): string[] {
-        return [`display a line of text`];
+        return [
+            "display a line of text"
+        ];
     }
+
     public usage(): string[] {
         return [
-            "\techo [SHORT-OPTION]... [STRING]...",
-            "\techo LONG-OPTION"
-        ]
+            "usage: echo [*args] [flags] [options]",
+            "",
+            "Flags include:",
+            `\t${addColor("r", Colors.yellow_light)} -> red color to output string`,
+            `\t${addColor("reverse", Colors.yellow_light)} -> reverse the output string`,
+            "",
+            "Options include:",
+            `\t${addColor("color", Colors.yellow_light)} : Valid colors - ${Object.values(Colors).join(', ')}`,
+            `\t${addColor("l | loop", Colors.yellow_light)} : count - how many times to repeat the output (on newlines)`,
+            "Examples:",
+            `\t echo Hello World "my name is divij"\t=> Strings can be quoted, unquoted, or a combination`,
+            `\t echo $name '$age'\t\t\t=> Variables can be in quotations or used directly`,
+            `\t echo $1 --color red -l 10\t\t=> Uses variable $1, red color, and loops 10 times`
+        ];
     }
 
     

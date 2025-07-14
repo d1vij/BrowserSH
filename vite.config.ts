@@ -1,3 +1,5 @@
-export default {
-    base: "/web-terminal/",
-}
+import { defineConfig } from 'vite'
+
+export default defineConfig(({ mode }) => ({
+    base: mode === 'production' ? '/web-terminal/' : '/',
+}))

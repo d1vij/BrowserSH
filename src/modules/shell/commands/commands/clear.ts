@@ -1,7 +1,5 @@
 import type { Tokens } from "../../core/__typing";
 import { AbstractCommand } from "../AbstractCommand";
-import { addColor } from "../../../output-handler/formatter";
-import { Colors } from "../../../output-handler/typing/enums";
 import { terminalLinesList, terminalInputFeild } from "../../../../domElements";
 import { TerminalOutputHandler } from "../../../output-handler/terminal-output-handler";
 
@@ -22,11 +20,11 @@ export class Clear extends AbstractCommand{
         }
     }
     public info(): string[] {
-        return [`${addColor("clear", Colors.blue_cool)}: clears terminal screen`];
+        return [`clears terminal screen`];
     }
 
     public usage(): string[] {
-        return [`${addColor("clear", Colors.blue_cool)}`];
+        return [`usage: clear`];
     }
     public handleErrors(err: any): void {
         TerminalOutputHandler.standardErrorOutput([

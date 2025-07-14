@@ -1,2 +1,5 @@
+-1. add info command showing info about this project and me
+0. add html escaping to user command
 1. add text displaying time taken to execute the previous command - could be handled in parser,
 2. up arrow to get last command - using some kind of command stack ??
+3. add traversal depth to ls command using -d or --depth

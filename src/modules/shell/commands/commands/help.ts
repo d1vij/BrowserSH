@@ -65,19 +65,19 @@ export class Help extends AbstractCommand {
         if (results.flags.includes("i") || results.flags.includes("info")) {
             console.log("printing info")
             TerminalOutputHandler.printToTerminal(OutputTemplates.standardTerminalOutput([
-                addColor(instance.name, Colors.blue_light),
+                // addColor(instance.name, Colors.blue_light),
                 ...instance.info()
             ]))
             return;
         } else if (results.flags.includes("u") || results.flags.includes("usage")) {
             TerminalOutputHandler.printToTerminal(OutputTemplates.standardTerminalOutput([
-                addColor(instance.name, Colors.blue_light),
+                // addColor(instance.name, Colors.blue_light),
                 ...instance.usage()
             ]))
             return;
         }else {
             TerminalOutputHandler.printToTerminal(OutputTemplates.standardTerminalOutput([
-                addColor(instance.name, Colors.blue_light),
+                // addColor(instance.name, Colors.blue_light),
                 ...instance.info(),
                 ...instance.usage()
             ]));

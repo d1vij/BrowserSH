@@ -143,7 +143,7 @@ body {
 
 .terminal-content {
     overflow-y: scroll;
-    z-index: 10;
+    scroll-behavior: smooth;
     padding: $inline-padding;
     height: 100%;
 
@@ -162,14 +162,13 @@ body {
 .line {
     color: $term-white;
     display: flex;
+    width: 100%;
 
+    white-space: pre-wrap;
     .line-content {
-        white-space: pre;
         
         @include text-overflows();
         width: 100%;
-        display: flex;  
-        flex-direction: row;
     }
 
     &.multiline {
@@ -198,8 +197,7 @@ body {
 
     .current-directory {
         color: $term-orange-warm;
-        display: flex;
-
+        width: max-content;
         &::after {
             content: "$";
             padding-inline: $inline-padding;

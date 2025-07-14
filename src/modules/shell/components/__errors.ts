@@ -1,7 +1,9 @@
 // file system
 export class NodeIsFileError extends Error {
-    constructor(message: string = "Node is a file") {
-        super(`NodeIsFileError: ${message}`);
+    public path: string;
+    constructor(path: string = "Node is a file") {
+        super(`NodeIsFileError: ${path}`);
+        this.path = path;
         this.name = 'NodeIsFileError';
         Object.setPrototypeOf(this, new.target.prototype);
     }
