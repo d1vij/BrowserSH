@@ -8,11 +8,17 @@ import type {
 import {
     NodeIsDirectoryError,
     NodeIsFileError,
+    NodeToRemoveIsADirectoryAndNoRecurseFlagIsProvidedError,
     NodeWithSameNameExistsError
 } from "../__errors";
+import { NodeNotFoundError } from "../../commands/__errors";
+import type { ParentalNodeFromPathContext } from "../../commands/__typing";
 
 export function nodeNamesFrom(path: string): Array<string> {
     return path.split("/").filter(Boolean); //only have non empty node names
+}
+export function pathFromNodeNames(nodeNames:string[]): string{
+    return nodeNames.join('/');
 }
 
 export const PARENT_IDENTIFIER = "..";
@@ -47,27 +53,36 @@ export class FileSystem {
      * Creates nested directories based on given path and parent
      */
     public static createDirectoryByPath(path:string, parent:DirectoryNode, overwrite = false): DirectoryNode{
-        const directoryNames = path.split("/").filter(Boolean);
-        // console.log(directoryNames)
-        
-        // FIXME: add overwrtie
-        // checking if any of node from provided path exists ??
-        // let curr = parent.children.find(node => (node.name == directoryNames[0] && node.type == "directory")) as DirectoryNode | undefined
-        // for(const name in directoryNames){
-        //     if(curr === undefined) break;
-        //     curr = curr?.children.find(node => node.name == name && node.type == "directory") as DirectoryNode;
-        // }
-        overwrite = !overwrite;
-        let pre = parent;
-        for(const name of    directoryNames){
-            // TODO: add error handling
-            pre = this.createDirectory(pre,name);
-        }
+        const directoryNames = nodeNamesFrom(path);
 
-        return pre;
+        let temp = parent; //prevents editing the parent if a faliure occurs in future
+
+        let existingsIndex;
+        for(let i=0; i<directoryNames.length; i++){
+            existingsIndex = temp.children.findIndex(node => node.name === directoryNames[i] && node.type =="directory");
+            if(existingsIndex != -1){
+                if(overwrite == false) throw new NodeWithSameNameExistsError(pathFromNodeNames(directoryNames.slice(0,i)));
+
+                temp.children.splice(existingsIndex, 1);
+            }
+
+            temp = FileSystem.createDirectory(temp, directoryNames[i], overwrite);
+        }
+        
+        return temp ;
     }
     
-    
+    public static deleteNodeByPath(path:string, root:DirectoryNode, recurse: boolean = false){
+        const node = this.getNodeByPath(path, root);
+        if(node === undefined) throw new NodeNotFoundError(path);
+
+        if(node.type === "directory" && recurse == false) throw new NodeToRemoveIsADirectoryAndNoRecurseFlagIsProvidedError(path);
+        if(node.parent == null) throw new NodeNotFoundError("parent");
+
+        const parent = node.parent;
+        const nodeIndex = parent.children.findIndex(n => n.name === node.name);
+        parent.children.splice(nodeIndex, 1);
+    }
 
     /**
      * Creates and appends a new FileNode Object in parent's child nodes. Returns reference object to the created object
@@ -92,20 +107,40 @@ export class FileSystem {
     /**
      * Traverses and returns indent-formatted tree-like string of all nodes within a root node
      */
-    public static traverseAndList(root: DirectoryNode, maxDepth = Infinity, __depth = 0, __output: Array<string> = []):string[] {
-        return [root.name, ...__traverse(root, maxDepth, __depth, __output)];
+
+    public static traverseAndList(context: ParentalNodeFromPathContext, maxDepth: number):string[];
+    public static traverseAndList(root: DirectoryNode, maxDepth: number):string[];
+    public static traverseAndList(dir: DirectoryNode | ParentalNodeFromPathContext,maxDepth = Infinity):string[] {
+        if(typeof dir === "object" && "root" in dir && "path" in dir){
+            return [dir.root.name, ...__traverse(dir.root, maxDepth, 0, [])];
+        }
+        return [dir.name, ...__traverse(dir, maxDepth, 0, [])];
     }
 
-    public static getNodeByPath(path: Array<string>, root:DirectoryNode): FSNode | undefined;
+    public static getNodeByPath(path: ParentalNodeFromPathContext): FSNode | undefined;
+    public static getNodeByPath(path: Array<string>, root: DirectoryNode): FSNode | undefined;
     public static getNodeByPath(path: string, root: DirectoryNode): FSNode | undefined;
-    public static getNodeByPath(path: string | Array<string>, root: DirectoryNode): FSNode | undefined {
+    public static getNodeByPath(path: string | Array<string> | ParentalNodeFromPathContext, root?: DirectoryNode): FSNode | undefined {
 
-        
-        let nodeNames;
-        if(!Array.isArray(path)) nodeNames = nodeNamesFrom(path);
-        else nodeNames = path;
-        return __getNodeByPath(nodeNames, root);
+        let nodeNames: string[];
+        let _root: DirectoryNode;
+
+        if (typeof path === "object" && "path" in path && "root" in path) {
+            nodeNames = Array.isArray(path.path) ? path.path : nodeNamesFrom(path.path);
+            _root = path.root;
+            
+        } else if (Array.isArray(path)) {
+            nodeNames = path;
+            _root = root!;
+            
+        } else {
+            nodeNames = nodeNamesFrom(path);
+            _root = root!;
+        }
+
+        return __getNodeByPath(nodeNames, _root);
     }
+
 
     public static getPathFromNode(node:FSNode): string{
         const __path = []
@@ -126,7 +161,7 @@ export class FileSystem {
 
 function __traverse(root: DirectoryNode, maxDepth: number, __depth = 0, __output: Array<string>) {
     // checking if current depth doesnt exceed maximum depth
-    if (__depth > maxDepth) return __output;
+    if (__depth >= maxDepth) return __output;
 
     if (root.type === "file") throw new NodeIsDirectoryError(`${root.name} is a file`);
     

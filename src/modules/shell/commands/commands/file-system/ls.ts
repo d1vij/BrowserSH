@@ -4,14 +4,15 @@ import { TerminalOutputHandler } from "../../../../output-handler/terminal-outpu
 import { Colors } from "../../../../output-handler/typing/enums";
 import { FileSystem } from "../../../components/file-system/file-system";
 import type { Tokens } from "../../../core/__typing";
-import { extractFlagsAndOptions } from "../../../core/extract";
-import { IncorrectArgumentsCountError } from "../../__errors";
+import { getCommandContext } from "../../../core/extract";
+import { IncorrectArgumentsCountError, InvalidNumberError } from "../../__errors";
 import { AbstractCommand } from "../../AbstractCommand";
+import { getParentalNodeContextFromPath } from "./getParentNodeFromPathContext";
 
 export class Ls extends AbstractCommand{
     public name: string = "ls";
     public flags: string[] = [];
-    public options: string[] = [];
+    public options: string[] = ['d', "depth"];
     public execute(tokens: Tokens): void {
         try{
             this.__execute(tokens);
@@ -20,20 +21,33 @@ export class Ls extends AbstractCommand{
         }
     }
     private __execute(tokens:Tokens){
-        const results = extractFlagsAndOptions(tokens);
-        if(results.remainingTokens.length != 0) throw new IncorrectArgumentsCountError(0, results.remainingTokens.length);
+        const results = getCommandContext(tokens);
+        if(results.remainingTokens.length >= 2) throw new IncorrectArgumentsCountError("0 or 1", results.remainingTokens.length);
         // TODO:complete
+        const path = results.remainingTokens[0] || "."
+        const context = getParentalNodeContextFromPath(path, __shell.globals.fs.currentDirectoryNode);
+        
+        let depth:number | string = results.options["depth"] || results.options['d'] || "1";
 
-        const dirTree = FileSystem.traverseAndList(__shell.globals.fs.currentDirectoryNode);
+        if(depth === "inf"){
+            depth = Infinity;
+        } else {
+            depth = parseInt(depth);
+            if(isNaN(depth)) throw new InvalidNumberError(depth.toString());
+        }
+        console.log(depth);
+        const dirTree = FileSystem.traverseAndList(context, depth);
         TerminalOutputHandler.printToTerminal(OutputTemplates.standardTerminalOutput(dirTree));
     }
     
     
     public handleErrors(err: any): void {
-        TerminalOutputHandler.standardErrorOutput([
-            `UNEXPECTED_ERROR: ${err.name}`,
-            err.toString()
-        ])
+        if(err instanceof InvalidNumberError){
+
+            TerminalOutputHandler.standardErrorOutput([
+                `InvalidNumberError: Error in parsing ${addColor(err.num, Colors.yellow_light)}. Enter a valid number`
+            ]);
+        }
     }
     public info(): string[] {
         return [

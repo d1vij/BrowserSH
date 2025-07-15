@@ -16,12 +16,24 @@ export class NodeIsDirectoryError extends Error {
     }
 }
 export class NodeWithSameNameExistsError extends Error {
-    constructor(message: string) {
-        super(`NodeWithSameNameExistsError: ${message}`);
+    public path: string;
+    constructor(path: string) {
+        super(`NodeWithSameNameExistsError: ${name}`);
         this.name = 'NodeWithSameNameExistsError';
+        this.path = path;
         Object.setPrototypeOf(this, new.target.prototype);
     }
 }
+export class NodeToRemoveIsADirectoryAndNoRecurseFlagIsProvidedError extends Error {
+    public path: string;
+    constructor(path: string) {
+        super(`NodeToRemoveIsADirectoryAndNoRecurseFlagIsProvidedError: ${ path }`);
+        this.path = path;
+        this.name = 'NodeToRemoveIsADirectoryAndNoRecurseFlagIsProvidedError';
+        Object.setPrototypeOf(this, new.target.prototype);
+    }
+}
+
 
 // variables factory
 export class VariableDoesNotExistsError extends Error {

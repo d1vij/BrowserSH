@@ -3,7 +3,7 @@ import { addColor, OutputTemplates } from "../../../output-handler/formatter";
 import { TerminalOutputHandler } from "../../../output-handler/terminal-output-handler";
 import { Colors } from "../../../output-handler/typing/enums";
 import type { Tokens } from "../../core/__typing";
-import { extractFlagsAndOptions } from "../../core/extract";
+import { getCommandContext } from "../../core/extract";
 import { IncorrectArgumentsCountError, InvalidNumberError, InvalidOperationError } from "../__errors";
 import { AbstractCommand } from "../AbstractCommand";
 
@@ -48,7 +48,7 @@ export class MathCommand extends AbstractCommand {
     private __execute(tokens: Tokens) {
 
         const operation = tokens.splice(0, 1)[0];
-        const results = extractFlagsAndOptions(tokens);
+        const results = getCommandContext(tokens);
         
         const nums = results.remainingTokens.map(tok => {
             const num = Number(tok)
