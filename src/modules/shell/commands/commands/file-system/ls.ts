@@ -13,14 +13,8 @@ export class Ls extends AbstractCommand{
     public name: string = "ls";
     public flags: string[] = [];
     public options: string[] = ['d', "depth"];
-    public execute(tokens: Tokens): void {
-        try{
-            this.__execute(tokens);
-        } catch(err){
-            this.handleErrors(err);
-        }
-    }
-    private __execute(tokens:Tokens){
+
+    public __execute(tokens:Tokens){
         const results = getCommandContext(tokens);
         if(results.remainingTokens.length >= 2) throw new IncorrectArgumentsCountError("0 or 1", results.remainingTokens.length);
 

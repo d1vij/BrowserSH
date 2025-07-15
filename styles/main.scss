@@ -1,9 +1,12 @@
 @use "colors" as *;
 @use "mixins" as *;
 
+@use "./components/ui/user-inputs.scss" as *;
+
 $main-font: "IBM Plex Mono";
 $inline-padding: 5px;
 $border-radius: 5px;
+
 
 
 

@@ -7,10 +7,11 @@ import { UndefinedCommandError, UnexpectedError, VariableValueIsMultipleWords } 
 import { getCommandConstructor } from "../commands/command-index";
 
 
-export function execute(results: parserResults){
+export function execute(results: parserResults, done? : ()=>void){
     if(results.type=="variable-assignment" && results.tokens){
         console.log("va ")
         assignVariable(results.tokens);
+        done?.();
         return;
     }
     else if (results.type=="command" && results.command && results.tokens){
@@ -18,9 +19,9 @@ export function execute(results: parserResults){
         
         if(cmdConstruct === undefined) throw new UndefinedCommandError(results.command);
         
-
+        
         const instance = new cmdConstruct();
-        instance.execute(results.tokens);
+        instance.execute(results.tokens, done);
         return;
 
     } else{
