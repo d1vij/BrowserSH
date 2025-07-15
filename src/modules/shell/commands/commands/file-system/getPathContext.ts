@@ -2,11 +2,11 @@ import { __shell } from "../../../../../main";
 import type { DirectoryNode } from "../../../components/__typing"
 import { nodeNamesFrom, PARENT_IDENTIFIER, SELF_IDENTIFIER } from "../../../components/file-system/file-system";
 import { NodeNotFoundError } from "../../__errors";
-import type { ParentalNodeFromPathContext } from "../../__typing";
+import type { PathContext } from "../../__typing";
 
 
 
-export function getParentalNodeContextFromPath(path:string, directoryNode:DirectoryNode): ParentalNodeFromPathContext{
+export function getPathContext(path:string, directoryNode:DirectoryNode): PathContext{
     // returns correct parent node and array of path names when provided with a path and directory node context
 
     const path_toks = nodeNamesFrom(path);

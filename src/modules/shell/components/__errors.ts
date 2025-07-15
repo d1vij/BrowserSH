@@ -9,8 +9,10 @@ export class NodeIsFileError extends Error {
     }
 }
 export class NodeIsDirectoryError extends Error {
-    constructor(message: string = "Node is a directory") {
-        super(`NodeIsDirectoryError: Node exits with name ${message} in directory.`);
+    public path;
+    constructor(path = "Node is a directory") {
+        super(`NodeIsDirectoryError: Node exits with name ${path} in directory.`);
+        this.path = path;
         this.name = 'NodeIsDirectoryError';
         Object.setPrototypeOf(this, new.target.prototype);
     }

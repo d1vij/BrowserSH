@@ -4,12 +4,12 @@ import { TerminalOutputHandler } from "../../../../output-handler/terminal-outpu
 import { Colors } from "../../../../output-handler/typing/enums";
 import { NodeIsFileError } from "../../../components/__errors";
 import type { DirectoryNode } from "../../../components/__typing";
-import { FileSystem, nodeNamesFrom, PARENT_IDENTIFIER, SELF_IDENTIFIER } from "../../../components/file-system/file-system";
+import { FileSystem } from "../../../components/file-system/file-system";
 import type { Tokens } from "../../../core/__typing";
 import { getCommandContext } from "../../../core/extract";
 import { IncorrectArgumentsCountError, NodeNotFoundError } from "../../__errors";
 import { AbstractCommand } from "../../AbstractCommand";
-import { getParentalNodeContextFromPath } from "./getParentNodeFromPathContext";
+import { getPathContext } from "./getPathContext";
 
 export class Cd extends AbstractCommand{
     public name: string = "cd";
@@ -29,7 +29,7 @@ export class Cd extends AbstractCommand{
         if(results.remainingTokens.length != 1) throw new IncorrectArgumentsCountError(1, results.remainingTokens.length);
 
         const path = results.remainingTokens[0];
-        const context = getParentalNodeContextFromPath(path, __shell.globals.fs.currentDirectoryNode);
+        const context = getPathContext(path, __shell.globals.fs.currentDirectoryNode);
 
         const node = FileSystem.getNodeByPath(context);
         if(node === undefined) throw new NodeNotFoundError(path);

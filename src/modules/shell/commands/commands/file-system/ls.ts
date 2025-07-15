@@ -7,7 +7,7 @@ import type { Tokens } from "../../../core/__typing";
 import { getCommandContext } from "../../../core/extract";
 import { IncorrectArgumentsCountError, InvalidNumberError } from "../../__errors";
 import { AbstractCommand } from "../../AbstractCommand";
-import { getParentalNodeContextFromPath } from "./getParentNodeFromPathContext";
+import { getPathContext } from "./getPathContext";
 
 export class Ls extends AbstractCommand{
     public name: string = "ls";
@@ -23,9 +23,9 @@ export class Ls extends AbstractCommand{
     private __execute(tokens:Tokens){
         const results = getCommandContext(tokens);
         if(results.remainingTokens.length >= 2) throw new IncorrectArgumentsCountError("0 or 1", results.remainingTokens.length);
-        // TODO:complete
+
         const path = results.remainingTokens[0] || "."
-        const context = getParentalNodeContextFromPath(path, __shell.globals.fs.currentDirectoryNode);
+        const context = getPathContext(path, __shell.globals.fs.currentDirectoryNode);
         
         let depth:number | string = results.options["depth"] || results.options['d'] || "1";
 
@@ -33,9 +33,9 @@ export class Ls extends AbstractCommand{
             depth = Infinity;
         } else {
             depth = parseInt(depth);
-            if(isNaN(depth)) throw new InvalidNumberError(depth.toString());
+            if(!Number.isInteger(depth)) throw new InvalidNumberError(depth.toString());
         }
-        console.log(depth);
+        
         const dirTree = FileSystem.traverseAndList(context, depth);
         TerminalOutputHandler.printToTerminal(OutputTemplates.standardTerminalOutput(dirTree));
     }
@@ -47,6 +47,12 @@ export class Ls extends AbstractCommand{
             TerminalOutputHandler.standardErrorOutput([
                 `InvalidNumberError: Error in parsing ${addColor(err.num, Colors.yellow_light)}. Enter a valid number`
             ]);
+        }
+        else if (err instanceof IncorrectArgumentsCountError){
+            TerminalOutputHandler.standardErrorOutput([
+                `IncorrectArgumentsCountError: This command only takes one argument!`,
+                `Pass any paths with spaces inside quotations!`
+            ])
         }
     }
     public info(): string[] {

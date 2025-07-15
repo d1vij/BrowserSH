@@ -6,7 +6,6 @@ import { tokenize } from "./tokenizer";
 import type { parserResults } from "./__typing";
 import { Colors } from "../../output-handler/typing/enums";
 import { GlobalsFactory } from "../components/globals-factory";
-import { FileSystem } from "../components/file-system/file-system";
 import { VariableDoesNotExistsError } from "../components/__errors";
 import { UserInputHandler } from "../../output-handler/user-input-handler";
 import { TerminalOutputHandler } from "../../output-handler/terminal-output-handler";
@@ -30,7 +29,6 @@ import {
 } from "./__errors"
 
 
-const __debugMode = "true"
 
 
 export class Shell {
@@ -48,16 +46,6 @@ export class Shell {
         // initializes a new shell 
         this.globals = new GlobalsFactory();
 
-        // initial stuff
-        this.globals.vars.set("__debug", __debugMode);
-        this.globals.vars.set("ping", "pong");
-        this.globals.vars.set("username", "divij");
-
-        const __test_dir = FileSystem.createDirectoryByPath("/temp/content", this.globals.fs.root);
-        FileSystem.createFile(__test_dir, "test.txt", "Hello World!");
-        const __home = FileSystem.createDirectoryByPath("/home/", this.globals.fs.root);
-        FileSystem.createFile(__home, "info.txt", "Linux Bash terminal Emulated purely on browser")
-        console.log(this.globals.fs.root);
     }
     public process() {
         const command = UserInputHandler.getUserInput();

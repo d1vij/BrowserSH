@@ -33,13 +33,29 @@ export class Rm extends AbstractCommand{
             }
         }
     }
-    public handleErrors(err: any): void {
-        
+    public handleErrors(_: any): void {}
+    public info(): string[] {
+        return [
+            "delete a file or directory from the filesystem"
+        ];
     }
-    public info(): Array<string> {
-        
-    }
-    public usage(): Array<string> {
-        
+
+    public usage(): string[] {
+        return [
+            "usage: rm <path> [flags]",
+            "",
+            "Arguments:",
+            `\t${addColor("<path>", Colors.yellow_light)} -> Path to the file or directory to delete.`,
+            "",
+            "Flags:",
+            `\t${addColor("-r", Colors.yellow_light)} -> Recursively deletes a directory and its contents.`,
+            `\t\t\t   Must be used if the target is a directory.`,
+            "",
+            "Examples:",
+            `\t${addColor("rm hello.txt", Colors.blue_light)} => Deletes the file 'hello.txt' from the current directory`,
+            `\t${addColor("rm root/data/file.json", Colors.blue_light)} => Deletes the file at the given absolute path`,
+            `\t${addColor("rm ./projects", Colors.blue_light)} => Fails if 'projects' is a directory (no -r flag used)`,
+            `\t${addColor("rm ./projects -r", Colors.blue_light)} => Recursively deletes the 'projects' directory and its contents`
+        ];
     }
 }

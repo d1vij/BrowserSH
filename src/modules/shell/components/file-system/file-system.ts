@@ -12,7 +12,7 @@ import {
     NodeWithSameNameExistsError
 } from "../__errors";
 import { NodeNotFoundError } from "../../commands/__errors";
-import type { ParentalNodeFromPathContext } from "../../commands/__typing";
+import type { PathContext } from "../../commands/__typing";
 
 export function nodeNamesFrom(path: string): Array<string> {
     return path.split("/").filter(Boolean); //only have non empty node names
@@ -52,25 +52,44 @@ export class FileSystem {
     /**
      * Creates nested directories based on given path and parent
      */
-    public static createDirectoryByPath(path:string, parent:DirectoryNode, overwrite = false): DirectoryNode{
-        const directoryNames = nodeNamesFrom(path);
+    public static createDirectoryByPath(path: PathContext, overwrite: boolean): DirectoryNode;
+    public static createDirectoryByPath(path: string, parent: DirectoryNode, overwrite: boolean): DirectoryNode;
 
-        let temp = parent; //prevents editing the parent if a faliure occurs in future
+    public static createDirectoryByPath(path: string | PathContext,parentOrOverwrite: DirectoryNode | boolean,maybeOverwrite?: boolean): DirectoryNode {
+        let temp: DirectoryNode;
+        let directoryNames: string[];
+        let overwrite: boolean;
 
-        let existingsIndex;
-        for(let i=0; i<directoryNames.length; i++){
-            existingsIndex = temp.children.findIndex(node => node.name === directoryNames[i] && node.type =="directory");
-            if(existingsIndex != -1){
-                if(overwrite == false) throw new NodeWithSameNameExistsError(pathFromNodeNames(directoryNames.slice(0,i)));
+        if (typeof path === "object" && "path" in path && "root" in path) {
+            temp = path.root;
+            directoryNames = path.path;
+            overwrite = parentOrOverwrite as boolean;
+        } else {
+            temp = parentOrOverwrite as DirectoryNode;
+            directoryNames = nodeNamesFrom(path as string);
+            overwrite = maybeOverwrite!;
+        }
 
-                temp.children.splice(existingsIndex, 1);
+        let existingsIndex: number;
+        for (let i = 0; i < directoryNames.length; i++) {
+            existingsIndex = temp.children.findIndex(
+                node => node.name === directoryNames[i] && node.type === "directory"
+            );
+
+            if (existingsIndex !== -1) {
+                if (!overwrite) {
+                    throw new NodeWithSameNameExistsError(pathFromNodeNames(directoryNames.slice(0, i)));
+                }
+
+                temp.children.splice(existingsIndex, 1); // remove existing conflicting directory
             }
 
             temp = FileSystem.createDirectory(temp, directoryNames[i], overwrite);
         }
-        
-        return temp ;
+
+        return temp;
     }
+
     
     public static deleteNodeByPath(path:string, root:DirectoryNode, recurse: boolean = false){
         const node = this.getNodeByPath(path, root);
@@ -108,19 +127,19 @@ export class FileSystem {
      * Traverses and returns indent-formatted tree-like string of all nodes within a root node
      */
 
-    public static traverseAndList(context: ParentalNodeFromPathContext, maxDepth: number):string[];
+    public static traverseAndList(context: PathContext, maxDepth: number):string[];
     public static traverseAndList(root: DirectoryNode, maxDepth: number):string[];
-    public static traverseAndList(dir: DirectoryNode | ParentalNodeFromPathContext,maxDepth = Infinity):string[] {
+    public static traverseAndList(dir: DirectoryNode | PathContext,maxDepth = Infinity):string[] {
         if(typeof dir === "object" && "root" in dir && "path" in dir){
             return [dir.root.name, ...__traverse(dir.root, maxDepth, 0, [])];
         }
         return [dir.name, ...__traverse(dir, maxDepth, 0, [])];
     }
 
-    public static getNodeByPath(path: ParentalNodeFromPathContext): FSNode | undefined;
+    public static getNodeByPath(path: PathContext): FSNode | undefined;
     public static getNodeByPath(path: Array<string>, root: DirectoryNode): FSNode | undefined;
     public static getNodeByPath(path: string, root: DirectoryNode): FSNode | undefined;
-    public static getNodeByPath(path: string | Array<string> | ParentalNodeFromPathContext, root?: DirectoryNode): FSNode | undefined {
+    public static getNodeByPath(path: string | Array<string> | PathContext, root?: DirectoryNode): FSNode | undefined {
 
         let nodeNames: string[];
         let _root: DirectoryNode;
