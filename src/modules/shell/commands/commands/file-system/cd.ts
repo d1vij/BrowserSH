@@ -4,11 +4,12 @@ import { TerminalOutputHandler } from "../../../../output-handler/terminal-outpu
 import { Colors } from "../../../../output-handler/typing/enums";
 import { NodeIsFileError } from "../../../components/__errors";
 import type { DirectoryNode } from "../../../components/__typing";
-import { FileSystem, nodeNamesFrom, PARENT_IDENTIFIER, SELF_IDENTIFIER } from "../../../components/file-system/file-system";
+import { FileSystem } from "../../../components/file-system/file-system";
 import type { Tokens } from "../../../core/__typing";
-import { extractFlagsAndOptions } from "../../../core/extract";
+import { getCommandContext } from "../../../core/extract";
 import { IncorrectArgumentsCountError, NodeNotFoundError } from "../../__errors";
 import { AbstractCommand } from "../../AbstractCommand";
+import { getPathContext } from "./getPathContext";
 
 export class Cd extends AbstractCommand{
     public name: string = "cd";
@@ -24,43 +25,13 @@ export class Cd extends AbstractCommand{
         
     }
     private __execute(tokens:Tokens){
-        const results = extractFlagsAndOptions(tokens);
+        const results = getCommandContext(tokens);
         if(results.remainingTokens.length != 1) throw new IncorrectArgumentsCountError(1, results.remainingTokens.length);
 
         const path = results.remainingTokens[0];
-        const path_toks = nodeNamesFrom(path);
-        
-        // TODO: prolly improve the algorithm
-        let start_node;
-        if(path_toks[0] === PARENT_IDENTIFIER){
-            
-            const parent = __shell.globals.fs.currentDirectoryNode.parent;
-            if(parent === null) throw new NodeNotFoundError("parent");
-            __shell.globals.fs.currentDirectoryNode = parent;
-            start_node = parent;
-            path_toks.splice(0, 1);
-        }
-        else if(path_toks[0]===SELF_IDENTIFIER){
-            path_toks.splice(0,1);
-            start_node = __shell.globals.fs.currentDirectoryNode;
-        }
-        // else if(path_toks[0] === __shell.globals.fs.root.name){
-        else if(path.startsWith(__shell.globals.fs.root.name)){
-            // path starts with name of root
-            if(path_toks.length < 2){
-                // change to root
-                __shell.globals.fs.currentDirectoryNode = __shell.globals.fs.root;
-                return;
-            }
-            start_node  = __shell.globals.fs.root;
-            path_toks.splice(0, 1);
-            console.log(path_toks); 
-        } else  {
-            // self 
-            start_node = __shell.globals.fs.currentDirectoryNode;
-        }
+        const context = getPathContext(path, __shell.globals.fs.currentDirectoryNode);
 
-        const node = FileSystem.getNodeByPath(path_toks, start_node);
+        const node = FileSystem.getNodeByPath(context);
         if(node === undefined) throw new NodeNotFoundError(path);
         else if (node.type === "file") throw new NodeIsFileError(path);
 

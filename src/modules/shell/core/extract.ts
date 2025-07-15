@@ -6,7 +6,7 @@ const flagOptionSearchRegex = /^-{1,2}([^\s]+)/;
 /**
  * extracts flags and options from tokens
  */
-export function extractFlagsAndOptions(tokens: Tokens): ExtractionResults {
+export function getCommandContext(tokens: Tokens): ExtractionResults {
     const flags = [];
     const options: Record<string, string> = {};
 

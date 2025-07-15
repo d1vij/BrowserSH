@@ -3,7 +3,7 @@ import { addColor, OutputTemplates } from "../../../output-handler/formatter";
 import { TerminalOutputHandler } from "../../../output-handler/terminal-output-handler";
 import { Colors } from "../../../output-handler/typing/enums";
 import type { Tokens } from "../../core/__typing";
-import { extractFlagsAndOptions } from "../../core/extract";
+import { getCommandContext } from "../../core/extract";
 import { IncorrectArgumentsCountError, InvalidListableItemError } from "../__errors";
 import { AbstractCommand } from "../AbstractCommand"
 import { commandIndex } from "../command-index";
@@ -17,7 +17,7 @@ export class List extends AbstractCommand {
 
     public execute(tokens: Tokens): void {
         try {
-            const results = extractFlagsAndOptions(tokens);
+            const results = getCommandContext(tokens);
             if (results.remainingTokens.length != 1) throw new IncorrectArgumentsCountError(1, results.remainingTokens.length);
 
             const toList = results.remainingTokens[0];
@@ -34,6 +34,10 @@ export class List extends AbstractCommand {
                 }
                 case "variables":{
                     content = __shell.globals.vars.variables.keys().toArray();
+                    break;
+                }
+                case "colors":{
+                    content = Object.keys(Object(Colors));
                     break;
                 }
                 default:

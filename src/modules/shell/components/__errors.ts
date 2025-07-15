@@ -9,19 +9,33 @@ export class NodeIsFileError extends Error {
     }
 }
 export class NodeIsDirectoryError extends Error {
-    constructor(message: string = "Node is a directory") {
-        super(`NodeIsDirectoryError: Node exits with name ${message} in directory.`);
+    public path;
+    constructor(path = "Node is a directory") {
+        super(`NodeIsDirectoryError: Node exits with name ${path} in directory.`);
+        this.path = path;
         this.name = 'NodeIsDirectoryError';
         Object.setPrototypeOf(this, new.target.prototype);
     }
 }
 export class NodeWithSameNameExistsError extends Error {
-    constructor(message: string) {
-        super(`NodeWithSameNameExistsError: ${message}`);
+    public path: string;
+    constructor(path: string) {
+        super(`NodeWithSameNameExistsError: ${name}`);
         this.name = 'NodeWithSameNameExistsError';
+        this.path = path;
         Object.setPrototypeOf(this, new.target.prototype);
     }
 }
+export class NodeToRemoveIsADirectoryAndNoRecurseFlagIsProvidedError extends Error {
+    public path: string;
+    constructor(path: string) {
+        super(`NodeToRemoveIsADirectoryAndNoRecurseFlagIsProvidedError: ${ path }`);
+        this.path = path;
+        this.name = 'NodeToRemoveIsADirectoryAndNoRecurseFlagIsProvidedError';
+        Object.setPrototypeOf(this, new.target.prototype);
+    }
+}
+
 
 // variables factory
 export class VariableDoesNotExistsError extends Error {

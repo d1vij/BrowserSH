@@ -1,7 +1,7 @@
 import { OutputTemplates } from "../../../output-handler/formatter";
 import { UndefinedCommandError } from "../../core/__errors";
 import type { Tokens } from "../../core/__typing";
-import { extractFlagsAndOptions } from "../../core/extract";
+import { getCommandContext } from "../../core/extract";
 import { AbstractCommand } from "../AbstractCommand";
 import { getCommandConstructor } from "../command-index";
 import { TerminalOutputHandler } from "../../../output-handler/terminal-output-handler";
@@ -42,7 +42,7 @@ export class Help extends AbstractCommand {
     }
 
     public __execute(tokens: Tokens) {
-        const results = extractFlagsAndOptions(tokens);
+        const results = getCommandContext(tokens);
 
         console.log("help")
         let cmdName;

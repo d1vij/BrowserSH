@@ -10,7 +10,7 @@ export class OutputTemplates {
         return `
         <li class="line">
           <div class="primary-prompt">
-                <span class="username">${__shell.globals.vars.get("username")}</span>
+                <span class="username">${__shell.globals.vars.get("&&username")}</span>
                 <span class="current-directory">${FileSystem.getPathFromNode(__shell.globals.fs.currentDirectoryNode)}</span>
           </div>
           <div class="line-content">${content}</div>
@@ -41,7 +41,7 @@ export class OutputTemplates {
 }
 
 export function updatePrimaryPrompt() {
-    primaryPrompt_username.innerText = __shell.globals.vars.get("username") || "USERNAME_NOT_SET";
+    primaryPrompt_username.innerText = __shell.globals.vars.get("&&username") || "USERNAME_NOT_SET";
     primaryPrompt_current_directory.innerText = FileSystem.getPathFromNode(__shell.globals.fs.currentDirectoryNode);
 }
 

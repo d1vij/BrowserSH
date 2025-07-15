@@ -2,7 +2,7 @@ import { addColor, OutputTemplates } from "../../../output-handler/formatter";
 import { TerminalOutputHandler } from "../../../output-handler/terminal-output-handler";
 import { Colors } from "../../../output-handler/typing/enums";
 import type { Tokens } from "../../core/__typing";
-import { extractFlagsAndOptions } from "../../core/extract";
+import { getCommandContext } from "../../core/extract";
 import { InvalidColorError, InvalidFlagError, InvalidNumberError, InvalidOptionError } from "../__errors";
 import { AbstractCommand } from "../AbstractCommand";
 import { processGenericErrors } from "../processGenericErrors";
@@ -46,7 +46,7 @@ export class Echo extends AbstractCommand {
 
     
     public __execute(tokens:Tokens){
-        const results = extractFlagsAndOptions(tokens);
+        const results = getCommandContext(tokens);
         
         let content = results.remainingTokens.join(' ');
         for(let flag of results.flags){

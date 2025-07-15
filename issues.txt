@@ -7,3 +7,5 @@
 4. auto scroll inside terminal-content whenever new lines are added to the end
 
 5. NEGATIVES ARE MIS-IDENTIFIED AS FLAGS
+
+6. UserFactory is redundant

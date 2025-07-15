@@ -15,7 +15,7 @@ export class GlobalsFactory {
     constructor() {
         this.fs = new FileSystemFactory({
             initialStructure: {
-                name:"root",
+                name:"#",
                 type:"directory",
                 parent: null,
                 children:[],
