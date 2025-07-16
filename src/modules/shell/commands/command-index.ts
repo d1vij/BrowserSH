@@ -10,7 +10,8 @@ import { Help } from "./commands/help";
 import { Clear } from "./commands/clear";
 import { Mkdir } from "./commands/file-system/mkdir";
 import { MathCommand } from "./commands/math";
-import { TakeInput } from "./commands/take-input";
+import { Exit } from "./commands/exit";
+import { Run } from "./commands/run/run";
 
 
 type CommandConstructor = new() => AbstractCommand;
@@ -26,7 +27,8 @@ export const commandIndex = new Map<string, CommandConstructor>([
     ["ls", Ls],
     ["list", List],
     ["rm", Rm],
-    ["ti", TakeInput]
+    ["run", Run],
+    ['exit',Exit],
     
 ] as [string, CommandConstructor][]);
 

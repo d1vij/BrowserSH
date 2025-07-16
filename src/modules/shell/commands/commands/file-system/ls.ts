@@ -7,14 +7,14 @@ import type { Tokens } from "../../../core/__typing";
 import { getCommandContext } from "../../../core/extract";
 import { IncorrectArgumentsCountError, InvalidNumberError } from "../../__errors";
 import { AbstractCommand } from "../../AbstractCommand";
-import { getPathContext } from "./getPathContext";
+import { getPathContext } from "../../../components/file-system/getPathContext";
 
 export class Ls extends AbstractCommand{
     public name: string = "ls";
     public flags: string[] = [];
     public options: string[] = ['d', "depth"];
 
-    public __execute(tokens:Tokens){
+    protected __execute(tokens:Tokens){
         const results = getCommandContext(tokens);
         if(results.remainingTokens.length >= 2) throw new IncorrectArgumentsCountError("0 or 1", results.remainingTokens.length);
 
@@ -31,7 +31,7 @@ export class Ls extends AbstractCommand{
         }
         
         const dirTree = FileSystem.traverseAndList(context, depth);
-        TerminalOutputHandler.printToTerminal(OutputTemplates.standardTerminalOutput(dirTree));
+        TerminalOutputHandler.printToTerminalOld(OutputTemplates.standardTerminalOutput(dirTree));
     }
     
     

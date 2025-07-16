@@ -29,8 +29,8 @@ body {
 .window {
     @include font-settings();
     background-color: $term-grey-mid;
-    height: 700px;
-    width: 1100px;
+    height: 680px;
+    width: 1400px;
     display: flex;
     flex-direction: column;
     gap: 2px;
@@ -192,6 +192,7 @@ body {
 
     .username {
         color: $term-green-pale;
+        width: max-content;
 
         &::after {
             content: "\00a0";

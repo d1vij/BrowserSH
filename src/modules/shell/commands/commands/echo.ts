@@ -84,7 +84,7 @@ export class Echo extends AbstractCommand {
             }
         }
 
-        TerminalOutputHandler.printToTerminal(OutputTemplates.standardTerminalOutput(content));
+        TerminalOutputHandler.printToTerminalOld(OutputTemplates.standardTerminalOutput(content));
     }   
     public handleErrors(err:any){
         

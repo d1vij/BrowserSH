@@ -1,4 +1,22 @@
+@use "../../mixins" as *;
 
-.ui-user-input-prompt {
-    padding-inline: 5px;
+.ui-user-input-container {
+    display: flex;
+    align-items: flex-start;
+    flex-wrap: nowrap;
+    width: 100%;
+
+    .ui-user-input-prompt {
+        padding-left: 5px;
+        flex: 0 0 auto;
+        white-space: pre-wrap;
+        max-width: 100%;
+    }
+
+    .ui-user-input-feild {
+        flex: 1 1 auto;
+        min-width: 0;
+        outline: none;
+        @include text-overflows();
+    }
 }

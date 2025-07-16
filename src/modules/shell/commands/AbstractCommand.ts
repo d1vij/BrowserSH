@@ -1,4 +1,5 @@
 import type { TCommand, TFlag, Tokens, TOption } from "../core/__typing";
+import type { MaybeAsyncFunction } from "./__typing";
 export abstract class AbstractCommand {
     /**
      * Name of primary command
@@ -18,7 +19,7 @@ export abstract class AbstractCommand {
     /**
      * method that gets called when to execute the command. Handles both the execution and error handling which may occur during execution
     */
-    public execute(tokens: Tokens, done?: () => void): void {
+    public execute(tokens: Tokens, done?:MaybeAsyncFunction<void>): void {
         /**
          * The callback based handling of post command execution stuff allows 
          * for the commands to be both synchronous as well as asynchronous,
@@ -55,6 +56,7 @@ export abstract class AbstractCommand {
                     .catch(err => this.handleErrors(err)) // <- ideally this call should not throw an error
                     .finally(() => done?.());
             }
+            else done?.();
         } catch (err) {
             this.handleErrors(err)
             done?.(); // called everytime irrespective of what happend (could probably cause some bugs later on) (okay keeping it in finally block caused it to get immeidately called);

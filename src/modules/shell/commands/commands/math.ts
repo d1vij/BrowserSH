@@ -14,14 +14,6 @@ export class MathCommand extends AbstractCommand {
     public flags = [];
     public options = ["out", 'o']
 
-    public execute(tokens: Tokens): void {
-        try {
-            this.__execute(tokens);
-        } catch (err) {
-            this.handleErrors(err);
-            return;
-        }
-    }
     public info() {
         return ["perform basic arithmetic operations"];
 
@@ -45,7 +37,8 @@ export class MathCommand extends AbstractCommand {
             "\t math mul 5 6 -o result => stores result in 'result' variable"]
     }
 
-    private __execute(tokens: Tokens) {
+    
+    protected __execute(tokens: Tokens): void {
 
         const operation = tokens.splice(0, 1)[0];
         const results = getCommandContext(tokens);
@@ -100,11 +93,11 @@ export class MathCommand extends AbstractCommand {
             const varname = arg || "math_result";
             __shell.globals.vars.set(varname, result.toString());
 
-            TerminalOutputHandler.printToTerminal(OutputTemplates.standardTerminalOutput(`Result saved to var ${addColor(varname, Colors.yellow_light)}.`));
+            TerminalOutputHandler.printToTerminalOld(OutputTemplates.standardTerminalOutput(`Result saved to var ${addColor(varname, Colors.yellow_light)}.`));
             return;
         } else {
             // print to terminal
-            TerminalOutputHandler.printToTerminal(OutputTemplates.standardTerminalOutput(addColor(result.toString(), Colors.yellow_light)));
+            TerminalOutputHandler.printToTerminalOld(OutputTemplates.standardTerminalOutput(addColor(result.toString(), Colors.yellow_light)));
             return;
         }
     }

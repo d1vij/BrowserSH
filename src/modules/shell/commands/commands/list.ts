@@ -7,51 +7,51 @@ import { getCommandContext } from "../../core/extract";
 import { IncorrectArgumentsCountError, InvalidListableItemError } from "../__errors";
 import { AbstractCommand } from "../AbstractCommand"
 import { commandIndex } from "../command-index";
+import { Run } from "./run/run";
 
 export class List extends AbstractCommand {
     public name: string = "list";
     public flags: string[] = [];
     public options: string[] = [];
 
-    public listables: Array<string> = ["commands","listables", "colors", "variables"]
+    public listables: Array<string> = ["commands","listables", "colors", "variables", "functions"]
 
-    public execute(tokens: Tokens): void {
-        try {
-            const results = getCommandContext(tokens);
-            if (results.remainingTokens.length != 1) throw new IncorrectArgumentsCountError(1, results.remainingTokens.length);
+    protected __execute(tokens: Tokens): void {
+        const results = getCommandContext(tokens);
+        if (results.remainingTokens.length != 1) throw new IncorrectArgumentsCountError(1, results.remainingTokens.length);
 
-            const toList = results.remainingTokens[0];
+        const toList = results.remainingTokens[0];
 
-            let content: Array<string>;
-            switch (toList) {
-                case "commands":
-                    content = commandIndex.keys().toArray();
-                    break;
+        let content: Array<string>;
+        switch (toList) {
+            case "commands":
+                content = commandIndex.keys().toArray();
+                break;
 
-                case "listables":{
-                    content = this.listables;
-                    break;
-                }
-                case "variables":{
-                    content = __shell.globals.vars.variables.keys().toArray();
-                    break;
-                }
-                case "colors":{
-                    content = Object.keys(Object(Colors));
-                    break;
-                }
-                default:
-                    throw new InvalidListableItemError(toList);
-                }
-
-            TerminalOutputHandler.printToTerminal(OutputTemplates.standardTerminalOutput(content));
-
-            return;
-        } catch (err) {
-            this.handleErrors(err);
-            return;
+            case "listables": {
+                content = this.listables;
+                break;
+            }
+            case "variables": {
+                content = __shell.globals.vars.variables.keys().toArray();
+                break;
+            }
+            case "colors": {
+                content = Object.keys(Object(Colors));
+                break;
+            }
+            case "functions": {
+                content = Object.keys((new Run).functionIndex);
+                break;
+            }
+            default:
+                throw new InvalidListableItemError(toList);
         }
+
+        TerminalOutputHandler.printToTerminalOld(OutputTemplates.standardTerminalOutput(content));
+        return;
     }
+    
     public handleErrors(err: any): void {
         if (err instanceof InvalidListableItemError) {
             TerminalOutputHandler.standardErrorOutput([
@@ -82,6 +82,7 @@ export class List extends AbstractCommand {
             `\t${addColor("listables", Colors.yellow_light)} -> Lists all valid items that can be passed to 'list'`,
             `\t${addColor("commands", Colors.yellow_light)} -> Lists all available shell commands`,
             `\t${addColor("variables", Colors.yellow_light)} -> Lists all stored variables.`,
+            `\t${addColor("functions", Colors.yellow_light)} -> Lists all runnable functions.`,
             // Uncomment this if "colors" or others are supported in the future
             // `\t${addColor("colors", Colors.yellow_light)} -> Lists all available color names`,
             "",

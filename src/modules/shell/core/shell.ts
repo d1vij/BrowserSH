@@ -51,7 +51,7 @@ export class Shell {
     public process() {
         const command = UserInputHandler.getUserInput();
 
-        TerminalOutputHandler.printToTerminal(OutputTemplates.userInputPreview(command));
+        TerminalOutputHandler.printToTerminalOld(OutputTemplates.userInputPreview(command));
         UserInputHandler.clearUserInput();
 
         // Command input feild is hidden once command processing starts
