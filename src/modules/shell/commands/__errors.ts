@@ -90,3 +90,14 @@ export class InvalidListableItemError extends Error {
         Object.setPrototypeOf(this, new.target.prototype);
     }
 }
+
+//run
+export class FunctionNotFoundError extends Error {
+    public funcname;
+    constructor(name: string) {
+        super(`FunctionNotFoundError: ${ name }`);
+        this.name = 'FunctionNotFoundError';
+        this.funcname = name;
+        Object.setPrototypeOf(this, new.target.prototype);
+    }
+}

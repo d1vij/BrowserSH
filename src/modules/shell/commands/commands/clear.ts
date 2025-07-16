@@ -9,16 +9,13 @@ export class Clear extends AbstractCommand{
     public flags: string[] = []
     public options: string[] = []
 
-    public execute(_: Tokens): void {
-        try{
+    protected __execute(_: Tokens): void{
 
-            terminalLinesList.innerHTML = "";
-            terminalInputFeild.value = "";
-            return;
-        } catch(err) {
-            this.handleErrors(err);
-        }
+        terminalLinesList.innerHTML = "";
+        terminalInputFeild.value = "";
+        return;
     }
+
     public info(): string[] {
         return [`clears terminal screen`];
     }

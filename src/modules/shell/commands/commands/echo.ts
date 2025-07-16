@@ -13,13 +13,6 @@ export class Echo extends AbstractCommand {
     public flags: string[] = ['r','reverse'];
     public options: string[] = ['colors', 'l', 'loop'];
 
-    public execute(tokens:Tokens): void {
-        try{
-            this.__execute(tokens);
-        } catch(err:any){
-            this.handleErrors(err);
-        }
-    }
     public info(): string[] {
         return [
             "display a line of text"
@@ -44,7 +37,6 @@ export class Echo extends AbstractCommand {
         ];
     }
 
-    
     public __execute(tokens:Tokens){
         const results = getCommandContext(tokens);
         
@@ -92,7 +84,7 @@ export class Echo extends AbstractCommand {
             }
         }
 
-        TerminalOutputHandler.printToTerminal(OutputTemplates.standardTerminalOutput(content));
+        TerminalOutputHandler.printToTerminalOld(OutputTemplates.standardTerminalOutput(content));
     }   
     public handleErrors(err:any){
         

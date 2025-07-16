@@ -27,10 +27,11 @@ import {
     TokenContainsQuoteInMiddleErrror,
     UndefinedCommandError
 } from "./__errors"
+import { terminalInputDiv } from "../../../domElements";
 
 
 
-
+// 
 export class Shell {
     /**
      * shell will 
@@ -50,15 +51,18 @@ export class Shell {
     public process() {
         const command = UserInputHandler.getUserInput();
 
-        TerminalOutputHandler.printToTerminal(OutputTemplates.userInputPreview(command));
+        TerminalOutputHandler.printToTerminalOld(OutputTemplates.userInputPreview(command));
         UserInputHandler.clearUserInput();
-        
+
+        // Command input feild is hidden once command processing starts
+        commandInputFeildHidden(true);
         
         let toks: Tokens = [];
         try {
             toks = tokenize(command);
         } catch (err: any) {
             handleTokenizationErrors(err, command)
+            commandInputFeildHidden(false);
             return;
         }
 
@@ -67,19 +71,35 @@ export class Shell {
             results = parse(toks);
         } catch (err) {
             handleParserErrors(err);
+            commandInputFeildHidden(false);
             return;
         }
         
         try {
-            execute(results);
+            execute(results,()=>{
+                // the callback which gets called once command execution is finished, here it shows the command input feild and resets the primary prompt
+                commandInputFeildHidden(false);
+                updatePrimaryPrompt()
+            });
         } catch (err) {
             handleExecutorErrors(err);
+            commandInputFeildHidden(false);
             return;
         }
         
-        updatePrimaryPrompt()
     }
 }
+
+// 
+
+function commandInputFeildHidden(b:boolean) {
+    console.log("hiding", b)
+    if(b) terminalInputDiv.style.display = "none";
+    else terminalInputDiv.style.display = "flex";
+}
+
+// 
+
 
 function handleExecutorErrors(err: any) {
     if (err instanceof VariableValueIsMultipleWords || err.name === "VariableValueIsMultipleWords") {

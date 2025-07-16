@@ -8,19 +8,13 @@ import type { Tokens } from "../../../core/__typing";
 import { getCommandContext } from "../../../core/extract";
 import { IncorrectArgumentsCountError} from "../../__errors";
 import { AbstractCommand } from "../../AbstractCommand";
-import { getPathContext } from "./getPathContext";
+import { getPathContext } from "../../../components/file-system/getPathContext";
 
 export class Mkdir extends AbstractCommand {
     public name: string = "mkdir";
     public flags: string[] = [];
     public options: string[] = [];
-    public execute(tokens: Tokens): void {
-        try {
-            this.__execute(tokens);
-        } catch (err) {
-            this.handleErrors(err);
-        }
-    }
+
     public handleErrors(err: any): void {
         if (err instanceof IncorrectArgumentsCountError) {
             TerminalOutputHandler.standardErrorOutput([
@@ -36,7 +30,7 @@ export class Mkdir extends AbstractCommand {
         }
     }
 
-    private __execute(tokens: Tokens) {
+    protected __execute(tokens: Tokens) {
         const results = getCommandContext(tokens);
         if (results.remainingTokens.length != 1) throw new IncorrectArgumentsCountError(1, results.remainingTokens.length);
 

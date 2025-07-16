@@ -10,3 +10,7 @@ export const terminalInputDiv = document.querySelector("div.terminal-input") as 
 export const terminalInputFeild = document.querySelector("div.input-feild") as HTMLInputElement;
 export const primaryPrompt_username = document.querySelector("span.username") as HTMLSpanElement;
 export const primaryPrompt_current_directory = document.querySelector("span.current-directory") as HTMLSpanElement;
+
+
+// templates
+export const takeUserInputTemplate = document.getElementById("ui-user-input") as HTMLTemplateElement;

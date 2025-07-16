@@ -14,7 +14,15 @@ function scrollToEnd(){
 
 export class TerminalOutputHandler{
 
-    public static printToTerminal(content:string){
+    public static printToTerminal(content:string | string[]): void{
+        terminalLinesList.innerHTML += OutputTemplates.standardTerminalOutput(content);
+        scrollToEnd();
+        return;
+    }
+
+    
+    public static printToTerminalOld(content:string){
+        // TODO: refactor usages to new printToTerminal
         terminalLinesList.innerHTML += content;
         scrollToEnd();
         return;

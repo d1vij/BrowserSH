@@ -12,5 +12,5 @@ export class Resolve{
 }
 
 export function resolve(content:string){
-    TerminalOutputHandler.printToTerminal(content);
+    TerminalOutputHandler.printToTerminalOld(content);
 }

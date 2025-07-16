@@ -9,28 +9,26 @@ import type { Tokens } from "../../../core/__typing";
 import { getCommandContext } from "../../../core/extract";
 import { IncorrectArgumentsCountError, NodeNotFoundError } from "../../__errors";
 import { AbstractCommand } from "../../AbstractCommand";
-import { getPathContext } from "./getPathContext";
+import { getPathContext } from "../../../components/file-system/getPathContext";
 
 export class Cat extends AbstractCommand{
     public name: string = "cat";
     public flags: string[] = [];
     public options: string[] = [];
-    public execute(tokens: Tokens): void {
-        try{
-            const results = getCommandContext(tokens);
-            if(results.remainingTokens.length != 1) throw new IncorrectArgumentsCountError(1, results.remainingTokens.length);
-            const path = results.remainingTokens[0];
-            const context = getPathContext(path, __shell.globals.fs.currentDirectoryNode);
-            const node = FileSystem.getNodeByPath(context);
-            if(node === undefined) throw new NodeNotFoundError(path);
-            if(node.type === "directory") throw new NodeIsDirectoryError(path);
-            const content = (node as FileNode).content;
 
-            TerminalOutputHandler.printToTerminal(OutputTemplates.standardTerminalOutput(content));
-        } catch(err){
-            this.handleErrors(err);
-        }
+    protected __execute(tokens: Tokens): void{
+        const results = getCommandContext(tokens);
+        if (results.remainingTokens.length != 1) throw new IncorrectArgumentsCountError(1, results.remainingTokens.length);
+        const path = results.remainingTokens[0];
+        const context = getPathContext(path, __shell.globals.fs.currentDirectoryNode);
+        const node = FileSystem.getNodeByPath(context);
+        if (node === undefined) throw new NodeNotFoundError(path);
+        if (node.type === "directory") throw new NodeIsDirectoryError(path);
+        const content = (node as FileNode).content;
+
+        TerminalOutputHandler.printToTerminalOld(OutputTemplates.standardTerminalOutput(content));
     }
+    
     public handleErrors(err: any): void {
         if(err instanceof IncorrectArgumentsCountError){
             TerminalOutputHandler.standardErrorOutput([

@@ -25,6 +25,8 @@ export class OutputTemplates {
      */
     public static standardTerminalOutput(content: string): string;
     public static standardTerminalOutput(content: string[]): string;
+    public static standardTerminalOutput(content: string | string[]): string;
+
     public static standardTerminalOutput(content: string | string[]): string {
         if (Array.isArray(content)) {
             const joined = content.map(line => `<div class="line-content">${line}</div>`).join("");
