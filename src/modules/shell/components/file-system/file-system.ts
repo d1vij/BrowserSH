@@ -13,6 +13,7 @@ import {
 } from "../__errors";
 import { NodeNotFoundError } from "../../commands/__errors";
 import type { PathContext } from "../../commands/__typing";
+import { getPathContext } from "./getPathContext";
 
 export function nodeNamesFrom(path: string): Array<string> {
     return path.split("/").filter(Boolean); //only have non empty node names
@@ -52,9 +53,6 @@ export class FileSystem {
     /**
      * Creates nested directories based on given path and parent
      */
-    public static createDirectoryByPath(path: PathContext, overwrite: boolean): DirectoryNode;
-    public static createDirectoryByPath(path: string, parent: DirectoryNode, overwrite: boolean): DirectoryNode;
-
     public static createDirectoryByPath(path: string | PathContext,parentOrOverwrite: DirectoryNode | boolean,maybeOverwrite?: boolean): DirectoryNode {
         let temp: DirectoryNode;
         let directoryNames: string[];
@@ -107,9 +105,14 @@ export class FileSystem {
      * Creates and appends a new FileNode Object in parent's child nodes. Returns reference object to the created object
      * Throws error if node with same name (case sensistive) exists in current directory, pass overwrite=true to enable forced overwriting
      */
-    public static createFile(parent: DirectoryNode, name: string, content: string = "", overwrite = false): FileNode {
+    public static createFileByPath(path: string | PathContext, parent: DirectoryNode, name: string, content: string = "", overwrite = false): FileNode {
         if (parent.type == "file") throw new NodeIsFileError(`${parent.name} is a file`);
 
+        const context = getPathContext(path, parent);
+        
+        this.createDirectoryByPath(path, parent);
+        
+        
         const nodeExists = parent.children.some(node => node.name === name)
         if (nodeExists && overwrite == false) throw new NodeWithSameNameExistsError(name);
 

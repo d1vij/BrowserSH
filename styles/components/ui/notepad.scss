@@ -1,0 +1,87 @@
+@use "../../../styles/colors" as *;
+@use "../../../styles/mixins" as *;
+
+* {
+    padding: 0;
+    margin: 0;
+    border: 0;
+}
+
+@mixin navbar-button-style {
+    user-select: none;
+
+    &:hover {
+        background-color: $term-blue-dark;
+        text-decoration: underline;
+        cursor: default;
+    }
+}
+
+.ui-notepad-window {
+    position: relative;
+    background-color: $term-grey-ash;
+    caret-shape: block;
+
+    height: 500px;
+    width: 100%;
+    border-style:solid ;
+    border-width: 2px;
+    border-radius: 5px;
+    border-color: $term-blue-dark;
+    // width: 1000px;
+    display: flex;
+    flex-direction: column;
+    
+    .ui-notepad-inputregion {
+        border-radius: 5px;
+        padding: 5px;
+        @include font-settings();
+        color: $term-yellow-light;
+        background-color: $term-grey-ash;
+        height: 100%;
+        width: 100%;
+
+        caret-color: $term-grey-faint;
+        resize: none;
+        overflow-wrap: anywhere;
+        word-spacing: normal;
+        outline: none;
+    }
+
+    .ui-notepad-navbar {
+        @include font-settings();
+        height: 50px;
+        background-color: $term-grey-charcoal;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-around;
+
+        .ui-notepad-navbar-button {
+            @include navbar-button-style();
+        }
+    }
+
+    .ui-notepad-tab-spaces-select {
+        @include font-settings();
+
+        position: absolute;
+        bottom: 45px;
+        right: 0px;
+        display: none;
+        flex-direction: row;
+        justify-content: space-around;
+        background-color: $term-grey-charcoal;
+        width: 200px;
+        z-index: 100;
+
+        .option {
+            @include navbar-button-style();
+            height: 25px;
+            width: 50px;
+            padding: 2px;
+            text-align: center;
+        }
+    }
+}

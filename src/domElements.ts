@@ -14,3 +14,4 @@ export const primaryPrompt_current_directory = document.querySelector("span.curr
 
 // templates
 export const takeUserInputTemplate = document.getElementById("ui-user-input") as HTMLTemplateElement;
+export const notepadTemplate = document.getElementById("ui-notepad") as HTMLTemplateElement;

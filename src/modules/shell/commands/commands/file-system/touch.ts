@@ -4,7 +4,7 @@
 //     public name: string = "ls";
 //     public flags: string[] = [];
 //     public options: string[] = [];
-//     public execute(tokens: Tokens): void {
+//     public __execute(tokens: Tokens): void {
         
 //     }
 //     public handleErrors(err: any): void {

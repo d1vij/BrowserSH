@@ -12,6 +12,7 @@ import { Mkdir } from "./commands/file-system/mkdir";
 import { MathCommand } from "./commands/math";
 import { Exit } from "./commands/exit";
 import { Run } from "./commands/run/run";
+import { Notepad } from "./commands/notepad";
 
 
 type CommandConstructor = new() => AbstractCommand;
@@ -29,6 +30,7 @@ export const commandIndex = new Map<string, CommandConstructor>([
     ["rm", Rm],
     ["run", Run],
     ['exit',Exit],
+    ['notepad', Notepad]
     
 ] as [string, CommandConstructor][]);
 
