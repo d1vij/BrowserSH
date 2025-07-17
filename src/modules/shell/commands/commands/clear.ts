@@ -1,7 +1,7 @@
 import type { Tokens } from "../../core/__typing";
 import { AbstractCommand } from "../AbstractCommand";
-import { terminalLinesList, terminalInputFeild } from "../../../../domElements";
 import { TerminalOutputHandler } from "../../../output-handler/terminal-output-handler";
+import { UserInputHandler } from "../../../output-handler/user-input-handler";
 
 
 export class Clear extends AbstractCommand{
@@ -11,8 +11,8 @@ export class Clear extends AbstractCommand{
 
     protected __execute(_: Tokens): void{
 
-        terminalLinesList.innerHTML = "";
-        terminalInputFeild.value = "";
+        TerminalOutputHandler.clearTerminal();
+        UserInputHandler.clearUserInput();
         return;
     }
 

@@ -1,9 +1,7 @@
-// main executor shell 
-
 import { parse } from "./parser";
 import { execute } from "./executor";
 import { tokenize } from "./tokenizer";
-import type { parserResults } from "./__typing";
+import type { ParserResults } from "./__typing";
 import { Colors } from "../../output-handler/typing/enums";
 import { GlobalsFactory } from "../components/globals-factory";
 import { VariableDoesNotExistsError } from "../components/__errors";
@@ -27,21 +25,38 @@ import {
     TokenContainsQuoteInMiddleErrror,
     UndefinedCommandError
 } from "./__errors"
-import { terminalInputDiv } from "../../../domElements";
+import { terminalInputDiv } from "../../../dom-elements";
+
+export const SPACE = ' ';
 
 
 
-// 
+/**
+ * THe main shell factory - instantiates the "shell" object, which implements the core command processing logic pipeline.
+ * 
+ * What shell does ?
+ * Core Processing Pipeline
+ * 1. Tokenization → 2. Parsing → 3. Execution → 4. Output Resolution
+ * Each stage handles specific aspects of command processing and holds the ability to terminate the pipeline to directly resolve exceptions.
+ * 0. Upon instantiation, ie on start of program instantiates a "globals" property which acts as the "system environment" for other components.
+ * 1. Shell recieves raw input command which then is first tokenized into array of strings.
+ * 2. The tokens are passed to Parser, which idenfies the semantics of the tokens and tells how to go about with the execution.
+ * 3. Executor recives the results of parser and finds the appropriate executor for the command.
+ * 
+ * Features of Terminal
+ * * Inbuild variable system
+ * * Emulated file-system along with commands for traversal and modification of the same.
+ * * All components / classes / functions follow the ideology of "Do one thing and do it well" and Modularity.
+ * * Core Components like  Output Handlers, Global State etc are abstracted from other componets and then "expose an api" for interaction with other components. They further use other abstracted components
+ * * Each component has its own set of exceptions to handle most (almost all) edge cases
+ * 
+ * Sources
+ * * https://www.linux.org/threads/bash-03-%E2%80%93-command-line-processing.38676/
+ * * https://github.com/0l1v3rr/0l1v3rr.github.io (inspiration)
+ * 
+ */
 export class Shell {
-    /**
-     * shell will 
-     * first tokenize
-     * then parse
-     * then execute
-     * then resolve (ie output to terminal)
-     * 
-     * resolution can come after any step using exception raising & handling
-     */
+
     public globals: GlobalsFactory;
     constructor() {
         // initializes a new shell 
@@ -56,7 +71,7 @@ export class Shell {
 
         // Command input feild is hidden once command processing starts
         commandInputFeildHidden(true);
-        
+
         let toks: Tokens = [];
         try {
             toks = tokenize(command);
@@ -66,7 +81,7 @@ export class Shell {
             return;
         }
 
-        let results: parserResults;
+        let results: ParserResults;
         try {
             results = parse(toks);
         } catch (err) {
@@ -74,10 +89,11 @@ export class Shell {
             commandInputFeildHidden(false);
             return;
         }
-        
+
         try {
-            execute(results,()=>{
-                // the callback which gets called once command execution is finished, here it shows the command input feild and resets the primary prompt
+            execute(results, () => {
+                // the callback which gets called once command execution is finished,
+                // here it shows the command input feild and resets the primary prompt
                 commandInputFeildHidden(false);
                 updatePrimaryPrompt()
             });
@@ -86,15 +102,15 @@ export class Shell {
             commandInputFeildHidden(false);
             return;
         }
-        
+
     }
 }
 
 // 
 
-function commandInputFeildHidden(b:boolean) {
+function commandInputFeildHidden(b: boolean) {
     console.log("hiding", b)
-    if(b) terminalInputDiv.style.display = "none";
+    if (b) terminalInputDiv.style.display = "none";
     else terminalInputDiv.style.display = "flex";
 }
 
@@ -102,12 +118,7 @@ function commandInputFeildHidden(b:boolean) {
 
 
 function handleExecutorErrors(err: any) {
-    if (err instanceof VariableValueIsMultipleWords || err.name === "VariableValueIsMultipleWords") {
-        TerminalOutputHandler.standardErrorOutput([
-            `VariableValueIsMultipleWords: variables cannot be set values as multiple tokens, pass multiple words in quotations as single token.`
-        ])
-    }
-    else if (err instanceof UndefinedCommandError) {
+    if (err instanceof UndefinedCommandError) {
         TerminalOutputHandler.standardErrorOutput([
             `UndefinedCommandError: Command ${addColor(err.command, Colors.yellow_light)} does not exsits!`
         ])
@@ -116,7 +127,12 @@ function handleExecutorErrors(err: any) {
 
 
 function handleParserErrors(err: any) {
-    if (err instanceof VariableDoesNotExistsError) {
+    if (err instanceof VariableValueIsMultipleWords || err.name === "VariableValueIsMultipleWords") {
+        TerminalOutputHandler.standardErrorOutput([
+            `VariableValueIsMultipleWords: variables cannot be set values as multiple tokens, pass multiple words in quotations as single token.`
+        ])
+    }
+    else if (err instanceof VariableDoesNotExistsError) {
         TerminalOutputHandler.standardErrorOutput([
             `VariableDoesNotExistsError: Variable with name ${err.varName} does not exists !`
         ])

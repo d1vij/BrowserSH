@@ -1,11 +1,15 @@
-import { primaryPrompt_current_directory, primaryPrompt_username } from "../../domElements";
+import { primaryPromptCurrentDirectory, primaryPromptUsername } from "../../dom-elements";
 import { __shell } from "../../main";
 import { FileSystem } from "../shell/components/file-system/file-system";
 
+/**
+ * Static clsas providing formatting to data to be outputed to the frontend terminal
+ */
 export class OutputTemplates {
-    // always the final step in output pipeline
-    public static userInputPreview(content: string) {
-        // last command which user entered
+    /**
+     * preview of user entered command
+     */
+    public static userInputPreview(command: string) {
 
         return `
         <li class="line">
@@ -13,15 +17,15 @@ export class OutputTemplates {
                 <span class="username">${__shell.globals.vars.get("&&username")}</span>
                 <span class="current-directory">${FileSystem.getPathFromNode(__shell.globals.fs.currentDirectoryNode)}</span>
           </div>
-          <div class="line-content">${content}</div>
+          <div class="line-content">${command}</div>
         </li>
             `
     }
 
 
-    // TODO: Remove use of stringify where multiline output is there
     /**
-     * Takes in string or string[] to be outputted, Function auto formats output based on input hence no need to use stringify for multiline output
+     * Formats the output given by the shell
+     * Takes in string for singleline or string[] for multiline output
      */
     public static standardTerminalOutput(content: string): string;
     public static standardTerminalOutput(content: string[]): string;
@@ -42,16 +46,18 @@ export class OutputTemplates {
 
 }
 
+/**
+ * Updates the primary prompt after each command cycle. Primary prompt contains the username and current directory.
+ */
 export function updatePrimaryPrompt() {
-    primaryPrompt_username.innerText = __shell.globals.vars.get("&&username") || "USERNAME_NOT_SET";
-    primaryPrompt_current_directory.innerText = FileSystem.getPathFromNode(__shell.globals.fs.currentDirectoryNode);
+    primaryPromptUsername.innerText = __shell.globals.vars.get("&&username") || "USERNAME_NOT_SET";
+    primaryPromptCurrentDirectory.innerText = FileSystem.getPathFromNode(__shell.globals.fs.currentDirectoryNode);
 }
 
 /**
  * Returns span enclosed string having provided color.
- * DONOT USE RETURN AS STRING
+ * Returned content not to be used in anything aside from terminal outputting
  */
-
 export function addColor(content: string, color: string): string;
 export function addColor(content: Array<string>, color: string): string[]
 export function addColor(content: Array<string> | string, color: string): string | string[] {

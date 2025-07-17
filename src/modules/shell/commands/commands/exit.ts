@@ -13,8 +13,10 @@ export class Exit extends AbstractCommand {
     
 
     protected __execute(_: Tokens): void{
-        TerminalOutputHandler.printToTerminalOld(OutputTemplates.standardTerminalOutput("You can check out any time you like, but you can never leave"));
+        TerminalOutputHandler.printToTerminal("You can check out any time you like, but you can never leave");
+        return;
     }
+    
     public handleErrors(_: any): void {}
     public info(): string[] {
         return [
