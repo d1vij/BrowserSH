@@ -9,7 +9,7 @@ import { FileSystem } from "../../components/file-system/file-system";
 import { getPathContext } from "../../components/file-system/getPathContext";
 import type { Tokens } from "../../core/__typing";
 import { getCommandContext } from "../../core/extract";
-import {  IncorrectArgumentsCountError, InvalidFlagError, InvalidOptionError, NodeNotFoundError } from "../__errors";
+import {  IncorrectArgumentsCountError, InvalidOptionError, NodeNotFoundError } from "../__errors";
 import { AbstractCommand } from "../AbstractCommand";
 
 export class Notepad extends AbstractCommand {
