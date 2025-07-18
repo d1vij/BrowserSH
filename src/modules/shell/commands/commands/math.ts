@@ -1,5 +1,5 @@
 import { __shell } from "../../../../main";
-import { addColor, OutputTemplates } from "../../../output-handler/formatter";
+import { addColor } from "../../../output-handler/formatter";
 import { TerminalOutputHandler } from "../../../output-handler/terminal-output-handler";
 import { Colors } from "../../../output-handler/typing/enums";
 import type { Tokens } from "../../core/__typing";
