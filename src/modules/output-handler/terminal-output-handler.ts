@@ -1,17 +1,16 @@
-//modifies dom elements
-
-
-import {
-    terminalContentDiv,
-    terminalLinesList
-} from "../../domElements"
-import { addColor, OutputTemplates } from "./formatter";
 import { Colors } from "./typing/enums";
+import { addColor, OutputTemplates } from "./formatter";
+import {terminalContentDiv,terminalLinesList} from "../../dom-elements"
 
 function scrollToEnd(){
     terminalContentDiv.scrollTop = terminalContentDiv.scrollHeight;
 }
 
+/**
+ * Static class to handle any output to be done to the terminal frontend
+ * Terminal output is handled by printToTerminal()
+ * Error output is handled by standardErrorOutput()
+ */
 export class TerminalOutputHandler{
 
     public static printToTerminal(content:string | string[]): void{
@@ -27,6 +26,10 @@ export class TerminalOutputHandler{
         scrollToEnd();
         return;
     }
+
+    /**
+     * Clears terminal
+     */
     public static clearTerminal(){
         terminalLinesList.innerHTML = "";
         return;

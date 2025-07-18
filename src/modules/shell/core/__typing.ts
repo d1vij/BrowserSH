@@ -16,7 +16,7 @@ export type Tokens = Array<string>
 
 export type TQuote = '"' | "'"
 
-export interface parserResults {
+export interface ParserResults {
     type: "command" | "variable-assignment"
     command?: string; //name of primary command
     tokens?: Tokens;

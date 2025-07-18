@@ -55,23 +55,23 @@ export class Help extends AbstractCommand {
         
         if (results.flags.includes("i") || results.flags.includes("info")) {
             console.log("printing info")
-            TerminalOutputHandler.printToTerminalOld(OutputTemplates.standardTerminalOutput([
+            TerminalOutputHandler.printToTerminal([
                 // addColor(instance.name, Colors.blue_light),
                 ...instance.info()
-            ]))
+            ])
             return;
         } else if (results.flags.includes("u") || results.flags.includes("usage")) {
-            TerminalOutputHandler.printToTerminalOld(OutputTemplates.standardTerminalOutput([
+            TerminalOutputHandler.printToTerminal([
                 // addColor(instance.name, Colors.blue_light),
                 ...instance.usage()
-            ]))
+            ])
             return;
         }else {
-            TerminalOutputHandler.printToTerminalOld(OutputTemplates.standardTerminalOutput([
+            TerminalOutputHandler.printToTerminal([
                 // addColor(instance.name, Colors.blue_light),
                 ...instance.info(),
                 ...instance.usage()
-            ]));
+            ]);
             return;
         }
     }

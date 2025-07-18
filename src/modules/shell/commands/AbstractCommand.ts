@@ -1,5 +1,8 @@
 import type { TCommand, TFlag, Tokens, TOption } from "../core/__typing";
 import type { MaybeAsyncFunction } from "./__typing";
+/**
+ * The abstract class which every primary command of this terminal inherits and implements
+ */
 export abstract class AbstractCommand {
     /**
      * Name of primary command
@@ -65,7 +68,7 @@ export abstract class AbstractCommand {
     }
 
     /**
-     * Main command executor, shouldnt be called from outside
+     * Main command executor, not to be called from outside
      */
     protected abstract __execute(tokens: Tokens): void | Promise<void>;
     /**

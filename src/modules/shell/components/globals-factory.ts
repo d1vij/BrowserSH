@@ -1,18 +1,17 @@
-// export and instantiate globals only from here
-
-/**
- * Pseudo "global" storage or environment system
- */
 import { FileSystemFactory } from "./file-system/file-system-factory";
-import { UserFactory } from "./user-factory";
 import { VariableSystemFactory } from "./variables-factory";
 
+/**
+ * GlobalsFactory instantiates a "Globals" object which acts as a pseudo environment for the shell / terminal.
+ * All other similar environment factories are also instantiated here, making this class's instance a singleton for all the other components
+ */
 export class GlobalsFactory {
     public fs: FileSystemFactory;
     public vars: VariableSystemFactory;
-    public user: UserFactory;
 
     constructor() {
+
+        // initial root directory is empty and its name is '#' (not bash like rawrrr)
         this.fs = new FileSystemFactory({
             initialStructure: {
                 name:"#",
@@ -22,8 +21,6 @@ export class GlobalsFactory {
             }
         });
 
-        // TODO: Add modifiable user initialization here vvv
-        this.user = new UserFactory("divij@ubuntu");
         this.vars = new VariableSystemFactory();
     }
 }

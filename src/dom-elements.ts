@@ -8,9 +8,10 @@ export const terminalLinesList = document.querySelector("ol.terminal-lines") as 
 
 export const terminalInputDiv = document.querySelector("div.terminal-input") as HTMLDivElement;
 export const terminalInputFeild = document.querySelector("div.input-feild") as HTMLInputElement;
-export const primaryPrompt_username = document.querySelector("span.username") as HTMLSpanElement;
-export const primaryPrompt_current_directory = document.querySelector("span.current-directory") as HTMLSpanElement;
+export const primaryPromptUsername = document.querySelector("span.username") as HTMLSpanElement;
+export const primaryPromptCurrentDirectory = document.querySelector("span.current-directory") as HTMLSpanElement;
 
 
 // templates
 export const takeUserInputTemplate = document.getElementById("ui-user-input") as HTMLTemplateElement;
+export const notepadTemplate = document.getElementById("ui-notepad") as HTMLTemplateElement;

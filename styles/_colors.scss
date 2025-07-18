@@ -1,38 +1,128 @@
-$term-black: #1C1C1C; 
-$term-red: #AF5F5F;  
-$term-green-dark: #5F875F; 
-$term-yellow-ochre: #87875F;  
-$term-blue-light: #5F87AF;  
-$term-purple-dark: #5F5F87; 
-$term-green-swamp: #5F8787; 
-$term-grey-mid: #6C6C6C;  
-$term-grey-dark: #444444;  
-$term-orange-warm: #FF8700;
-$term-green-pale: #87AF87; 
-$term-yellow-light: #FFFFAF;
-$term-blue-cool: #8FAFD7; 
-$term-purple-muted: #8787AF;
-$term-teal-bright: #5FAFAF;  
-
+$term-black: #1C1C1C;
+$term-red: #AF5F5F;
+$term-green-dark: #5F875F;
+$term-yellow-ochre: #87875F;
+$term-blue-light: #5F87AF;
+$term-black: #1C1C1C;
 $term-white: #FFFFFF;
 $term-white-off: #F5F5F5;
+$term-white-warm: #FFFBEA;
+$term-white-silver: #E6E6E6;
+
+$term-red: #AF5F5F;
+$term-red-muted: #AF3F3F;
+$term-red-bright: #FF5F5F;
+$term-red-deep: #870000;
+$term-maroon-dark: #5F1F3F;
+
+$term-green-dark: #5F875F;
+$term-green-pale: #87AF87;
+$term-green-olive: #6F875F;
+$term-green-mint: #AFFF87;
+$term-green-forest: #3F5F3F;
+$term-green-swamp: #5F8787;
+$term-green-murky: #375F4F;
+
+$term-yellow-ochre: #87875F;
+$term-yellow-light: #FFFFAF;
+$term-yellow-deep: #AFAF5F;
+$term-yellow-faded: #D7D787;
+$term-yellow-mustard: #5F5F00;
+
+$term-blue-light: #5F87AF;
+$term-blue-cool: #8FAFD7;
+$term-blue-dark: #005F87;
+$term-blue-ice: #AFD7FF;
+$term-blue-navy: #1C2A4C;
+$term-indigo-deep: #2C2C54;
+
+$term-purple-dark: #5F5F87;
+$term-purple-muted: #8787AF;
+$term-purple-wine: #875F87;
+$term-purple-fog: #D7D7FF;
+$term-purple-night: #3F3F5F;
+
+$term-teal-bright: #5FAFAF;
+$term-teal-dusty: #5FAF87;
+$term-teal-light: #AFFFFF;
+$term-teal-deep: #2F4F4F;
+$term-cyan-steel: #2B5F5F;
+
+$term-orange-warm: #FF8700;
+$term-orange-soft: #FFAF5F;
+$term-orange-dark: #D78700;
+$term-orange-rust: #AF5F00;
+$term-brown-dark: #4B3A2F;
+
+$term-grey-faint: #C0C0C0;
+$term-grey-cool: #999999;
+$term-grey-mid: #6C6C6C;
+$term-grey-dark: #444444;
+$term-grey-ash: #3C3C3C;
+$term-grey-charcoal: #2B2B2B;
+$term-grey-coal: #1A1A1A;
+$term-slate-deep: #404860;
+
+
 
 $term-colors: (
     "black": $term-black,
+    "white": $term-white,
+    "white_off": $term-white-off,
+    "white_warm": $term-white-warm,
+    "white_silver": $term-white-silver,
+
     "red": $term-red,
+    "red_muted": $term-red-muted,
+    "red_bright": $term-red-bright,
+    "red_deep": $term-red-deep,
+    "maroon_dark": $term-maroon-dark,
+
     "green_dark": $term-green-dark,
-    "yellow_ochre": $term-yellow-ochre,
-    "blue_light": $term-blue-light,
-    "purple_dark": $term-purple-dark,
+    "green_pale": $term-green-pale,
+    "green_olive": $term-green-olive,
+    "green_mint": $term-green-mint,
+    "green_forest": $term-green-forest,
     "green_swamp": $term-green-swamp,
+    "green_murky": $term-green-murky,
+
+    "yellow_ochre": $term-yellow-ochre,
+    "yellow_light": $term-yellow-light,
+    "yellow_deep": $term-yellow-deep,
+    "yellow_faded": $term-yellow-faded,
+    "yellow_mustard": $term-yellow-mustard,
+
+    "blue_light": $term-blue-light,
+    "blue_cool": $term-blue-cool,
+    "blue_dark": $term-blue-dark,
+    "blue_ice": $term-blue-ice,
+    "blue_navy": $term-blue-navy,
+    "indigo_deep": $term-indigo-deep,
+
+    "purple_dark": $term-purple-dark,
+    "purple_muted": $term-purple-muted,
+    "purple_wine": $term-purple-wine,
+    "purple_fog": $term-purple-fog,
+    "purple_night": $term-purple-night,
+
+    "teal_bright": $term-teal-bright,
+    "teal_dusty": $term-teal-dusty,
+    "teal_light": $term-teal-light,
+    "teal_deep": $term-teal-deep,
+    "cyan_steel": $term-cyan-steel,
+
+    "orange_warm": $term-orange-warm,
+    "orange_soft": $term-orange-soft,
+    "orange_dark": $term-orange-dark,
+    "orange_rust": $term-orange-rust,
+    "brown_dark": $term-brown-dark,
+
+    "grey_faint": $term-grey-faint,
+    "grey_cool": $term-grey-cool,
     "grey_mid": $term-grey-mid,
     "grey_dark": $term-grey-dark,
-    "orange_warm": $term-orange-warm,
-    "green_pale": $term-green-pale,
-    "yellow_light": $term-yellow-light,
-    "blue_cool": $term-blue-cool,
-    "purple_muted": $term-purple-muted,
-    "teal_bright": $term-teal-bright,
-    "white": $term-white,
-    "white_off": $term-white-off
+    "grey_ash": $term-grey-ash,
+    "grey_charcoal": $term-grey-charcoal,
+    "grey_coal": $term-grey-coal,
+    "slate_deep": $term-slate-deep
 );

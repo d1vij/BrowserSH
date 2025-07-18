@@ -2,12 +2,11 @@
 @use "mixins" as *;
 
 @use "./components/ui/user-inputs.scss" as *;
+@use "./components/ui/notepad.scss" as *;
 
 $main-font: "IBM Plex Mono";
 $inline-padding: 5px;
 $border-radius: 5px;
-
-
 
 
 * {
@@ -229,5 +228,19 @@ body {
 
     &:focus {
         outline: none;
+    }
+}
+
+.github {
+    @include font-settings();
+    color: $term-grey-ash;
+    
+    font-weight: 600;
+    .link {
+        color: $term-grey-ash;
+        text-decoration-line: underline;
+        &:hover{
+            color: $term-red-deep;
+        }
     }
 }

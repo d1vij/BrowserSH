@@ -54,10 +54,10 @@ export class Run extends AbstractCommand {
         return [
             addColor("usage: run", Colors.blue_light) + " " + addColor("<function-name>", Colors.yellow_light),
             "",
-            addColor("Arguments", Colors.green),
+            addColor("Arguments", Colors.green_pale),
             "\t" + addColor("<function-name>", Colors.yellow_light) + "\tName of the inbuilt script function to execute",
             "",
-            addColor("Examples", Colors.green),
+            addColor("Examples", Colors.green_pale),
             "\t" + addColor("run setup", Colors.blue_light) + " => runs the internal setup script",
             "",
             "Note:",

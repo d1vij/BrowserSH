@@ -93,11 +93,11 @@ export class MathCommand extends AbstractCommand {
             const varname = arg || "math_result";
             __shell.globals.vars.set(varname, result.toString());
 
-            TerminalOutputHandler.printToTerminalOld(OutputTemplates.standardTerminalOutput(`Result saved to var ${addColor(varname, Colors.yellow_light)}.`));
+            TerminalOutputHandler.printToTerminal(`Result saved to var ${addColor(varname, Colors.yellow_light)}.`);
             return;
         } else {
             // print to terminal
-            TerminalOutputHandler.printToTerminalOld(OutputTemplates.standardTerminalOutput(addColor(result.toString(), Colors.yellow_light)));
+            TerminalOutputHandler.printToTerminal(addColor(result.toString(), Colors.yellow_light));
             return;
         }
     }

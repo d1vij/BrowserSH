@@ -1,15 +1,6 @@
-/**
- * (syntax)
- * Tokenizes command and returns array of tokens based on rules: 
- * 1. Tokens are splitted on spaces
- * 2. All tokens enclosed within similar quotes (" or ') form a singular token
- * 3. Words cannot have quotations in middle
- * 4. Commands cannot start with quotes
- * 5. All quotes must be paired
- */
-
 import { CommandContainsUnpairedQuoteError, CommandStartsWithQuotesError, TokenContainsQuoteInMiddleErrror } from "./__errors";
 import type { TQuote, TCommand, Tokens } from "./__typing";
+import { SPACE } from "./shell";
 
 function startsWithQuote(str: string): boolean {
 
@@ -32,19 +23,13 @@ function endsWithQuote(str: string): boolean {
 }
 
 /**
- * Example Usage
-    try{
-       const toks = tokenize(command);
-    } catch(err) {
-        if(err instanceof Error){
-            errorHandle()
-        }
-    }
-    doSmthh
-
- * 
+ * Does Syntax analysis and splitting of input command into meaningful and parsable tokens.
+ * Tokenziation is done on the following rules:
+ * 0. All tokens are split based on spaces ie splitting works on word breaks
+ * 1. Words enclosed within pair of similar quotes form a single token and presence of dissimilar quotes dont affect the outer quotation. That is > The "quick 'brown' fox" jumps < would get tokenzied into [The, quick 'brown' fox, jumps]
+ * 3. All unescaped quotes must be paired
+ * 4. Quotes can be escaped using a backslash (\). Escaped quotes dont affect the quotation logic. That is > Hello Wo\'rld < would be tokenzied into [Hello, Wo\'rld]
  */
-
 export function tokenize(command: TCommand): Tokens {
     let currentToken: string = '';
     let lastSeenQuote: TQuote | undefined = undefined;
@@ -53,15 +38,12 @@ export function tokenize(command: TCommand): Tokens {
     //all the parsed tokens
     let processedTokenStack: Tokens = [];
 
-    //acts as buffer storage for currently processing tokens
+    //stores currently processing tokens
     let currentTokenStack: Tokens = [];
 
+    if (startsWithQuote(command)) throw new CommandStartsWithQuotesError(command);
 
-    if (startsWithQuote(command)) {
-        throw new CommandStartsWithQuotesError(command);
-    }
-
-    const tokens = command.split(' ').filter(Boolean);
+    const tokens = command.split(SPACE).filter(Boolean);
 
     for (let index = 0; index < tokens.length; index++) {
         currentToken = tokens[index];
@@ -101,7 +83,7 @@ export function tokenize(command: TCommand): Tokens {
             // push token without the quote
             currentTokenStack.push(currentToken.slice(0, -1));
 
-            processedTokenStack.push(currentTokenStack.join(' '));
+            processedTokenStack.push(currentTokenStack.join(SPACE));
             currentTokenStack = [];
 
         } else if (lastSeenQuote != undefined
@@ -120,6 +102,12 @@ export function tokenize(command: TCommand): Tokens {
     }
     return processedTokenStack;
 }
+// 
+
+
+
+
+
 
 
 // char wise tokenizer
