@@ -1,4 +1,3 @@
-import { OutputTemplates } from "../../../output-handler/formatter";
 import { UndefinedCommandError } from "../../core/__errors";
 import type { Tokens } from "../../core/__typing";
 import { getCommandContext } from "../../core/extract";

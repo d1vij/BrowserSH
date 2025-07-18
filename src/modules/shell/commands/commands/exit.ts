@@ -1,6 +1,6 @@
 // TODO: print "You can checkout any time you like, but you can never leave!!" when user enters exit
 
-import { addColor, OutputTemplates } from "../../../output-handler/formatter";
+import { addColor } from "../../../output-handler/formatter";
 import { TerminalOutputHandler } from "../../../output-handler/terminal-output-handler";
 import { Colors } from "../../../output-handler/typing/enums";
 import type { Tokens } from "../../core/__typing";

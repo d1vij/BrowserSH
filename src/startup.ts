@@ -10,7 +10,7 @@ export function startupConfig() {
     const __test_dir = FileSystem.createDirectoryByPath("/temp/content", __shell.globals.fs.root, false);
     const __home = FileSystem.createDirectoryByPath("/home/", __shell.globals.fs.root, false);
     FileSystem.createFileByPath("./info.txt", __home.parent!,"Linux Bash terminal Emulated purely on browser")
-    // FileSystem.createFileByPath("test.txt",__test_dir, "Hello World!");
+    FileSystem.createFileByPath("test.txt",__test_dir, "Hello World!");
     
     updatePrimaryPrompt();
     
