@@ -1,51 +1,68 @@
 # BrowserSH
 
-A zero-dependency, object-oriented Linux-style shell and terminal emulator that runs entirely in the browser. Built with TypeScript, SASS, Vite, and plain HTML/CSS, BrowserSH delivers a full command-line experience—no backend required.
-Features
+A zero-dependency, object-oriented Linux-style shell and terminal emulator that runs entirely in the browser. Built with TypeScript, SCSS, HTML and bundled using Vite, BrowserSH emulates a full command-line experience without any backend required.
 
-Virtual File System
-In-memory directory tree supporting standard operations: cd, ls, touch, mkdir, rm, file editing, and session-scoped persistence.
+> This project is a very early Work in Progress Prototype. Along with Basic commands, it is possible to embed other programs to emulate "applications" (for example, the notepad is a standalone application embedded with some modifications)
 
-Shell Variable System
-Create and substitute variables using $name syntax for simple scripting.
+## Features
 
-Command History & Completion
-Real-time command execution with history navigation and tab completion.
+### Modular Architecture
 
-Modular Architecture
-– Singletons for global state and dispatcher
-– Factory for command instantiation
-– Command pattern to encapsulate each operation
-– Pipelines for tokenizing, parsing, execution, and rendering
+All modules adhere to the _Unix philosophy_ of "doing one thing and doing it well". This enables independent development and testing of components without side effects, promoting code reusability and maintainability. Moreover BrowserSH employs design patterns like Factories, Singletons, Abstracted as :
 
-Unix Philosophy
-Each module “does one thing and does it well,” enabling independent development and testing without side effects.
+- **Singletons** for global state management and shell instance coordination
+- **Factory pattern** for command instantiation, allowing dynamic creation of command objects without exposing creation logic
+- **Modular pipelines** for tokenizing, parsing, execution, and rendering that work together seamlessly
 
-Self-Documenting Code
-Comprehensive JSDoc comments on every class, method, and function provide clear context and tooling support.
+### Easy Development of New Commands
+BrowserSH provides a streamlined approach to extending functionality through its **AbstractCommand** class[4][6]. New commands can be easily added by:
 
-Extensible Commands
-Base on AbstractCommand.ts: extend the abstract class, implement execute(), and your command is auto-registered with built-in parsing, error handling, and help support.
+1. **Extending AbstractCommand.ts**: All commands inherit from this base class, which provides a fixed and predictable structure[4][6]
+2. **Implementing required methods**: The abstract class defines the interface that all commands must follow[4][6]
 
-Vite-Powered Build
-Instant server start, hot module replacement, TypeScript and SASS compilation, plus optimized production bundles.
+The AbstractCommand pattern provides abstraction common functionality like argument parsing, error handling, and execution context management, while allowing specific command implementations to focus solely on their unique behavior.
 
-How to Add a Command
+<!-- ### Self-Documented Code
+Every component, class, and major function includes comprehensive inline documentation following TypeScript's JSDoc standards[2][3]. This documentation approach serves multiple purposes:
 
-Create MyCommand.ts extending AbstractCommand:
+- **Immediate context** for developers working with the code
+- **IDE integration** enabling hover tooltips and autocomplete assistance
+- **Living documentation** that evolves with the codebase
+- **Clear explanations** of not just what each element does, but why it exists and how it fits into the broader system architecture
 
-ts
-import AbstractCommand from '../core/AbstractCommand';
+Method signatures include parameter descriptions, return value explanations, and usage examples where appropriate, making the codebase accessible to both contributors and users[2][3]. -->
 
-export default class MyCommand extends AbstractCommand {
-name = 'mycmd';
-execute(argv, io, state) {
-io.out.write('Hello from mycmd');
-}
-}
+### Virtual File System
+BrowserSH implements a in-memory directory tree that supports standard file system operations. The virtual file system provides:
 
-Place the file in src/commands/—it’s auto-discovered.
+- **Standard operations** like `cd`, `ls`, `touch`, `mkdir`, `rm`, and file editing capabilities using inbuilt notepad program
+- **Hierarchical structure**: Files and directories organized in a tree-like structure and are 
+- **Session-scoped persistence**: File system state is maintained throughout the browser session until page refresh[15][16]
+- **Memory-efficient storage**: All data is stored in memory using optimized data structures[12][17]
 
-Rebuild (npm run build) and enjoy your new command!
+The file system uses a nested object structure where directories are represented as objects and files as string values, providing efficient access and manipulation[12][13].
 
-BrowserSH demonstrates that a powerful, maintainable shell can live entirely in the browser, leveraging modern web tooling and classical design principles.
+### Shell Variable System
+BrowserSH also implements a in memory,session persisted,  Variable System using hashmaps which other helper functions which allows to
+
+- **Create variables** using unescaped dollar sign (`$`) syntax
+```
+$count = 10
+```
+- **Substitute variables** in commands using `$name` syntax
+```bash
+$fruit = apple
+$count = 10
+echo 'I Bought' $count count of "$fruit" # yes, commands do support quotations
+```
+
+
+## Using the Shell
+
+BrowserSH mimics BASH-style commands, making it intuitive for users familiar with traditional Unix terminals.
+
+- Enter `list commands` to view all available commands
+- Use `help <command name>` to get detailed usage information for specific commands
+
+<hr>
+
