@@ -9,7 +9,7 @@ import { FileSystem } from "../../components/file-system/file-system";
 import { getPathContext } from "../../components/file-system/getPathContext";
 import type { Tokens } from "../../core/__typing";
 import { getCommandContext } from "../../core/extract";
-import {  InvalidFlagError, InvalidOptionError, NodeNotFoundError } from "../__errors";
+import {  IncorrectArgumentsCountError, InvalidFlagError, InvalidOptionError, NodeNotFoundError } from "../__errors";
 import { AbstractCommand } from "../AbstractCommand";
 
 export class Notepad extends AbstractCommand {
@@ -27,6 +27,10 @@ export class Notepad extends AbstractCommand {
                 err.optionName === "open"
                     ? `No path provided to open!`
                     : `No path provided to create a file to!`
+            ])
+        } else if (err instanceof IncorrectArgumentsCountError){
+            TerminalOutputHandler.standardErrorOutput([
+                `Incorrect usage, use ${addColor("help notepad", Colors.blue_cool)} for usage.`
             ])
         }
     }
@@ -64,7 +68,7 @@ export class Notepad extends AbstractCommand {
             createdNode.content = content;
             return;
         } else {
-            // Fallback: check if user provided positional argument (for backward compat)
+            // Fallback: check if user provided positional argument
             if (results.remainingTokens.length === 1) {
                 // Assume open mode as fallback
                 path = results.remainingTokens[0];
@@ -78,7 +82,7 @@ export class Notepad extends AbstractCommand {
                 fileNode.content = content;
                 return;
             }
-            throw new InvalidFlagError(""); // No recognized flags/options provided
+            throw new IncorrectArgumentsCountError(1,0); // No recognized flags/options provided
         }
     }
     public info(): string[] {

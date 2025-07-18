@@ -230,3 +230,17 @@ body {
         outline: none;
     }
 }
+
+.github {
+    @include font-settings();
+    color: $term-grey-ash;
+    
+    font-weight: 600;
+    .link {
+        color: $term-grey-ash;
+        text-decoration-line: underline;
+        &:hover{
+            color: $term-red-deep;
+        }
+    }
+}

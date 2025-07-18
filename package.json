@@ -26,8 +26,5 @@
     "url": "https://github.com/d1vij/web-terminal/issues"
   },
   "homepage": "https://github.com/d1vij/web-terminal#readme",
-  "description": "",
-  "dependencies": {
-    "nanoid": "^5.1.5"
-  }
+  "description": ""
 }

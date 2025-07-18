@@ -25,7 +25,7 @@ import {
     TokenContainsQuoteInMiddleErrror,
     UndefinedCommandError
 } from "./__errors"
-import { terminalInputDiv } from "../../../dom-elements";
+import { terminalInputDiv, terminalInputFeild } from "../../../dom-elements";
 
 export const SPACE = ' ';
 
@@ -96,6 +96,7 @@ export class Shell {
                 // here it shows the command input feild and resets the primary prompt
                 commandInputFeildHidden(false);
                 updatePrimaryPrompt()
+                terminalInputFeild.focus();
             });
         } catch (err) {
             handleExecutorErrors(err);
