@@ -4,6 +4,10 @@ import { TerminalOutputHandler } from "../../../../output-handler/terminal-outpu
 import { Colors } from "../../../../output-handler/typing/enums";
 import { promptUser } from "../../../../ui/prompt-user";
 
+
+
+
+
 export async function setup(){
     TerminalOutputHandler.printToTerminal("todo")
     TerminalOutputHandler.printToTerminal("Hello! This is a browser emulated web terminal !")

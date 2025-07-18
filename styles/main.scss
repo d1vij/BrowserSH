@@ -69,9 +69,14 @@ body {
         transition: all 150ms ease-in-out;
         justify-content: space-between;
         box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-        &:hover {
-            cursor: pointer;
+        user-select: none;
+        
+
+        .icon {
+            height: 30px;
+            width: 30px;
         }
+        
 
         p.title {
             &:hover {
@@ -86,8 +91,9 @@ body {
             background-color: transparent;
             padding: $inline-padding;
             font-size: 1.2em;
-
-            // text-align: center;
+            &:hover{
+                cursor: pointer;
+            }
 
         }
     }
@@ -106,8 +112,8 @@ body {
         .close {
             margin-inline: $inline-padding;
             
-            height: 22px;
-            width: 22px;
+            height: 20px;
+            width: 20px;
             border-radius: 100%;
 
             @include font-settings();
@@ -231,9 +237,12 @@ body {
     }
 }
 
-.github {
+.footer {
     @include font-settings();
     color: $term-grey-ash;
+    display: flex;
+    gap: 5px;
+    user-select: none;
     
     font-weight: 600;
     .link {
