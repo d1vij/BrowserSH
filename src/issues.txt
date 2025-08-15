@@ -1,11 +1,5 @@
 1.Unexpected exception (Uncaught TypeError: can't access property 0, /(?:\w+\s+)?\w+[\'\"]\w+(?:\s+\w+)?/i.exec(...) is null)
     when command contains quotes in pattern -> '"' or "'" or """"
-    
 2.Add overwritting functionality to createNode methods in fs
 3.refactor and add error handling to createDirectoryByPath of fs
-
 4. auto scroll inside terminal-content whenever new lines are added to the end
-
-5. NEGATIVES ARE MIS-IDENTIFIED AS FLAGS
-
-6. UserFactory is redundant

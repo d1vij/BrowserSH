@@ -1,4 +1,4 @@
-import { __shell } from "../../../../../main";
+import { SHELL } from "../../../../../main";
 import { addColor } from "../../../../output-handler/formatter";
 import { TerminalOutputHandler } from "../../../../output-handler/terminal-output-handler";
 import { Colors } from "../../../../output-handler/typing/enums";
@@ -21,13 +21,13 @@ export class Cd extends AbstractCommand{
         if(results.remainingTokens.length != 1) throw new IncorrectArgumentsCountError(1, results.remainingTokens.length);
 
         const path = results.remainingTokens[0];
-        const context = getPathContext(path, __shell.globals.fs.currentDirectoryNode);
+        const context = getPathContext(path, SHELL.globals.fs.currentDirectoryNode);
 
         const node = FileSystem.getNodeByPath(context);
         if(node === undefined) throw new NodeNotFoundError(path);
         else if (node.type === "file") throw new NodeIsFileError(path);
 
-        __shell.globals.fs.currentDirectoryNode = node as DirectoryNode;
+        SHELL.globals.fs.currentDirectoryNode = node as DirectoryNode;
         return;
     }
     

@@ -6,6 +6,18 @@ export class CommandDoesNotExistsError extends Error {
     }
 }
 
+export class IncorrectOptionUsageInCommandError extends Error {
+    public msg:string;
+    
+    constructor(message: string) {
+        super(`IncorrectOptionUsageInCommandError: ${ message }`);
+        this.name = 'IncorrectOptionUsageInCommandError';
+        this.msg = message;
+        Object.setPrototypeOf(this, new.target.prototype);
+    }
+}
+
+
 export class InvalidFlagError extends Error {
     public flagName: string;
     constructor(flag: string) {

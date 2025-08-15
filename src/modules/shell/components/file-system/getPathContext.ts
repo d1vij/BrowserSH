@@ -1,4 +1,4 @@
-import { __shell } from "../../../../main";
+import { SHELL } from "../../../../main";
 import type { DirectoryNode } from "../__typing"
 import { nodeNamesFrom, PARENT_IDENTIFIER, SELF_IDENTIFIER } from "./file-system";
 import { NodeNotFoundError } from "../../commands/__errors";
@@ -28,10 +28,10 @@ export function getPathContext(path:string, directoryNode:DirectoryNode): PathCo
             path: path_toks
         }
     }
-    else if(path.startsWith(__shell.globals.fs.root.name)){
+    else if(path.startsWith(SHELL.globals.fs.root.name)){
         path_toks.splice(0,1);
         return {
-            root: __shell.globals.fs.root,
+            root: SHELL.globals.fs.root,
             path: path_toks
         }
     }

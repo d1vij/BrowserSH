@@ -1,5 +1,5 @@
 import { primaryPromptCurrentDirectory, primaryPromptUsername } from "../../dom-elements";
-import { __shell } from "../../main";
+import { SHELL } from "../../main";
 import { FileSystem } from "../shell/components/file-system/file-system";
 
 /**
@@ -14,8 +14,8 @@ export class OutputTemplates {
         return `
         <li class="line">
           <div class="primary-prompt">
-                <span class="username">${__shell.globals.vars.get("&&username")}</span>
-                <span class="current-directory">${FileSystem.getPathFromNode(__shell.globals.fs.currentDirectoryNode)}</span>
+                <span class="username">${SHELL.globals.vars.get("&&username")}</span>
+                <span class="current-directory">${FileSystem.getPathFromNode(SHELL.globals.fs.currentDirectoryNode)}</span>
           </div>
           <div class="line-content">${command}</div>
         </li>
@@ -50,8 +50,8 @@ export class OutputTemplates {
  * Updates the primary prompt after each command cycle. Primary prompt contains the username and current directory.
  */
 export function updatePrimaryPrompt() {
-    primaryPromptUsername.innerText = __shell.globals.vars.get("&&username") || "USERNAME_NOT_SET";
-    primaryPromptCurrentDirectory.innerText = FileSystem.getPathFromNode(__shell.globals.fs.currentDirectoryNode);
+    primaryPromptUsername.innerText = SHELL.globals.vars.get("&&username") || "USERNAME_NOT_SET";
+    primaryPromptCurrentDirectory.innerText = FileSystem.getPathFromNode(SHELL.globals.fs.currentDirectoryNode);
 }
 
 /**

@@ -35,10 +35,12 @@ body {
     gap: 2px;
 
     box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+    padding: 4px;
     border-radius: $border-radius;
     border-style: solid;
-    border-color: $term-grey-mid;
-    border-width: 4px;
+
+    border-color: $term-grey-dark;
+    border-width: 2px;
 
 }
 
@@ -46,7 +48,6 @@ body {
     @include font-settings();
     width: 100%;
     height: 32px;
-    // padding-inline: $inline-padding;
 
     display: flex;
     flex-direction: row;
@@ -59,24 +60,29 @@ body {
     .window-title {
         height: 100%;
         width: 220px;
-        border-radius: 5px;
         background-color: $term-black;
 
         display: flex;
         flex-direction: row;
         align-items: center;
-        padding-left: $inline-padding;
-        transition: all 150ms ease-in-out;
+        
         justify-content: space-between;
+        
+        transition: all 150ms ease-in-out;
+        
+        padding-left: $inline-padding;
+        
         box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
         user-select: none;
+
         
+        border-radius: 5px;
 
         .icon {
             height: 30px;
             width: 30px;
         }
-        
+
 
         p.title {
             &:hover {
@@ -91,7 +97,8 @@ body {
             background-color: transparent;
             padding: $inline-padding;
             font-size: 1.2em;
-            &:hover{
+
+            &:hover {
                 cursor: pointer;
             }
 
@@ -105,13 +112,13 @@ body {
         height: fit-content;
         align-items: center;
         padding: $inline-padding;
-        
-        
+
+
         .minimize,
         .windowed,
         .close {
             margin-inline: $inline-padding;
-            
+
             height: 20px;
             width: 20px;
             border-radius: 100%;
@@ -121,7 +128,7 @@ body {
             display: flex;
             justify-content: center;
             align-items: center;
-            
+
             transition: all 100ms ease-in-out;
 
             border-style: solid;
@@ -130,22 +137,24 @@ body {
             border-width: 2px;
             box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 
-            &:hover{
+            &:hover {
                 cursor: pointer;
             }
 
         }
-        
-        .minimize{
+
+        .minimize {
             @include circle-buttons-color-and-hover($term-green-dark)
         }
-        .windowed{
+
+        .windowed {
             @include circle-buttons-color-and-hover($term-yellow-ochre)
         }
-        .close{
+
+        .close {
             @include circle-buttons-color-and-hover($term-red)
         }
-        
+
     }
 }
 
@@ -159,6 +168,10 @@ body {
     border-radius: $border-radius;
 
     border-top-left-radius: -10;
+
+    border-style: solid;
+    border-color: $term-grey-charcoal;
+    border-width: 2px;
 }
 
 .terminal-lines {
@@ -173,8 +186,9 @@ body {
     width: 100%;
 
     white-space: pre-wrap;
+
     .line-content {
-        
+
         @include text-overflows();
         width: 100%;
     }
@@ -207,6 +221,7 @@ body {
     .current-directory {
         color: $term-orange-warm;
         width: max-content;
+
         &::after {
             content: "$";
             padding-inline: $inline-padding;
@@ -243,12 +258,15 @@ body {
     display: flex;
     gap: 5px;
     user-select: none;
-    
+
+    margin-top: 5px;
     font-weight: 600;
+
     .link {
         color: $term-grey-ash;
         text-decoration-line: underline;
-        &:hover{
+
+        &:hover {
             color: $term-red-deep;
         }
     }

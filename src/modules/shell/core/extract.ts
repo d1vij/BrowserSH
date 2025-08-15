@@ -1,37 +1,71 @@
+import { addColor } from "../../output-handler/formatter";
+import { Colors } from "../../output-handler/typing/enums";
+import { IncorrectOptionUsageInCommandError } from "../commands/__errors";
 import type { ExtractionResults, Tokens } from "./__typing";
 
+// "flags" are -a -f -x that is have only 1 dash, single letter-ed, not quoted, and may appear anywhere in the command and hence have to be removed out
+// flags cannot be like -1 -0.5 that is with numbers, this prevents mislabeling of negative numbers as flags
 
-const flagOptionSearchRegex = /^-{1,2}([^\s]+)/;
+// "options" are '--num 1' '--color red' that is double-dashed, single-worded, and have a value following them. 
+// Can have only one value and multiple passed should be passed as a string with some kind of delimiter
+
+const C_SINGLE_DASH = '-'
+const C_DOUBLE_DASH = '--'
 
 /**
  * extracts flags and options from tokens
  */
 export function getCommandContext(tokens: Tokens): ExtractionResults {
-    const flags = [];
+    console.log(tokens);
+
+    const remainingTokens: Array<string> = [];
+    const flags: Array<string> = [];
     const options: Record<string, string> = {};
 
-    for (let i = 0; i < tokens.length; i++) {
-        if (flagOptionSearchRegex.test(tokens[i])) {
-
-            // this is either a flag or option
-            if (i + 1 >= tokens.length || flagOptionSearchRegex.test(tokens[i + 1])) {
-                // next token is also a flag implying both of these tokens are flags
-                const flag = flagOptionSearchRegex.exec(tokens[i])![1];
-                flags.push(flag);
-                tokens.splice(i, 1);
-                i -= 1;
-            } else {
-                const key = flagOptionSearchRegex.exec(tokens[i])![1]
-                options[key] = tokens[i + 1];
-                tokens.splice(i, 2)
-                i -= 2;
-            }
+    for (let idx = 0; idx < tokens.length; idx++) {
+        const currTok = tokens[idx];
+        
+        if (currTok.length === 2 && currTok[0] === C_SINGLE_DASH && !test_isNumeric(currTok)){
+            // current token is a flag
+            flags.push(currTok[1]);
         }
+        else if(currTok.length >= 3 && currTok.startsWith(C_DOUBLE_DASH, 0)){
+            // current token is an option
+
+            const optionName = currTok.slice(2);
+            
+            if(idx + 1 >= tokens.length) throw new IncorrectOptionUsageInCommandError(`No option provided to option ${addColor(optionName, Colors.yellow_light)}`);
+
+            
+            const nextTok = tokens[idx + 1];
+            if(nextTok.startsWith(C_DOUBLE_DASH, 0)
+                ||(nextTok.length === 2 && nextTok[0] === C_SINGLE_DASH && !test_isNumeric(nextTok))) throw new IncorrectOptionUsageInCommandError(`No option provided to option ${addColor(optionName, Colors.yellow_light)}`);
+            
+            options[optionName] = nextTok;
+            idx++; //skip the next token
+
+            // cmd add -1 -2 
+            // cmd --color red abc
+            // cmd xyx --color 1
+            // cmd xyz --color -1 -p <- doesnt raises error
+
+            // cmd xyz --color -p <-- raises error 
+            // cmd xyz --color --abc 1 <-- raises error
+        }
+        else remainingTokens.push(currTok);
     }
 
     return {
         flags,
         options,
-        remainingTokens: tokens
+        remainingTokens
     }
+}
+
+
+function test_isNumeric(str: string): boolean {
+    // things that count as numbers -> 123 1.23 -123 -1.23 -0.23 0323
+    // things that dont count as numbers -> .123 -.123 123. xyz
+
+    return /^\-?\d+(?:\.?\d+$)?/.test(str);
 }

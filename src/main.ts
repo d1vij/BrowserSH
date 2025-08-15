@@ -4,19 +4,19 @@ import { startupConfig } from "./startup";
 
 
 // shell is used as an singleton throughout the program
-export let __shell: Shell;
+export let SHELL: Shell;
 
 window.onload = start;
 
 // setup initial content for the shell and hookup eventlistener to the input feild
-function start(){
+function start() {
     console.log("starting")
-    __shell = new Shell();
+    SHELL = new Shell();
     startupConfig();
     terminalInputFeild.addEventListener("keypress", (event: KeyboardEvent) => {
         if (event.key == "Enter") {
             event.preventDefault();
-            __shell.process();
+            SHELL.process();
         }
     })
 }

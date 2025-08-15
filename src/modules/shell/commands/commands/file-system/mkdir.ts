@@ -1,4 +1,4 @@
-import { __shell } from "../../../../../main";
+import { SHELL } from "../../../../../main";
 import { addColor } from "../../../../output-handler/formatter";
 import { TerminalOutputHandler } from "../../../../output-handler/terminal-output-handler";
 import { Colors } from "../../../../output-handler/typing/enums";
@@ -34,7 +34,7 @@ export class Mkdir extends AbstractCommand {
         const results = getCommandContext(tokens);
         if (results.remainingTokens.length != 1) throw new IncorrectArgumentsCountError(1, results.remainingTokens.length);
 
-        const context = getPathContext(results.remainingTokens[0], __shell.globals.fs.currentDirectoryNode);
+        const context = getPathContext(results.remainingTokens[0], SHELL.globals.fs.currentDirectoryNode);
 
         
         const foundNode = FileSystem.getNodeByPath(context);
@@ -49,7 +49,7 @@ export class Mkdir extends AbstractCommand {
         }
 
         if(results.flags.includes('c') || results.flags.includes("cd")){
-            __shell.globals.fs.currentDirectoryNode = createdNode;
+            SHELL.globals.fs.currentDirectoryNode = createdNode;
         }
         return;
     }

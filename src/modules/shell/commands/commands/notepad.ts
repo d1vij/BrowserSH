@@ -1,4 +1,4 @@
-import { __shell } from "../../../../main";
+import { SHELL } from "../../../../main";
 import { addColor } from "../../../output-handler/formatter";
 import { TerminalOutputHandler } from "../../../output-handler/terminal-output-handler";
 import { Colors } from "../../../output-handler/typing/enums";
@@ -45,7 +45,7 @@ export class Notepad extends AbstractCommand {
             path = results.options.o || results.options.open;
             if (!path) throw new InvalidOptionError("open");
 
-            const node = FileSystem.getNodeByPath(getPathContext(path, __shell.globals.fs.currentDirectoryNode));
+            const node = FileSystem.getNodeByPath(getPathContext(path, SHELL.globals.fs.currentDirectoryNode));
             if (!node) throw new NodeNotFoundError(path);
             if (node.type === "directory") throw new NodeIsDirectoryError(path);
 
@@ -59,10 +59,10 @@ export class Notepad extends AbstractCommand {
             path = results.options.n || results.options.new;
             if (!path) throw new InvalidOptionError("new");
 
-            const existingNode = FileSystem.getNodeByPath(getPathContext(path, __shell.globals.fs.currentDirectoryNode));
+            const existingNode = FileSystem.getNodeByPath(getPathContext(path, SHELL.globals.fs.currentDirectoryNode));
             if (existingNode) throw new NodeWithSameNameExistsError(path);
 
-            const createdNode = FileSystem.createFileByPath(path, __shell.globals.fs.currentDirectoryNode);
+            const createdNode = FileSystem.createFileByPath(path, SHELL.globals.fs.currentDirectoryNode);
             const npd = new NotepadFactory("", createdNode.name);
             const content = await npd.getContent();
             createdNode.content = content;
@@ -72,7 +72,7 @@ export class Notepad extends AbstractCommand {
             if (results.remainingTokens.length === 1) {
                 // Assume open mode as fallback
                 path = results.remainingTokens[0];
-                const node = FileSystem.getNodeByPath(getPathContext(path, __shell.globals.fs.currentDirectoryNode));
+                const node = FileSystem.getNodeByPath(getPathContext(path, SHELL.globals.fs.currentDirectoryNode));
                 if (!node) throw new NodeNotFoundError(path);
                 if (node.type === "directory") throw new NodeIsDirectoryError(path);
 

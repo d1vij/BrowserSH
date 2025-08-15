@@ -1,4 +1,4 @@
-import { __shell } from "../../../../../main";
+import { SHELL } from "../../../../../main";
 import { addColor } from "../../../../output-handler/formatter";
 import { TerminalOutputHandler } from "../../../../output-handler/terminal-output-handler";
 import { Colors } from "../../../../output-handler/typing/enums";
@@ -19,7 +19,7 @@ export class Ls extends AbstractCommand{
         if(results.remainingTokens.length >= 2) throw new IncorrectArgumentsCountError("0 or 1", results.remainingTokens.length);
 
         const path = results.remainingTokens[0] || "."
-        const context = getPathContext(path, __shell.globals.fs.currentDirectoryNode);
+        const context = getPathContext(path, SHELL.globals.fs.currentDirectoryNode);
         
         let depth:number | string = results.options["depth"] || results.options['d'] || "1";
 

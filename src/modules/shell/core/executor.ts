@@ -1,4 +1,4 @@
-import { __shell } from "../../../main";
+import { SHELL } from "../../../main";
 import type { Tokens , ParserResults} from "./__typing";
 import { varNameRegex} from "./parser";
 import { UndefinedCommandError, UnexpectedError } from "./__errors";
@@ -39,6 +39,6 @@ export function execute(results: ParserResults, done? : MaybeAsyncFunction<void>
 function assignVariable(tokens: Tokens) {
     const name = varNameRegex.exec(tokens[0])![1]
     const value = tokens[2]
-    __shell.globals.vars.set(name, value);
+    SHELL.globals.vars.set(name, value);
     return;
 }

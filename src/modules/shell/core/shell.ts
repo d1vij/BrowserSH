@@ -26,8 +26,9 @@ import {
     UndefinedCommandError
 } from "./__errors"
 import { terminalInputDiv, terminalInputFeild } from "../../../dom-elements";
+import { IncorrectOptionUsageInCommandError } from "../commands/__errors";
 
-export const SPACE = ' ';
+export const C_SPACE = ' ';
 
 
 
@@ -65,8 +66,9 @@ export class Shell {
     }
     public process() {
         const command = UserInputHandler.getUserInput();
+        const sanitized_command = sanitizeHTML(command);
 
-        TerminalOutputHandler.printToTerminalOld(OutputTemplates.userInputPreview(command));
+        TerminalOutputHandler.printToTerminalOld(OutputTemplates.userInputPreview(sanitized_command));
         UserInputHandler.clearUserInput();
 
         // Command input feild is hidden once command processing starts
@@ -74,9 +76,9 @@ export class Shell {
 
         let toks: Tokens = [];
         try {
-            toks = tokenize(command);
+            toks = tokenize(sanitized_command);
         } catch (err: any) {
-            handleTokenizationErrors(err, command)
+            handleTokenizationErrors(err, sanitized_command)
             commandInputFeildHidden(false);
             return;
         }
@@ -108,6 +110,13 @@ export class Shell {
 }
 
 // 
+function sanitizeHTML(__string: string): string {
+    // return __string;
+    return __string
+        .replace('<', "&lt;")
+        .replace('>', "&gt;")
+}
+// 
 
 function commandInputFeildHidden(b: boolean) {
     console.log("hiding", b)
@@ -125,7 +134,6 @@ function handleExecutorErrors(err: any) {
         ])
     }
 }
-
 
 function handleParserErrors(err: any) {
     if (err instanceof VariableValueIsMultipleWords || err.name === "VariableValueIsMultipleWords") {

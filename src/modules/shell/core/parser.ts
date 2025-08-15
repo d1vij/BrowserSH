@@ -2,11 +2,11 @@
  * (semantics)
  */
 
-import { __shell } from "../../../main";
+import { SHELL } from "../../../main";
 import type { ParserResults } from "./__typing";
 import type { Tokens } from "./__typing"
 import { VariableDoesNotExistsError } from "../components/__errors";
-import { SPACE } from "./shell";
+import { C_SPACE } from "./shell";
 import { VariableValueIsMultipleWords } from "./__errors";
 
 
@@ -59,17 +59,17 @@ export function parse(tokens: Tokens): ParserResults {
 
 function insertVar(token: string) {
     //TODO: Prolly Optimize since time complexity is o(n^2)
-    const toks = token.split(SPACE).filter(Boolean);
+    const toks = token.split(C_SPACE).filter(Boolean);
 
     for (let i = 0; i < toks.length; i++) {
         toks[i] = toks[i].replace(varNameRegex, (_, name) => {
-            const value = __shell.globals.vars.get(name);
+            const value = SHELL.globals.vars.get(name);
             if (value === undefined) throw new VariableDoesNotExistsError(name, name)
             return value;
         })
     }
 
-    return toks.join(SPACE);
+    return toks.join(C_SPACE);
 }
 
 function isVariableAssignment(tokens: Tokens): boolean {

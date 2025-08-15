@@ -3,7 +3,7 @@ import { TerminalOutputHandler } from "../../../output-handler/terminal-output-h
 import { Colors } from "../../../output-handler/typing/enums";
 import type { Tokens } from "../../core/__typing";
 import { getCommandContext } from "../../core/extract";
-import { InvalidColorError, InvalidFlagError, InvalidNumberError, InvalidOptionError } from "../__errors";
+import { IncorrectOptionUsageInCommandError, InvalidColorError, InvalidFlagError, InvalidNumberError, InvalidOptionError } from "../__errors";
 import { AbstractCommand } from "../AbstractCommand";
 import { processGenericErrors } from "../processGenericErrors";
 
@@ -39,6 +39,7 @@ export class Echo extends AbstractCommand {
 
     public __execute(tokens:Tokens){
         const results = getCommandContext(tokens);
+        console.log(results);
         
         let content = results.remainingTokens.join(' ');
         for(let flag of results.flags){
@@ -88,7 +89,7 @@ export class Echo extends AbstractCommand {
         return;
     }   
     public handleErrors(err:any){
-        
+        if(err instanceof IncorrectOptionUsageInCommandError){ console.log("CATCHED in cmd body")}
         if(err instanceof InvalidColorError){
             TerminalOutputHandler.standardErrorOutput([
                 `InvalidColorError: Color (${err.color}) does not exsists`,

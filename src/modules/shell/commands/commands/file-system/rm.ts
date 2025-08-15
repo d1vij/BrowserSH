@@ -1,4 +1,4 @@
-import { __shell } from "../../../../../main";
+import { SHELL } from "../../../../../main";
 import { addColor } from "../../../../output-handler/formatter";
 import { TerminalOutputHandler } from "../../../../output-handler/terminal-output-handler";
 import { Colors } from "../../../../output-handler/typing/enums";
@@ -18,7 +18,7 @@ export class Rm extends AbstractCommand{
         const results = getCommandContext(tokens);
         const recurse = results.flags.includes('r');
 
-        FileSystem.deleteNodeByPath(results.remainingTokens[0], __shell.globals.fs.currentDirectoryNode, recurse);
+        FileSystem.deleteNodeByPath(results.remainingTokens[0], SHELL.globals.fs.currentDirectoryNode, recurse);
     }
     
     

@@ -13,11 +13,13 @@ import { MathCommand } from "./commands/math";
 import { Exit } from "./commands/exit";
 import { Run } from "./commands/run/run";
 import { Notepad } from "./commands/notepad";
+import { __tmp } from "./commands/__tmp";
 
 
 type CommandConstructor = new() => AbstractCommand;
 
 export const commandIndex = new Map<string, CommandConstructor>([
+    ["__tmp",__tmp],
     ["cat", Cat],
     ["cd", Cd],
     ["clear", Clear],

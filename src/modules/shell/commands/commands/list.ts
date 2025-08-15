@@ -1,4 +1,4 @@
-import { __shell } from "../../../../main";
+import { SHELL } from "../../../../main";
 import { addColor } from "../../../output-handler/formatter";
 import { TerminalOutputHandler } from "../../../output-handler/terminal-output-handler";
 import { Colors } from "../../../output-handler/typing/enums";
@@ -33,7 +33,7 @@ export class List extends AbstractCommand {
                 break;
             }
             case "variables": {
-                content = __shell.globals.vars.variables.keys().toArray();
+                content = SHELL.globals.vars.variables.keys().toArray();
                 break;
             }
             case "colors": {

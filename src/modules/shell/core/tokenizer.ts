@@ -1,6 +1,6 @@
 import { CommandContainsUnpairedQuoteError, CommandStartsWithQuotesError, TokenContainsQuoteInMiddleErrror } from "./__errors";
 import type { TQuote, TCommand, Tokens } from "./__typing";
-import { SPACE } from "./shell";
+import { C_SPACE } from "./shell";
 
 function startsWithQuote(str: string): boolean {
 
@@ -43,7 +43,7 @@ export function tokenize(command: TCommand): Tokens {
 
     if (startsWithQuote(command)) throw new CommandStartsWithQuotesError(command);
 
-    const tokens = command.split(SPACE).filter(Boolean);
+    const tokens = command.split(C_SPACE).filter(Boolean);
 
     for (let index = 0; index < tokens.length; index++) {
         currentToken = tokens[index];
@@ -83,7 +83,7 @@ export function tokenize(command: TCommand): Tokens {
             // push token without the quote
             currentTokenStack.push(currentToken.slice(0, -1));
 
-            processedTokenStack.push(currentTokenStack.join(SPACE));
+            processedTokenStack.push(currentTokenStack.join(C_SPACE));
             currentTokenStack = [];
 
         } else if (lastSeenQuote != undefined

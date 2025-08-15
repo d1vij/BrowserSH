@@ -1,5 +1,5 @@
 import { notepadTemplate, terminalLinesList } from "../../dom-elements";
-import { SPACE } from "../shell/core/shell";
+import { C_SPACE } from "../shell/core/shell";
 
 let hovertimeout: NodeJS.Timeout;
 let count = 4;
@@ -85,7 +85,7 @@ export class NotepadFactory {
     private changeSelection = (event: Event) => {
         const target = event.target as HTMLDivElement;
         count = Number(target.getAttribute("data-value")!);
-        INDENT = SPACE.repeat(count);
+        INDENT = C_SPACE.repeat(count);
         this.npdIndentSpacesPreview.innerText = count.toString();
     }
 
