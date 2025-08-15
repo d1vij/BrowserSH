@@ -1,7 +1,8 @@
 import type { Tokens } from "../../core/__typing";
 import { AbstractCommand } from "../AbstractCommand";
 import { TerminalOutputHandler } from "../../../output-handler/terminal-output-handler";
-import { getCommandContext } from "../../core/extract";
+import { LoaderFactory } from "../../../ui/loader";
+import { Colors } from "../../../output-handler/typing/enums";
 
 
 export class __tmp extends AbstractCommand{
@@ -9,16 +10,21 @@ export class __tmp extends AbstractCommand{
     public flags: string[] = []
     public options: string[] = []
 
-    protected __execute(toks: Tokens): void{
-        const results = getCommandContext(toks);
-        let output = ''
+    protected __execute(_: Tokens): void{
+        const l = new LoaderFactory(100,"Fetching from url", "braille",Colors.red);
+        l.startLoading()
+        setTimeout(()=>{
+            l.stopLoading(true);
+            TerminalOutputHandler.printToTerminal("Loadding stopped");
+            l.setText("Doing something")
+            l.setColor(Colors.green_mint);
+            l.startLoading();
+            setTimeout(()=>{
+                l.stopLoading(true);
+                TerminalOutputHandler.printToTerminal("Did something");
+            },1000)
+        }, 3000);
         
-        if(results.flags.includes('a')) output += 'got a\n';
-        if(results.flags.includes('b')) output += 'got b\n';
-        output+= `c ${results.options['c']}\n`;
-        output+= `dd ${results.options['dd']}`;
-
-        TerminalOutputHandler.printToTerminal(output);
     }
 
     public info(): string[] {

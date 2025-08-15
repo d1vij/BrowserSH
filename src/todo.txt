@@ -1,3 +1,4 @@
+-2.FIX DOCUMENTATION WHERE OPTIONS ARE SinGLE dashed (-o filename) etc
 -1. add info command showing info about this project and me
 1. add text displaying time taken to execute the previous command - could be handled in parser,
 2. up arrow to get last command - using some kind of command stack ??

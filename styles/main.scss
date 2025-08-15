@@ -3,6 +3,7 @@
 
 @use "./components/ui/user-inputs.scss" as *;
 @use "./components/ui/notepad.scss" as *;
+@use "./components/ui/loader.scss" as *;
 
 $main-font: "IBM Plex Mono";
 $inline-padding: 5px;
@@ -191,6 +192,8 @@ body {
 
         @include text-overflows();
         width: 100%;
+        display: flex;
+        flex-direction: row;
     }
 
     &.multiline {
