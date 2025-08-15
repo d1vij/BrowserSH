@@ -1,7 +1,6 @@
 import type { Tokens } from "../../core/__typing";
 import { AbstractCommand } from "../AbstractCommand";
 import { TerminalOutputHandler } from "../../../output-handler/terminal-output-handler";
-import { UserInputHandler } from "../../../output-handler/user-input-handler";
 import { getCommandContext } from "../../core/extract";
 
 

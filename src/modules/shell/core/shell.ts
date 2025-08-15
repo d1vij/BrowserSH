@@ -26,7 +26,6 @@ import {
     UndefinedCommandError
 } from "./__errors"
 import { terminalInputDiv, terminalInputFeild } from "../../../dom-elements";
-import { IncorrectOptionUsageInCommandError } from "../commands/__errors";
 
 export const C_SPACE = ' ';
 
