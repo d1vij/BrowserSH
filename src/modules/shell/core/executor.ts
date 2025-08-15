@@ -12,7 +12,6 @@ import type { MaybeAsyncFunction } from "../commands/__typing";
  */
 export function execute(results: ParserResults, done? : MaybeAsyncFunction<void>){
     if(results.type=="variable-assignment" && results.tokens){
-        console.log("va ")
         assignVariable(results.tokens);
         done?.();
         return;

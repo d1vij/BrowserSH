@@ -16,7 +16,7 @@ export class LoaderFactory {
     private loaderStates: Array<string>;
     private loaderStatesLength;
 
-    private delay: number;
+    private delay: number = 100;
     private loader: HTMLSpanElement;
     private loaderText: HTMLSpanElement;
     private loaderContainer: HTMLSpanElement;
@@ -26,14 +26,13 @@ export class LoaderFactory {
     private color: string = "";
 
     constructor(
-        msDelay: number = 100, // lower the delay, faster would the state of spinner change
         text: string,
+        msDelay: number = 100, // lower the delay, faster would the state of spinner change
         loaderType: "line" | "braille" | "circle",
         color: string
     ) {
 
-        this.delay = msDelay;
-
+        this.setDelay(msDelay);
 
         switch (loaderType) {
             case "line": this.loaderStates = ['|', '/', '-', '\\']; break;
@@ -51,7 +50,8 @@ export class LoaderFactory {
         this.setText(text);
     }
     public setText(text: string) {
-        this.loaderText.innerText = text;
+        // ts is probably a bad idea, but again user wont be accessing this so...
+        this.loaderText.innerHTML = text;
     }
     public setColor(color: string) {
         // Takes in colors from the Colors enum
@@ -59,14 +59,36 @@ export class LoaderFactory {
         if (this.color !== '') this.loader.classList.remove(this.color);
         this.loader.classList.add(color);
     }
+    public setDelay(delay: number) {
+        this.delay = delay;
+    }
+
+    public startLoadingFor(ms: number, maintainState:boolean) {
+        // "fakes" delay and starts loading
+        const lp = this.startLoading(); 
+
+        return new Promise<void>(resolve => {
+            setTimeout(async () => {
+                this.stopLoading(maintainState);
+                await lp;
+                resolve();
+            }, ms);
+        });
+    }
+
     public startLoading() {
         this.isSpinning = true;
 
         terminalLinesList.appendChild(this.loaderContainer)
 
         return new Promise(resolve => {
-            if (!this.isSpinning) resolve(0);
-            setInterval(() => {
+            this.loader.innerText = this.loaderStates[this.currIdx];
+            const loaderInterval = setInterval(() => {
+                if (!this.isSpinning) {
+                    clearInterval(loaderInterval);
+                    resolve(0);
+                };
+
                 this.loader.innerText = this.loaderStates[this.currIdx];
                 if (this.currIdx >= this.loaderStatesLength - 1) this.currIdx = 0
                 else this.currIdx++;

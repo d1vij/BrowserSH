@@ -12,7 +12,10 @@ window.onload = start;
 function start() {
     console.log("starting")
     SHELL = new Shell();
-    startupConfig();
+    startupConfig(el);
+}
+function el() {
+    
     terminalInputFeild.addEventListener("keypress", (event: KeyboardEvent) => {
         if (event.key == "Enter") {
             event.preventDefault();

@@ -117,7 +117,7 @@ function sanitizeHTML(__string: string): string {
 }
 // 
 
-function commandInputFeildHidden(b: boolean) {
+export function commandInputFeildHidden(b: boolean) {
     console.log("hiding", b)
     if (b) terminalInputDiv.style.display = "none";
     else terminalInputDiv.style.display = "flex";

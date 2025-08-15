@@ -10,8 +10,9 @@ export class __tmp extends AbstractCommand{
     public flags: string[] = []
     public options: string[] = []
 
-    protected __execute(_: Tokens): void{
-        const l = new LoaderFactory(100,"Fetching from url", "braille",Colors.red);
+    protected __execute(_: Tokens){
+        
+        const l = new LoaderFactory("Fetching from url",100, "braille",Colors.red);
         l.startLoading()
         setTimeout(()=>{
             l.stopLoading(true);
@@ -24,7 +25,6 @@ export class __tmp extends AbstractCommand{
                 TerminalOutputHandler.printToTerminal("Did something");
             },1000)
         }, 3000);
-        
     }
 
     public info(): string[] {

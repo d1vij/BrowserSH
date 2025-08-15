@@ -39,7 +39,7 @@ export function promptUser(prompt: string, multiline:boolean = false, inputPrevi
             container.remove();
             
             // eh maybe remove 
-            if(inputPreview == true) TerminalOutputHandler.printToTerminal(`${prompt} : ${userInput}`);
+            if(inputPreview == true) TerminalOutputHandler.printToTerminal(`${prompt}${userInput.trim()}`);
             
             if (userInput === "") resolve(undefined);
             else resolve(userInput)
