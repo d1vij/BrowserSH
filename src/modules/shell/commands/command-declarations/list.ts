@@ -7,14 +7,13 @@ import { getCommandContext } from "../../core/extract";
 import { IncorrectArgumentsCountError, InvalidListableItemError } from "../__errors";
 import { AbstractCommand } from "../AbstractCommand"
 import { commandIndex } from "../command-index";
-import { Run } from "./run/run";
 
 export class List extends AbstractCommand {
     public name: string = "list";
     public flags: string[] = [];
     public options: string[] = [];
 
-    public listables: Array<string> = ["commands","listables", "colors", "variables", "functions"]
+    public listables: Array<string> = ["commands","listables", "colors", "variables"]
 
     protected __execute(tokens: Tokens): void {
         const results = getCommandContext(tokens);
@@ -38,10 +37,6 @@ export class List extends AbstractCommand {
             }
             case "colors": {
                 content = Object.keys(Object(Colors));
-                break;
-            }
-            case "functions": {
-                content = Object.keys((new Run).functionIndex);
                 break;
             }
             default:

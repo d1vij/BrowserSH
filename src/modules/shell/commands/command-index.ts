@@ -11,7 +11,6 @@ import { Clear } from "./command-declarations/clear";
 import { Mkdir } from "./command-declarations/file-system/mkdir";
 import { MathCommand } from "./command-declarations/math";
 import { Exit } from "./command-declarations/exit";
-import { Run } from "./command-declarations/run/run";
 import { Notepad } from "./command-declarations/notepad";
 import { __tmp } from "./command-declarations/__tmp";
 import { Facts } from "./command-declarations/facts";
@@ -32,7 +31,6 @@ export const commandIndex = new Map<string, CommandConstructor>([
     ["ls", Ls],
     ["list", List],
     ["rm", Rm],
-    ["run", Run],
     ['exit',Exit],
     ['notepad', Notepad]
     
