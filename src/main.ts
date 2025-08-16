@@ -1,4 +1,4 @@
-import { terminalInputFeild } from "./dom-elements"
+import { terminalInputFeild, unsupportedMessage, windowDiv } from "./dom-elements"
 import { Shell } from "./modules/shell/core/shell";
 import { startupConfig } from "./startup";
 
@@ -8,18 +8,26 @@ export let SHELL: Shell;
 
 window.onload = start;
 
-// setup initial content for the shell and hookup eventlistener to the input feild
+// disallowing mobile devices for sake of compatibility
+const isMobile = (()=> {
+    const nav = navigator as Navigator & { userAgentData?: { mobile: boolean } };
+    if (nav.userAgentData) return nav.userAgentData.mobile; 
+    return /Mobi|Android/i.test(navigator.userAgent);
+})()
+
 function start() {
+    if(isMobile){
+        windowDiv.style.display = "none";
+        unsupportedMessage.style.display = "block";
+    }
     console.log("starting")
     SHELL = new Shell();
-    startupConfig(el);
-}
-function el() {
-    
-    terminalInputFeild.addEventListener("keypress", (event: KeyboardEvent) => {
+    startupConfig(()=>{
+        terminalInputFeild.addEventListener("keypress", (event: KeyboardEvent) => {
         if (event.key == "Enter") {
             event.preventDefault();
             SHELL.process();
         }
     })
+    });
 }

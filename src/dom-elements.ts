@@ -1,3 +1,4 @@
+export const unsupportedMessage = document.querySelector("h1.unsupported") as HTMLHeadingElement;
 export const windowDiv = document.querySelector("div.window") as HTMLDivElement;
 
 export const navbarDiv = document.querySelector("div.navbar") as HTMLDivElement;
