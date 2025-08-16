@@ -1,19 +1,20 @@
 import { AbstractCommand } from "./AbstractCommand";
 
-import { Cd } from "./commands/file-system/cd";
-import { Ls } from "./commands/file-system/ls";
-import { Rm } from "./commands/file-system/rm";
-import { Cat } from "./commands/file-system/cat";
-import { List } from "./commands/list";
-import { Echo } from "./commands/echo";
-import { Help } from "./commands/help";
-import { Clear } from "./commands/clear";
-import { Mkdir } from "./commands/file-system/mkdir";
-import { MathCommand } from "./commands/math";
-import { Exit } from "./commands/exit";
-import { Run } from "./commands/run/run";
-import { Notepad } from "./commands/notepad";
-import { __tmp } from "./commands/__tmp";
+import { Cd } from "./command-declarations/file-system/cd";
+import { Ls } from "./command-declarations/file-system/ls";
+import { Rm } from "./command-declarations/file-system/rm";
+import { Cat } from "./command-declarations/file-system/cat";
+import { List } from "./command-declarations/list";
+import { Echo } from "./command-declarations/echo";
+import { Help } from "./command-declarations/help";
+import { Clear } from "./command-declarations/clear";
+import { Mkdir } from "./command-declarations/file-system/mkdir";
+import { MathCommand } from "./command-declarations/math";
+import { Exit } from "./command-declarations/exit";
+import { Run } from "./command-declarations/run/run";
+import { Notepad } from "./command-declarations/notepad";
+import { __tmp } from "./command-declarations/__tmp";
+import { Facts } from "./command-declarations/facts";
 
 
 type CommandConstructor = new() => AbstractCommand;
@@ -24,6 +25,7 @@ export const commandIndex = new Map<string, CommandConstructor>([
     ["cd", Cd],
     ["clear", Clear],
     ["echo", Echo],
+    ["facts", Facts],
     ["help", Help],
     ["math", MathCommand],
     ["mkdir", Mkdir],

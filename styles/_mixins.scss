@@ -1,19 +1,22 @@
 @use "colors" as *;
+@use "sass:color";
 @mixin text-overflows {
     overflow-wrap: anywhere;
     word-spacing: normal;
 }
 
 @mixin font-settings() {
-    font-family: "IBM Plex Mono";
+    // font-family: "IBM Plex Mono";
+    font-family: "Fira Code";
     font-weight: 400;
-    font-size: 16px;
-    color: $term-white;
+    font-optical-sizing: auto;
+    font-size: 15px;
+    color: $term-white-warm;
 }
 
 @mixin circle-buttons-color-and-hover($color) {
     background-color: $color;
         &:hover {
-            background-color: darken($color, $amount: 5%);
+            background-color: color.adjust($color: $color,$lightness: -5%);
         }
 }

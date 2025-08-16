@@ -73,7 +73,7 @@ export abstract class AbstractCommand {
     /**
      * Private error handler to seggregate between "system-raised" errors and command specific erorrs
      */
-    protected __handleErrors(err: any): void {
+    private __handleErrors(err: any): void {
         if (err instanceof IncorrectOptionUsageInCommandError) {
             TerminalOutputHandler.standardErrorOutput(err.msg)
 

@@ -2,6 +2,7 @@ import { addColor } from "../../output-handler/formatter";
 import { Colors } from "../../output-handler/typing/enums";
 import { IncorrectOptionUsageInCommandError } from "../commands/__errors";
 import type { ExtractionResults, Tokens } from "./__typing";
+import { test_isNumeric } from "./checks";
 
 // "flags" are -a -f -x that is have only 1 dash, single letter-ed, not quoted, and may appear anywhere in the command and hence have to be removed out
 // flags cannot be like -1 -0.5 that is with numbers, this prevents mislabeling of negative numbers as flags
@@ -60,12 +61,4 @@ export function getCommandContext(tokens: Tokens): ExtractionResults {
         options,
         remainingTokens
     }
-}
-
-
-function test_isNumeric(str: string): boolean {
-    // things that count as numbers -> 123 1.23 -123 -1.23 -0.23 0323
-    // things that dont count as numbers -> .123 -.123 123. xyz
-
-    return /^\-?\d+(?:\.?\d+$)?/.test(str);
 }

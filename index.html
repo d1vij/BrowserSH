@@ -16,6 +16,13 @@
         href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap"
         rel="stylesheet">
 
+    <!-- Fira code -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap"
+        rel="stylesheet">
+
     <title>BrowserSH</title>
 </head>
 
@@ -33,14 +40,13 @@
                 <div class="close"></div>
             </div>
         </div>
-        
-        <div class="terminal-content">
 
+        <div class="terminal-content">
             <ol class="terminal-lines"></ol>
             <div class="terminal-input">
                 <div class="primary-prompt">
-                    <span class="username">STARTING</span>
-                    <span class="current-directory">SHELL</span>
+                    <span class="username"></span>
+                    <span class="current-directory"></span>
                 </div>
                 <div class="input-feild" contenteditable=""></div>
             </div>
@@ -51,7 +57,7 @@
         <p>|</p>
         <a href="https://github.com/d1vij/BrowserSH" class="link" target="_blank" draggable="false">github</a>
     </div>
-    
+
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
     <template id="ui-user-input">
@@ -73,7 +79,8 @@
             <div class="ui-notepad-navbar">
                 <span class="ui-notepad-navbar-button ui-notepad-filename">My file.txt</span>
                 <span class="ui-notepad-navbar-button ui-notepad-save-and-close-button" data-for="">Save & Close</span>
-                <div class="ui-notepad-navbar-button ui-notepad-tab-spaces-button">Spaces <span class="selected">4</span>
+                <div class="ui-notepad-navbar-button ui-notepad-tab-spaces-button">Spaces <span
+                        class="selected">4</span>
                 </div>
             </div>
         </div>
@@ -81,7 +88,7 @@
     <template id="ui-loader">
         <span class="loader-container"><span class="loader"></span><span class="loader-text"></span></span>
     </template>
-    
+
 </body>
 
 </html>

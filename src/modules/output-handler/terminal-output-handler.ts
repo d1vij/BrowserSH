@@ -3,7 +3,7 @@ import { addColor, OutputTemplates } from "./formatter";
 import { terminalContentDiv, terminalLinesList } from "../../dom-elements"
 
 function scrollToEnd() {
-    terminalContentDiv.scrollTop = terminalContentDiv.scrollHeight;
+    terminalContentDiv.scrollTop = terminalContentDiv.scrollHeight + 100;
 }
 
 /**

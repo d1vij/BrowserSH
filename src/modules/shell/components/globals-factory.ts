@@ -14,7 +14,7 @@ export class GlobalsFactory {
         // initial root directory is empty and its name is '#' (not bash like rawrrr)
         this.fs = new FileSystemFactory({
             initialStructure: {
-                name:"#",
+                name:"@",
                 type:"directory",
                 parent: null,
                 children:[],

@@ -239,6 +239,7 @@ body {
 
 .terminal-input {
     display: flex;
+    padding-bottom: 5px;
 }
 
 .input-feild {
@@ -247,7 +248,6 @@ body {
 
     background-color: $term-black;
     width: 100%;
-
     &:focus {
         outline: none;
     }

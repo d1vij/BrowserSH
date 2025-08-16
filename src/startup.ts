@@ -3,6 +3,7 @@ import { SHELL } from "./main";
 import { addColor, updatePrimaryPrompt } from "./modules/output-handler/formatter";
 import { TerminalOutputHandler } from "./modules/output-handler/terminal-output-handler";
 import { Colors } from "./modules/output-handler/typing/enums";
+import { commandIndex } from "./modules/shell/commands/command-index";
 import { FileSystem } from "./modules/shell/components/file-system/file-system";
 import { pause } from "./modules/shell/core/pause";
 import { commandInputFeildHidden } from "./modules/shell/core/shell";
@@ -10,6 +11,8 @@ import { LoaderFactory } from "./modules/ui/loader";
 import { promptUser } from "./modules/ui/prompt-user";
 
 const termprint = TerminalOutputHandler.printToTerminal
+
+const randomTime = () => Math.random() * (400 - 100) + 100;
 
 
 export async function startupConfig(cb: () => void) {
@@ -46,32 +49,51 @@ export async function startupConfig(cb: () => void) {
     
     for (const line of lines) {
         termprint(line);
-        await pause(Math.random() * (400 - 100) + 100);
+        await pause(randomTime());
     }
     termprint(`${addColor("[OK]", Colors.green_mint)} System boot completed in ${(Date.now() - startTime) / 1000} seconds`);
 
     const l = new LoaderFactory(addColor("Starting Shell", Colors.blue_cool), 100, "braille", Colors.red);
     const p = l.startLoading();
     // await l.startLoadingFor(3000, true);
-    const username = await promptUser("Enter username ", false, true) || "guest";
-
+    let username = await promptUser("Enter username ", false, true);
+    username = username?.trim() === "" || username === undefined ? "guest" : username.trim();
     // eh prolly do this some other way
     if (username === "guest") termprint("No username recieved, defaulting to guest");
-    SHELL.globals.vars.set("&&username", `${username}@${detectBrowser()}`);
+    SHELL.globals.vars.set("&&username", `${username.trim()}@${detectBrowser()}`);
     updatePrimaryPrompt();
-    termprint(addColor(`Welcome to BrowserSH v0.1.0`, Colors.blue_ice));
-    termprint(`Type ${addColor("list commands", Colors.yellow_faded)} to see available commands.`)
-
+    
     l.stopLoading(true);
     await p;
     
+    l.setText("Curating user profile");
+    await l.startLoadingFor(2500, true);
     
-    SHELL.globals.vars.set("ping", "pong");
-    const __test_dir = FileSystem.createDirectoryByPath("/temp/content", SHELL.globals.fs.root, false);
-    const __home = FileSystem.createDirectoryByPath("/home/", SHELL.globals.fs.root, false);
-    FileSystem.createFileByPath("./info.txt", __home.parent!, "Linux Bash terminal Emulated purely on browser")
-    FileSystem.createFileByPath("test.txt", __test_dir, "Hello World!");
+    TerminalOutputHandler.clearTerminal();
+    await pause(randomTime());
+    termprint(addColor(`Welcome to BrowserSH v0.1.0`, Colors.blue_ice));
+    await pause(500);
+    termprint(`Type ${addColor("list commands", Colors.yellow_faded)} to see available commands.`)
+    
+    await pause(randomTime());
+    
+    
+    // const __test_dir = FileSystem.createDirectoryByPath("/temp/content", SHELL.globals.fs.root, false);
+    // const __home = FileSystem.createDirectoryByPath("/home/", SHELL.globals.fs.root, false);
+    // FileSystem.createFileByPath("./info.txt", __home.parent!, "Linux Bash terminal Emulated purely on browser")
+    // FileSystem.createFileByPath("test.txt", __test_dir, "Hello World!");
 
+    const home = FileSystem.createDirectory(SHELL.globals.fs.root, "home");
+    FileSystem.createFileByPath("about.txt", home, content_about);
+
+    const _var = FileSystem.createDirectory(SHELL.globals.fs.root, "var");
+    const log = FileSystem.createDirectory(_var, "log");
+    FileSystem.createFileByPath("boot.log", log, content_bootlog);
+
+    const bin = FileSystem.createDirectory(SHELL.globals.fs.root, "bin");
+    for(const cmd of commandIndex.keys().toArray()){
+        FileSystem.createFileByPath(cmd, bin, "Nothing to see here!!");
+    }
 
 
     commandInputFeildHidden(false);
@@ -98,3 +120,8 @@ function detectBrowser() {
 
     return "UnknownBrowser";
 }
+
+// 
+
+const content_about = `TODO`;
+const content_bootlog = `TODO`;
