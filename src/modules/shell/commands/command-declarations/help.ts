@@ -14,22 +14,31 @@ export class Help extends AbstractCommand {
     public flags: string[] = ['u', "usage", 'i', "info"];
     public options: string[] = ["cmd"];
     
-    public info() {
-        return [
-            "Display information about builtin commands, or used to list all avaialable commands",
-            "Options",
-            "\t--usage | -u\t Shows usage info for provided command ",
-        ]
-    }
-    public usage() {
-        return [
-            "help [--cmd] [COMMAND_NAME] [-u | --usage][-i | --info]",
-            "eg",
-            "\thelp [--cmd] echo -> info for echo",
-            `\thelp echo --usage -> usage for echo`,
-            "\thelp -> lists all avaialable commands",
-        ]
-    }
+   public info(): string[] {
+    return [
+        "Display information about builtin commands or list all available commands.",
+        "",
+        "Flags include:",
+        `\t${addColor("i | info", Colors.yellow_light)}   -> shows detailed information about the command`,
+        `\t${addColor("u | usage", Colors.yellow_light)}  -> shows usage examples for the command`,
+        "",
+        "Options include:",
+        `\t${addColor("cmd", Colors.yellow_light)} : specify which command to show help for (default = help)`,
+    ];
+}
+
+public usage(): string[] {
+    return [
+        "usage: help [COMMAND_NAME] [flags] [options]",
+        "",
+        "Examples:",
+        `\t help\t\t\t\t=> lists all available commands`,
+        `\t help echo\t\t\t=> shows both info and usage for 'echo'`,
+        `\t help echo --info\t\t=> shows only info for 'echo'`,
+        `\t help echo --usage\t\t=> shows only usage for 'echo'`,
+        `\t help --cmd facts -u\t\t=> shows usage info for 'facts'`,
+    ];
+}
 
     public __execute(tokens: Tokens) {
         const results = getCommandContext(tokens);

@@ -9,12 +9,12 @@ import { FileSystem } from "../../components/file-system/file-system";
 import { getPathContext } from "../../components/file-system/getPathContext";
 import type { Tokens } from "../../core/__typing";
 import { getCommandContext } from "../../core/extract";
-import {  IncorrectArgumentsCountError, InvalidOptionError, NodeNotFoundError } from "../__errors";
+import { IncorrectArgumentsCountError, InvalidOptionError, NodeNotFoundError } from "../__errors";
 import { AbstractCommand } from "../AbstractCommand";
 
 export class Notepad extends AbstractCommand {
     public name = "notepad";
-    public options: string[] = ['o', "open", 'n', "new"];
+    public options: string[] = ["open", "new"];
     public flags: string[] = [];
 
     public handleErrors(err: any): void {
@@ -28,13 +28,14 @@ export class Notepad extends AbstractCommand {
                     ? `No path provided to open!`
                     : `No path provided to create a file to!`
             ])
-        } else if (err instanceof IncorrectArgumentsCountError){
+        } else if (err instanceof IncorrectArgumentsCountError) {
             TerminalOutputHandler.standardErrorOutput([
                 `Incorrect usage, use ${addColor("help notepad", Colors.blue_cool)} for usage.`
             ])
         }
     }
 
+    // TODO: Refactor single dashed options
     protected async __execute(tokens: Tokens): Promise<void> {
         const results = getCommandContext(tokens);
         // Typical shell expects `-o path` or `-n path` (not mixing)
@@ -82,30 +83,29 @@ export class Notepad extends AbstractCommand {
                 fileNode.content = content;
                 return;
             }
-            throw new IncorrectArgumentsCountError(1,0); // No recognized flags/options provided
+            throw new IncorrectArgumentsCountError(1, 0); // No recognized flags/options provided
         }
     }
     public info(): string[] {
         return [
             "Edit or create a file using the terminal notepad interface.",
+            "",
+            "Options include:",
+            `\t${addColor("--open", Colors.yellow_light)} <path> -> open the specified file`,
+            `\t${addColor("--new", Colors.yellow_light)} <path>  -> create and edit the specified file`,
         ];
     }
 
     public usage(): string[] {
         return [
-            "usage: notepad (--open <path> | -o <path> | --new <path> | -n <path> | <path>)",
-            " ",
-            "Options:",
-            `\t${addColor("o | open", Colors.yellow_light)} <path>\tOpen an existing file for editing`,
-            `\t${addColor("n | new", Colors.yellow_light)} <path>\tCreate a new file and edit it`,
-            " ",
+            "usage: notepad [flags] [options] [<path>]",
+            "",
             "Examples:",
-            `\t notepad --open foo.txt\t\t\tOpen file named foo.txt`,
-            `\t notepad -o docs/notes.md\t\tOpen a file in a subdirectory`,
-            `\t notepad --new report.txt\t\tCreate a new file named report.txt and edit`,
-            `\t notepad -n diary/2024-06-05.md\tCreate new nested file if path allows`,
-            `\t notepad bar.txt\t\t\t\tOpen bar.txt (same as --open)`,
+            `\t notepad --open foo.txt\t\t\t=> Open file named foo.txt`,
+            `\t notepad -o docs/notes.md\t\t\t=> Open a file in a subdirectory`,
+            `\t notepad --new report.txt\t\t\t=> Create a new file named report.txt and edit`,
+            `\t notepad -n diary/2024-06-05.md\t\t=> Create new nested file if path allows`,
+            `\t notepad bar.txt\t\t\t\t=> Open bar.txt (same as --open)`,
         ];
     }
 }
-

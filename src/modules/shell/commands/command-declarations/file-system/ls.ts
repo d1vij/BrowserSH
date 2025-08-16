@@ -12,7 +12,7 @@ import { getPathContext } from "../../../components/file-system/getPathContext";
 export class Ls extends AbstractCommand{
     public name: string = "ls";
     public flags: string[] = [];
-    public options: string[] = ['d', "depth"];
+    public options: string[] = ["depth"];
 
     protected __execute(tokens:Tokens){
         const results = getCommandContext(tokens);
@@ -21,7 +21,7 @@ export class Ls extends AbstractCommand{
         const path = results.remainingTokens[0] || "."
         const context = getPathContext(path, SHELL.globals.fs.currentDirectoryNode);
         
-        let depth:number | string = results.options["depth"] || results.options['d'] || "1";
+        let depth:number | string = results.options["depth"] ||"1";
 
         if(depth === "inf"){
             depth = Infinity;
@@ -58,19 +58,22 @@ export class Ls extends AbstractCommand{
     }
 
     public usage(): string[] {
-        return [
-            "usage: ls",
-            "",
-            "Arguments:",
-            "\t(none) -> This command does not take any arguments currently.",
-            "",
-            "Description:",
-            "\tLists all files and folders in the current working directory.",
-            "\tOnly the current directory is supported — no paths or flags allowed.",
-            "",
-            "Examples:",
-            `\t${addColor("ls", Colors.blue_light)} => Displays all contents of the current directory`
-        ];
-    }
+    return [
+        "usage: ls [--depth=N | --depth=inf]",
+        "",
+        "Options:",
+        `\t--depth N -> Depth of traversal. Defaults to 1.`,
+        `\t--depth inf -> Traverse infinitely deep.`,
+        "",
+        "Description:",
+        "\tLists contents of a directory. Supports optional depth control.",
+        "",
+        "Examples:",
+        `\t${addColor("ls", Colors.blue_light)} => Lists current directory (depth 1)`,
+        `\t${addColor("ls --depth 2", Colors.blue_light)} => Lists current directory with depth 2`,
+        `\t${addColor("ls --depth inf", Colors.blue_light)} => Lists everything under current directory recursively`
+    ];
+}
+
 
 }

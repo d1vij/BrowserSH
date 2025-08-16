@@ -3,16 +3,16 @@ import { addColor } from "../../../../output-handler/formatter";
 import { TerminalOutputHandler } from "../../../../output-handler/terminal-output-handler";
 import { Colors } from "../../../../output-handler/typing/enums";
 import { NodeWithSameNameExistsError } from "../../../components/__errors";
-import { FileSystem} from "../../../components/file-system/file-system";
+import { FileSystem } from "../../../components/file-system/file-system";
 import type { Tokens } from "../../../core/__typing";
 import { getCommandContext } from "../../../core/extract";
-import { IncorrectArgumentsCountError} from "../../__errors";
+import { IncorrectArgumentsCountError } from "../../__errors";
 import { AbstractCommand } from "../../AbstractCommand";
 import { getPathContext } from "../../../components/file-system/getPathContext";
 
 export class Mkdir extends AbstractCommand {
     public name: string = "mkdir";
-    public flags: string[] = [];
+    public flags: string[] = ['c', 'f'];
     public options: string[] = [];
 
     public handleErrors(err: any): void {
@@ -22,7 +22,7 @@ export class Mkdir extends AbstractCommand {
                 `Pass any paths with spaces inside quotations!`
             ])
             return;
-        } if (err instanceof NodeWithSameNameExistsError){
+        } if (err instanceof NodeWithSameNameExistsError) {
             TerminalOutputHandler.standardErrorOutput([
                 `NodeWithSameNameExistsError: A directory already exists at path ${addColor(err.path, Colors.yellow_light)}.`,
                 `To overwrite existing directory, use the ${addColor('-f', Colors.blue_light)} flag.`
@@ -36,19 +36,19 @@ export class Mkdir extends AbstractCommand {
 
         const context = getPathContext(results.remainingTokens[0], SHELL.globals.fs.currentDirectoryNode);
 
-        
+
         const foundNode = FileSystem.getNodeByPath(context);
-        if(foundNode !== undefined) throw new NodeWithSameNameExistsError(results.remainingTokens[0]);
+        if (foundNode !== undefined) throw new NodeWithSameNameExistsError(results.remainingTokens[0]);
 
         let createdNode;
-        if(results.flags.includes('f')){
+        if (results.flags.includes('f')) {
             createdNode = FileSystem.createDirectoryByPath(context, true);
         }
-        else{
+        else {
             createdNode = FileSystem.createDirectoryByPath(context, false);
         }
 
-        if(results.flags.includes('c') || results.flags.includes("cd")){
+        if (results.flags.includes('c')) {
             SHELL.globals.fs.currentDirectoryNode = createdNode;
         }
         return;
@@ -56,28 +56,26 @@ export class Mkdir extends AbstractCommand {
 
     public info(): string[] {
         return [
-            "list contents of a directory with optional depth"
+            "create a new directory (optionally force overwrite or change into it)"
         ];
     }
 
     public usage(): string[] {
         return [
-            "usage: ls [path] [options]",
+            `usage: mkdir ${addColor("[path]", Colors.yellow_light)} [flags]`,
             "",
             "Arguments:",
-            `\t${addColor("[path]", Colors.yellow_light)} -> Optional. Path to the directory to list. Defaults to current directory if omitted.`,
+            `\t${addColor("[path]", Colors.yellow_light)} -> Required. Path where the new directory should be created.`,
             "",
-            "Options:",
-            `\t${addColor("--depth", Colors.yellow_light)}, ${addColor("-d", Colors.yellow_light)} : Optional. How deep to traverse the directory tree.`,
-            `\t\t\t\t\t\t\t\t  Accepts a number or the keyword ${addColor("inf", Colors.yellow_light)}.`,
+            "Flags:",
+            `\t${addColor("-f", Colors.yellow_light)} : Force create. Overwrites existing directory if it already exists.`,
+            `\t${addColor("-c", Colors.yellow_light)} : Change directory into the newly created folder.`,
             "",
             "Examples:",
-            `\t${addColor("ls", Colors.blue_light)} => Lists contents of the current directory`,
-            `\t${addColor("ls ./docs", Colors.blue_light)} => Lists contents of the 'docs' directory`,
-            `\t${addColor("ls -d 2", Colors.blue_light)} => Lists contents of the current directory up to depth 2`,
-            `\t${addColor("ls root/projects -d inf", Colors.blue_light)} => Recursively lists everything under 'root/projects'`
+            `\t${addColor("mkdir docs", Colors.blue_light)} => Creates a new directory called 'docs' in the current directory`,
+            `\t${addColor("mkdir -f docs", Colors.blue_light)} => Creates 'docs', overwriting if it already exists`,
+            `\t${addColor("mkdir -c projects", Colors.blue_light)} => Creates 'projects' and moves into it immediately`
         ];
     }
-
 
 }

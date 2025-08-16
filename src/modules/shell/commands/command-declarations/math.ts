@@ -15,27 +15,38 @@ export class MathCommand extends AbstractCommand {
     public options = ["out", 'o']
 
     public info() {
-        return ["perform basic arithmetic operations"];
+    return [
+        "Perform basic arithmetic operations using subcommands.",
+        "",
+        "Subcommands include:",
+        `\t${addColor("add", Colors.yellow_light)} -> adds all the given numbers`,
+        `\t${addColor("sub", Colors.yellow_light)} -> subtracts subsequent numbers from the first`,
+        `\t${addColor("mul", Colors.yellow_light)} -> multiplies all the numbers`,
+        `\t${addColor("div", Colors.yellow_light)} -> divides the first number by the second (exactly 2 args)`,
+        "",
+        "Flags include:",
+        `\t${addColor("-o", Colors.yellow_light)}   -> save result to a variable (default name: math_result)`,
+        "",
+        "Options include:",
+        `\t${addColor("--out", Colors.yellow_light)} : assign result to a variable with the given name`,
+    ];
+}
 
-    }
-    public usage() {
-        return [
-            "usage: math <subcommand> [*args] [flags] [options]",
-            "Subcommands include",
-            "\t add -> adds all the given numbers",
-            "\t sub -> subtracts subsequent numbers from the first",
-            "\t mul -> multiplies all the numbers",
-            "\t div -> divides the first number by the second number, takes 2 arguments",
-            "Options include",
-            "\t -o | --out : assign the result to a variable with the given name",
-            "Examples",
-            "\t math add 4 5 6 => returns 15",
-            "\t math sub 20 5 3 => returns 12",
-            "\t math mul 2 3 4 => returns 24",
-            "\t math div 100 2 5 => returns 10",
-            "\t math add $a $b => supports variable expansion",
-            "\t math mul 5 6 -o result => stores result in 'result' variable"]
-    }
+public usage() {
+    return [
+        "usage: math <subcommand> [*args] [flags] [options]",
+        "",
+        "Examples:",
+        `\t math add 4 5 6\t\t\t=> returns 15`,
+        `\t math sub 20 5 3\t\t=> returns 12`,
+        `\t math mul 2 3 4\t\t=> returns 24`,
+        `\t math div 100 2\t\t=> returns 50`,
+        `\t math add $a $b\t\t=> supports variable expansion`,
+        `\t math mul 5 6 -o\t\t=> stores result in variable 'math_result'`,
+        `\t math mul 5 6 --out result\t=> stores result in variable 'result'`,
+    ];
+}
+
 
 
     protected __execute(tokens: Tokens): void {
