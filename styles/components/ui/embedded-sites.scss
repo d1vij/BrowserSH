@@ -1,0 +1,48 @@
+@use "../../colors" as *;
+@use "../../mixins" as *;
+#embedded-websites-container{
+    padding:0;
+    margin: 0;
+    border: 0;
+    background-color: none;
+    .navbar{
+        background-color: #CFCFCF;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        
+        position: relative;
+        #site-url{
+            font-weight: 500;
+            color: $term-grey-dark;
+            width: fit-content;
+            &:hover{
+                content: "Not accurate";
+            }
+        }
+        #close-button{
+            @include circle-buttons-color-and-hover($term-red);
+            height: 24px;
+            width: 24px;
+            border-radius: 100%;
+            border-width: 2px;
+            border-style:solid ;
+            border-color: #1c1c1c80; //80% opacity $term-black
+            box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+
+            cursor: pointer;
+            position: absolute;
+            right: 0;
+            margin-right: 5px;
+            
+        }
+    }
+    .embedded-websites-frame{
+        width: 100%;
+        height: 596px;
+        // height: 580px;
+        border: 0;
+        padding: 0;
+        margin: 0;
+    }
+}

@@ -4,6 +4,7 @@
 @use "./components/ui/user-inputs.scss" as *;
 @use "./components/ui/notepad.scss" as *;
 @use "./components/ui/loader.scss" as *;
+@use "./components/ui/embedded-sites.scss" as *;
 
 $main-font: "IBM Plex Mono";
 $inline-padding: 5px;
@@ -14,6 +15,10 @@ $border-radius: 5px;
     padding: 0;
     margin: 0;
     border: 0;
+}
+
+.hidden{
+    display: none;
 }
 
 .unsupported {

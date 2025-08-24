@@ -1,4 +1,4 @@
-
+export type TMaybeDefined<T> = T | undefined | null
 
 export type TCommand = string
 export type TOption = string

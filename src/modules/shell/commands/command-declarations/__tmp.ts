@@ -1,8 +1,8 @@
+import { Colors } from "../../../output-handler/typing/enums";
+import { EmbedExternalWebsites } from "../../../ui/embed-websites-factory";
+import { LoaderFactory } from "../../../ui/loader";
 import type { Tokens } from "../../core/__typing";
 import { AbstractCommand } from "../AbstractCommand";
-import { TerminalOutputHandler } from "../../../output-handler/terminal-output-handler";
-import { LoaderFactory } from "../../../ui/loader";
-import { Colors } from "../../../output-handler/typing/enums";
 
 
 export class __tmp extends AbstractCommand{
@@ -10,21 +10,14 @@ export class __tmp extends AbstractCommand{
     public flags: string[] = []
     public options: string[] = []
 
-    protected __execute(_: Tokens){
+    protected async __execute(_: Tokens){
+        const l = new LoaderFactory("Loading Site", 150, "line", Colors.blue_cool);
         
-        const l = new LoaderFactory("Fetching from url",100, "braille",Colors.red);
-        l.startLoading()
-        setTimeout(()=>{
-            l.stopLoading(true);
-            TerminalOutputHandler.printToTerminal("Loadding stopped");
-            l.setText("Doing something")
-            l.setColor(Colors.green_mint);
-            l.startLoading();
-            setTimeout(()=>{
-                l.stopLoading(true);
-                TerminalOutputHandler.printToTerminal("Did something");
-            },1000)
-        }, 3000);
+        // const site = new EmbedExternalWebsites("https://d1vij.github.io/badui-birthday-guesser/");
+        const site = new EmbedExternalWebsites("https://en.wikipedia.org/wiki/Main_Page");
+        await l.startLoadingFor(1000, false);
+        const p = site.embed();
+        await p;
     }
 
     public info(): string[] {
@@ -35,9 +28,6 @@ export class __tmp extends AbstractCommand{
         return [`usage: clear`];
     }
     public handleErrors(err: any): void {
-        TerminalOutputHandler.standardErrorOutput([
-            `How even did this command raise an error ???`,
-            err.name
-        ])
+        console.log(err);
     }
 }

@@ -14,70 +14,74 @@ const termprint = TerminalOutputHandler.printToTerminal
 
 const randomTime = () => Math.random() * (400 - 100) + 100;
 
+const debug = true;
+
 
 export async function startupConfig(cb: () => void) {
     commandInputFeildHidden(true);
 
-    await pause(1000);
-    const startTime = Date.now();
+    if (!debug) {
 
-    // boot seq
-    const bootText = addColor("[BOOT]", Colors.red_muted);
-    const infoText = addColor("[INFO]", Colors.yellow_faded);
-    const lines = [
-        infoText + " Initializing BrowserSH runtime...",
-        bootText + " Loading shell modules... done",
-        bootText + " Preparing virtual filesystem... OK",
-        bootText + " Checking local storage quota... 512MB available",
-        bootText + " Loading theme and UI components... done",
-        bootText + " Initializing input/output handlers...",
-        "\t> Keyboard event listener attached",
-        "\t> Clipboard integration enabled",
-        "\t> Display renderer ready",
-        bootText + " Setting up command registry... done",
-        bootText + " Establishing pseudo-network interface... OK",
-        bootText + " Mounting virtual directories...",
-        bootText + " Loading environment variables... done",
-        bootText + " Warming up JavaScript engine... done",
-        bootText + " The cake is a lie...",
-        bootText + " Compiling shell scripts... done",
-        bootText + " Printing obviously fake boot sequence :)...",
-        bootText + " Running startup hooks... done",
-        bootText + " Cleaning temporary buffers... done",
-        infoText + " All systems nominal. Welcome to BrowserSH.",
-    ];
-    
-    for (const line of lines) {
-        termprint(line);
+        await pause(1000);
+        const startTime = Date.now();
+
+        // boot seq
+        const bootText = addColor("[BOOT]", Colors.red_muted);
+        const infoText = addColor("[INFO]", Colors.yellow_faded);
+        const lines = [
+            infoText + " Initializing BrowserSH runtime...",
+            bootText + " Loading shell modules... done",
+            bootText + " Preparing virtual filesystem... OK",
+            bootText + " Checking local storage quota... 512MB available",
+            bootText + " Loading theme and UI components... done",
+            bootText + " Initializing input/output handlers...",
+            "\t> Keyboard event listener attached",
+            "\t> Clipboard integration enabled",
+            "\t> Display renderer ready",
+            bootText + " Setting up command registry... done",
+            bootText + " Establishing pseudo-network interface... OK",
+            bootText + " Mounting virtual directories...",
+            bootText + " Loading environment variables... done",
+            bootText + " Warming up JavaScript engine... done",
+            bootText + " The cake is a lie...",
+            bootText + " Compiling shell scripts... done",
+            bootText + " Printing obviously fake boot sequence :)...",
+            bootText + " Running startup hooks... done",
+            bootText + " Cleaning temporary buffers... done",
+            infoText + " All systems nominal. Welcome to BrowserSH.",
+        ];
+
+        for (const line of lines) {
+            termprint(line);
+            await pause(randomTime());
+        }
+        termprint(`${addColor("[OK]", Colors.green_mint)} System boot completed in ${(Date.now() - startTime) / 1000} seconds`);
+        
+        const l = new LoaderFactory(addColor("Starting Shell", Colors.blue_cool), 100, "braille", Colors.red);
+        const p = l.startLoading();
+        // await l.startLoadingFor(3000, true);
+        let username = await promptUser("Enter username ", false, true);
+        username = username?.trim() === "" || username === undefined ? "guest" : username.trim();
+        // eh prolly do this some other way
+        if (username === "guest") termprint("No username recieved, defaulting to guest");
+        SHELL.globals.vars.set("&&username", `${username.trim()}@${detectBrowser()}`);
+        updatePrimaryPrompt();
+        
+        l.stopLoading(true);
+        await p;
+        
+        l.setText("Curating user profile");
+        await l.startLoadingFor(2500, true);
+        
+        TerminalOutputHandler.clearTerminal();
+        await pause(randomTime());
+        termprint(addColor(`Welcome to BrowserSH v0.1.0`, Colors.blue_ice));
+        await pause(500);
+        termprint(`Type ${addColor("list commands", Colors.yellow_faded)} to see available commands.`)
+        
         await pause(randomTime());
     }
-    termprint(`${addColor("[OK]", Colors.green_mint)} System boot completed in ${(Date.now() - startTime) / 1000} seconds`);
-
-    const l = new LoaderFactory(addColor("Starting Shell", Colors.blue_cool), 100, "braille", Colors.red);
-    const p = l.startLoading();
-    // await l.startLoadingFor(3000, true);
-    let username = await promptUser("Enter username ", false, true);
-    username = username?.trim() === "" || username === undefined ? "guest" : username.trim();
-    // eh prolly do this some other way
-    if (username === "guest") termprint("No username recieved, defaulting to guest");
-    SHELL.globals.vars.set("&&username", `${username.trim()}@${detectBrowser()}`);
-    updatePrimaryPrompt();
-    
-    l.stopLoading(true);
-    await p;
-    
-    l.setText("Curating user profile");
-    await l.startLoadingFor(2500, true);
-    
-    TerminalOutputHandler.clearTerminal();
-    await pause(randomTime());
-    termprint(addColor(`Welcome to BrowserSH v0.1.0`, Colors.blue_ice));
-    await pause(500);
-    termprint(`Type ${addColor("list commands", Colors.yellow_faded)} to see available commands.`)
-    
-    await pause(randomTime());
-    
-    
+        
     // const __test_dir = FileSystem.createDirectoryByPath("/temp/content", SHELL.globals.fs.root, false);
     // const __home = FileSystem.createDirectoryByPath("/home/", SHELL.globals.fs.root, false);
     // FileSystem.createFileByPath("./info.txt", __home.parent!, "Linux Bash terminal Emulated purely on browser")
@@ -91,7 +95,7 @@ export async function startupConfig(cb: () => void) {
     FileSystem.createFileByPath("boot.log", log, content_bootlog);
 
     const bin = FileSystem.createDirectory(SHELL.globals.fs.root, "bin");
-    for(const cmd of commandIndex.keys().toArray()){
+    for (const cmd of commandIndex.keys().toArray()) {
         FileSystem.createFileByPath(cmd, bin, "Nothing to see here!!");
     }
 
