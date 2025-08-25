@@ -67,7 +67,7 @@ export class Shell {
         const command = UserInputHandler.getUserInput();
         const sanitized_command = sanitizeHTML(command);
 
-        TerminalOutputHandler.printToTerminalOld(OutputTemplates.userInputPreview(sanitized_command));
+        TerminalOutputHandler.printToTerminal(OutputTemplates.userInputPreview(sanitized_command), true);
         UserInputHandler.clearUserInput();
 
         // Command input feild is hidden once command processing starts

@@ -13,7 +13,7 @@ export class List extends AbstractCommand {
     public flags: string[] = [];
     public options: string[] = [];
 
-    public listables: Array<string> = ["commands","listables", "colors", "variables"]
+    public listables: Array<string> = ["commands", "listables", "colors", "variables"]
 
     protected __execute(tokens: Tokens): void {
         const results = getCommandContext(tokens);
@@ -46,7 +46,7 @@ export class List extends AbstractCommand {
         TerminalOutputHandler.printToTerminal(content);
         return;
     }
-    
+
     public handleErrors(err: any): void {
         if (err instanceof InvalidListableItemError) {
             TerminalOutputHandler.standardErrorOutput([
@@ -82,6 +82,6 @@ export class List extends AbstractCommand {
         ];
     }
 
-    
-    
+
+
 }

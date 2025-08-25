@@ -63,9 +63,9 @@ export class LoaderFactory {
         this.delay = delay;
     }
 
-    public startLoadingFor(ms: number, maintainState:boolean) {
+    public startLoadingFor(ms: number, maintainState: boolean) {
         // "fakes" delay and starts loading
-        const lp = this.startLoading(); 
+        const lp = this.startLoading();
 
         return new Promise<void>(resolve => {
             setTimeout(async () => {

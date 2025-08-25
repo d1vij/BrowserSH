@@ -6,7 +6,7 @@ let count = 4;
 let INDENT = " ".repeat(count);
 
 // ms after which the indent hover options should disapper once the mouse leaves the it
-const TIMEOUT_DELAY = 1000; 
+const TIMEOUT_DELAY = 1000;
 
 /**
  * The NotepadFactory class instantiates and manages a standalone notepad/ text-editor popup inside the web terminal.
@@ -30,11 +30,11 @@ export class NotepadFactory {
     private npdIndentSpacesSelect;
     private npdIndentSpacesPreview;
     private npdFileName;
-    private resolveInput: null | ((content:string) => void);
+    private resolveInput: null | ((content: string) => void);
 
     private inserted: boolean = false;
-    
-    public constructor(preExistingContent:string = "", fileName:string) {
+
+    public constructor(preExistingContent: string = "", fileName: string) {
         const clone = notepadTemplate.content.cloneNode(true) as DocumentFragment;
 
         this.npdWindow = clone.querySelector("div.ui-notepad-window") as HTMLDivElement;
@@ -50,7 +50,7 @@ export class NotepadFactory {
 
         this.npdInput.addEventListener("keydown", this.tab);
         this.npdInput.value = preExistingContent;
-        
+
         this.npdIndentSpacesSelect.querySelectorAll<HTMLDivElement>(".option").forEach(option => option.addEventListener("click", this.changeSelection));
 
         this.npdIndentSpacesButton.addEventListener("mouseenter", () => {
@@ -66,22 +66,22 @@ export class NotepadFactory {
     }
 
     private insertIntoDom = () => {
-        
+
         // safety to prevent double insertions
-        if(this.inserted == false){
+        if (this.inserted == false) {
             terminalLinesList.appendChild(this.npdWindow);
             this.inserted = true;
         }
     }
     private submit = () => {
-        if(this.resolveInput !== null){
+        if (this.resolveInput !== null) {
             this.resolveInput(this.npdInput.value);
             this.resolveInput = null;
             this.inserted = false;
             this.npdWindow.remove();
         }
     }
-    
+
     private changeSelection = (event: Event) => {
         const target = event.target as HTMLDivElement;
         count = Number(target.getAttribute("data-value")!);
@@ -93,21 +93,21 @@ export class NotepadFactory {
      * Returns a promise which resolves to string when user clicks the "Save and Exit" button inside the notepad window.
      * The notepad is only inserted into dom when this function is called, which allows for multiple usage of the same notepad instance
      */
-    public getContent=(): Promise<string> => {
+    public getContent = (): Promise<string> => {
         this.insertIntoDom();
         return new Promise((resolve) => {
             this.resolveInput = resolve;
         })
     }
-    
-    private deleteTimeout = ()  => {
+
+    private deleteTimeout = () => {
         clearTimeout(hovertimeout)
     }
 
-    private hideWithDelay = ()  => {
+    private hideWithDelay = () => {
         hovertimeout = setTimeout(() => {
             this.npdIndentSpacesSelect.style.display = "none";
-        }, TIMEOUT_DELAY) 
+        }, TIMEOUT_DELAY)
     }
 
     //event listener for tab presses since by there is no default behaviour to handle tab inputs in html textarea elements

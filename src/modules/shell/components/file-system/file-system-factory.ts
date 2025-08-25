@@ -21,7 +21,7 @@ export class FileSystemFactory {
                 children: []
             } 
         */
-           this.root = config.initialStructure
-           this.currentDirectoryNode = this.root;
-        }
+        this.root = config.initialStructure
+        this.currentDirectoryNode = this.root;
+    }
 }

@@ -9,20 +9,20 @@ import { getCommandContext } from "../../../core/extract";
 import { NodeNotFoundError } from "../../__errors";
 import { AbstractCommand } from "../../AbstractCommand";
 
-export class Rm extends AbstractCommand{
+export class Rm extends AbstractCommand {
     public name: string = "rm";
     public flags: string[] = ['r'];
     public options: string[] = [];
 
-    protected __execute(tokens: Tokens): void{
+    protected __execute(tokens: Tokens): void {
         const results = getCommandContext(tokens);
         const recurse = results.flags.includes('r');
 
         FileSystem.deleteNodeByPath(results.remainingTokens[0], SHELL.globals.fs.currentDirectoryNode, recurse);
     }
-    
-    
-    
+
+
+
     public handleErrors(err: any): void {
         if (err instanceof NodeToRemoveIsADirectoryAndNoRecurseFlagIsProvidedError) {
             TerminalOutputHandler.standardErrorOutput([

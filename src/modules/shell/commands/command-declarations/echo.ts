@@ -10,7 +10,7 @@ import { processGenericErrors } from "../processGenericErrors";
 
 export class Echo extends AbstractCommand {
     public name = "echo";
-    public flags: string[] = ['r','reverse'];
+    public flags: string[] = ['r', 'reverse'];
     public options: string[] = ['colors', 'l', 'loop'];
 
     public info(): string[] {
@@ -37,14 +37,14 @@ export class Echo extends AbstractCommand {
         ];
     }
 
-    public __execute(tokens:Tokens){
+    public __execute(tokens: Tokens) {
         const results = getCommandContext(tokens);
         console.log(results);
-        
+
         let content = results.remainingTokens.join(' ');
-        for(let flag of results.flags){
-            switch(flag){
-                case "r":{
+        for (let flag of results.flags) {
+            switch (flag) {
+                case "r": {
                     content = addColor(content, Colors.red);
                     break;
                 }
@@ -57,9 +57,9 @@ export class Echo extends AbstractCommand {
                 }
             }
         }
-        
-        for (let option in results.options){
-            switch(option){
+
+        for (let option in results.options) {
+            switch (option) {
                 case "color": {
                     const userColor = results.options.color;
                     if (userColor in Colors === false) throw new InvalidColorError(userColor);
@@ -67,19 +67,19 @@ export class Echo extends AbstractCommand {
                     break;
                 }
                 case "l":
-                case "loop":{
+                case "loop": {
                     const count = Number(results.options["l"] || results.options["loop"]);
                     console.log(count);
-                    if(Number.isNaN(count)) throw new InvalidNumberError(results.options['l'] || results.options["loop"]);
-                    
+                    if (Number.isNaN(count)) throw new InvalidNumberError(results.options['l'] || results.options["loop"]);
+
                     // FIXME: vvvv
                     // @ts-ignore
                     content = new Array(count).fill(content);
-                    
-                    
+
+
                     break;
                 }
-                default:{
+                default: {
                     throw new InvalidOptionError(option);
                 }
             }
@@ -87,22 +87,22 @@ export class Echo extends AbstractCommand {
 
         TerminalOutputHandler.printToTerminal(content);
         return;
-    }   
-    public handleErrors(err:any){
-        if(err instanceof IncorrectOptionUsageInCommandError){ console.log("CATCHED in cmd body")}
-        if(err instanceof InvalidColorError){
+    }
+    public handleErrors(err: any) {
+        if (err instanceof IncorrectOptionUsageInCommandError) { console.log("CATCHED in cmd body") }
+        if (err instanceof InvalidColorError) {
             TerminalOutputHandler.standardErrorOutput([
                 `InvalidColorError: Color (${err.color}) does not exsists`,
                 `valid colors only include ${Object.values(Colors).join(', ')}`
             ])
             return;
-        } else if(err instanceof InvalidNumberError) {
+        } else if (err instanceof InvalidNumberError) {
             TerminalOutputHandler.standardErrorOutput([
                 `InvalidNumberError: Error in parsing ${addColor(err.num, Colors.yellow_light)}. Enter a valid number`
             ]);
             return;
         }
-        else{
+        else {
             processGenericErrors(err);
             return;
         }

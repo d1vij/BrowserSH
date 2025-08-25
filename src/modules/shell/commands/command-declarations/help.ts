@@ -13,32 +13,32 @@ export class Help extends AbstractCommand {
     public name = "help";
     public flags: string[] = ['u', "usage", 'i', "info"];
     public options: string[] = ["cmd"];
-    
-   public info(): string[] {
-    return [
-        "Display information about builtin commands or list all available commands.",
-        "",
-        "Flags include:",
-        `\t${addColor("i | info", Colors.yellow_light)}   -> shows detailed information about the command`,
-        `\t${addColor("u | usage", Colors.yellow_light)}  -> shows usage examples for the command`,
-        "",
-        "Options include:",
-        `\t${addColor("cmd", Colors.yellow_light)} : specify which command to show help for (default = help)`,
-    ];
-}
 
-public usage(): string[] {
-    return [
-        "usage: help [COMMAND_NAME] [flags] [options]",
-        "",
-        "Examples:",
-        `\t help\t\t\t\t=> lists all available commands`,
-        `\t help echo\t\t\t=> shows both info and usage for 'echo'`,
-        `\t help echo --info\t\t=> shows only info for 'echo'`,
-        `\t help echo --usage\t\t=> shows only usage for 'echo'`,
-        `\t help --cmd facts -u\t\t=> shows usage info for 'facts'`,
-    ];
-}
+    public info(): string[] {
+        return [
+            "Display information about builtin commands or list all available commands.",
+            "",
+            "Flags include:",
+            `\t${addColor("i | info", Colors.yellow_light)}   -> shows detailed information about the command`,
+            `\t${addColor("u | usage", Colors.yellow_light)}  -> shows usage examples for the command`,
+            "",
+            "Options include:",
+            `\t${addColor("cmd", Colors.yellow_light)} : specify which command to show help for (default = help)`,
+        ];
+    }
+
+    public usage(): string[] {
+        return [
+            "usage: help [COMMAND_NAME] [flags] [options]",
+            "",
+            "Examples:",
+            `\t help\t\t\t\t=> lists all available commands`,
+            `\t help echo\t\t\t=> shows both info and usage for 'echo'`,
+            `\t help echo --info\t\t=> shows only info for 'echo'`,
+            `\t help echo --usage\t\t=> shows only usage for 'echo'`,
+            `\t help --cmd facts -u\t\t=> shows usage info for 'facts'`,
+        ];
+    }
 
     public __execute(tokens: Tokens) {
         const results = getCommandContext(tokens);
@@ -60,7 +60,7 @@ public usage(): string[] {
         const instance = new cmdConstruct();
 
         console.log(results.flags);
-        
+
         if (results.flags.includes("i") || results.flags.includes("info")) {
             console.log("printing info")
             TerminalOutputHandler.printToTerminal([
@@ -74,7 +74,7 @@ public usage(): string[] {
                 ...instance.usage()
             ])
             return;
-        }else {
+        } else {
             TerminalOutputHandler.printToTerminal([
                 // addColor(instance.name, Colors.blue_light),
                 ...instance.info(),

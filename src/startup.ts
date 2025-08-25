@@ -56,7 +56,7 @@ export async function startupConfig(cb: () => void) {
             await pause(randomTime());
         }
         termprint(`${addColor("[OK]", Colors.green_mint)} System boot completed in ${(Date.now() - startTime) / 1000} seconds`);
-        
+
         const l = new LoaderFactory(addColor("Starting Shell", Colors.blue_cool), 100, "braille", Colors.red);
         const p = l.startLoading();
         // await l.startLoadingFor(3000, true);
@@ -66,22 +66,22 @@ export async function startupConfig(cb: () => void) {
         if (username === "guest") termprint("No username recieved, defaulting to guest");
         SHELL.globals.vars.set("&&username", `${username.trim()}@${detectBrowser()}`);
         updatePrimaryPrompt();
-        
+
         l.stopLoading(true);
         await p;
-        
+
         l.setText("Curating user profile");
         await l.startLoadingFor(2500, true);
-        
+
         TerminalOutputHandler.clearTerminal();
         await pause(randomTime());
         termprint(addColor(`Welcome to BrowserSH v0.1.0`, Colors.blue_ice));
         await pause(500);
         termprint(`Type ${addColor("list commands", Colors.yellow_faded)} to see available commands.`)
-        
+
         await pause(randomTime());
     }
-        
+
     // const __test_dir = FileSystem.createDirectoryByPath("/temp/content", SHELL.globals.fs.root, false);
     // const __home = FileSystem.createDirectoryByPath("/home/", SHELL.globals.fs.root, false);
     // FileSystem.createFileByPath("./info.txt", __home.parent!, "Linux Bash terminal Emulated purely on browser")

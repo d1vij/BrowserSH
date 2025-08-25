@@ -13,34 +13,34 @@ import { TerminalOutputHandler } from "../output-handler/terminal-output-handler
  * Anywhere in command, 
  *      const response = await promptUser("Whats your name ? :") //Whats your name ? : Foo
  */
-export function promptUser(prompt: string, multiline:boolean = false, inputPreview:boolean = false): Promise<string | undefined> {
+export function promptUser(prompt: string, multiline: boolean = false, inputPreview: boolean = false): Promise<string | undefined> {
     return new Promise((resolve) => {
         const clone = takeUserInputTemplate.content.cloneNode(true) as DocumentFragment;
-        
+
         // TODO: Rename class names in css and html template
         const container = clone.querySelector<HTMLLIElement>(".ui-user-input-container")!;
         const inputFeild = clone.querySelector<HTMLDivElement>(".ui-user-input-feild")!;
         const promptFeild = clone.querySelector<HTMLDivElement>(".ui-user-input-prompt")!;
 
         promptFeild.innerText = prompt; //TODO: add html escaping
-        
-        
-        inputFeild.addEventListener("keypress", function handleUserinput(event:KeyboardEvent){
-            if(multiline && event.key === "Enter" && event.shiftKey) return;
+
+
+        inputFeild.addEventListener("keypress", function handleUserinput(event: KeyboardEvent) {
+            if (multiline && event.key === "Enter" && event.shiftKey) return;
             if (event.key !== "Enter") return;
-            
+
             event.preventDefault();
             const target = event.target as HTMLDivElement;
-            
-            target.removeEventListener("keypress",handleUserinput);
-            
+
+            target.removeEventListener("keypress", handleUserinput);
+
             const userInput = target.innerText;
-            
+
             container.remove();
-            
+
             // eh maybe remove 
-            if(inputPreview == true) TerminalOutputHandler.printToTerminal(`${prompt}${userInput.trim()}`);
-            
+            if (inputPreview == true) TerminalOutputHandler.printToTerminal(`${prompt}${userInput.trim()}`);
+
             if (userInput === "") resolve(undefined);
             else resolve(userInput)
         });

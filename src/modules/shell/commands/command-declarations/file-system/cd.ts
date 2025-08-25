@@ -11,37 +11,37 @@ import { IncorrectArgumentsCountError, NodeNotFoundError } from "../../__errors"
 import { AbstractCommand } from "../../AbstractCommand";
 import { getPathContext } from "../../../components/file-system/getPathContext";
 
-export class Cd extends AbstractCommand{
+export class Cd extends AbstractCommand {
     public name: string = "cd";
     public flags: string[] = [];
     public options: string[] = [];
 
-    protected __execute(tokens:Tokens){
+    protected __execute(tokens: Tokens) {
         const results = getCommandContext(tokens);
-        if(results.remainingTokens.length != 1) throw new IncorrectArgumentsCountError(1, results.remainingTokens.length);
+        if (results.remainingTokens.length != 1) throw new IncorrectArgumentsCountError(1, results.remainingTokens.length);
 
         const path = results.remainingTokens[0];
         const context = getPathContext(path, SHELL.globals.fs.currentDirectoryNode);
 
         const node = FileSystem.getNodeByPath(context);
-        if(node === undefined) throw new NodeNotFoundError(path);
+        if (node === undefined) throw new NodeNotFoundError(path);
         else if (node.type === "file") throw new NodeIsFileError(path);
 
         SHELL.globals.fs.currentDirectoryNode = node as DirectoryNode;
         return;
     }
-    
-    
+
+
     public handleErrors(err: any): void {
-        if(err instanceof IncorrectArgumentsCountError){
+        if (err instanceof IncorrectArgumentsCountError) {
             TerminalOutputHandler.standardErrorOutput([
                 `IncorrectArgumentsCountError: This command only takes one argument!`,
                 `Pass any paths with spaces inside quotations!`
             ])
             return;
 
-        } else if(err instanceof NodeNotFoundError){
-            if(err.path==="parent"){
+        } else if (err instanceof NodeNotFoundError) {
+            if (err.path === "parent") {
                 TerminalOutputHandler.standardErrorOutput([
                     `NodeNotFoundError: No parent node exists for this directory !.`,
                     `Current directory could be the root directory ??`
@@ -52,14 +52,14 @@ export class Cd extends AbstractCommand{
                 `NodeNotFoundError: Cannot cd into directory, ${addColor(err.path, Colors.yellow_light)}, no such path exists!`
             ])
             return;
-            
-        } else if(err instanceof NodeIsFileError){
+
+        } else if (err instanceof NodeIsFileError) {
             TerminalOutputHandler.standardErrorOutput([
                 `NodeIsFileError: Cannot cd to path, ${addColor(err.path, Colors.yellow_light)}, target node is a File!`
             ])
             return;
         }
-        else{
+        else {
             TerminalOutputHandler.standardErrorOutput([
                 `INVALIDERROR: ${err.name}`,
                 err.toString() //idk if it would work or not
@@ -87,12 +87,12 @@ export class Cd extends AbstractCommand{
             `\t ${addColor("some/nested/dir", Colors.yellow_light)}-> Relative path from current directory`,
             "",
             "Examples:",
-            `\t ${addColor("cd .. ",Colors.blue_light)} => Moves to the parent directory`,
-            `\t ${addColor("cd . ",Colors.blue_light)} => Stays in the current directory`,
-            `\t ${addColor("cd ./ ",Colors.blue_light)} => Stays in the current directory`,
-            `\t ${addColor("cd root/Users/Guest ",Colors.blue_light)} => Moves to absolute path starting from root`,
-            `\t ${addColor("cd ./root/a/b",Colors.blue_light)} => Moves to relative path starting from current directory`,
-            `\t ${addColor("cd projects/alpha",Colors.blue_light)} => Moves into a subfolder called 'alpha' inside 'projects'`
+            `\t ${addColor("cd .. ", Colors.blue_light)} => Moves to the parent directory`,
+            `\t ${addColor("cd . ", Colors.blue_light)} => Stays in the current directory`,
+            `\t ${addColor("cd ./ ", Colors.blue_light)} => Stays in the current directory`,
+            `\t ${addColor("cd root/Users/Guest ", Colors.blue_light)} => Moves to absolute path starting from root`,
+            `\t ${addColor("cd ./root/a/b", Colors.blue_light)} => Moves to relative path starting from current directory`,
+            `\t ${addColor("cd projects/alpha", Colors.blue_light)} => Moves into a subfolder called 'alpha' inside 'projects'`
         ];
     }
 

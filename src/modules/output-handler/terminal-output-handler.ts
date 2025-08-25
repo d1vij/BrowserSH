@@ -13,20 +13,16 @@ function scrollToEnd() {
  */
 export class TerminalOutputHandler {
 
-    public static printToTerminal(content: string | string[]): void {
-        terminalLinesList.innerHTML += OutputTemplates.standardTerminalOutput(content);
+    public static printToTerminal(content: string | string[], formatted=false): void {
+        if(formatted){
+            terminalLinesList.innerHTML += content;
+        }else {
+            terminalLinesList.innerHTML += OutputTemplates.standardTerminalOutput(content);
+        }
         scrollToEnd();
         return;
     }
-
-
-    public static printToTerminalOld(content: string) {
-        // TODO: refactor usages to new printToTerminal
-        terminalLinesList.innerHTML += content;
-        scrollToEnd();
-        return;
-    }
-
+    
     /**
      * Clears terminal
      */

@@ -3,12 +3,12 @@ import type { Tokens } from "../../core/__typing";
 import { AbstractCommand } from "../AbstractCommand";
 
 
-export class BirthdayGuesser extends AbstractCommand{
+export class BirthdayGuesser extends AbstractCommand {
     public name = "clear";
     public flags: string[] = []
     public options: string[] = []
 
-    protected async __execute(_: Tokens){
+    protected async __execute(_: Tokens) {
         const site = new EmbedExternalWebsites("https://d1vij.github.io/badui-birthday-guesser/");
         await site.embed()
     }

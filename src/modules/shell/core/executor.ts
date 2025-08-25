@@ -1,6 +1,6 @@
 import { SHELL } from "../../../main";
-import type { Tokens , ParserResults} from "./__typing";
-import { varNameRegex} from "./parser";
+import type { Tokens, ParserResults } from "./__typing";
+import { varNameRegex } from "./parser";
 import { UndefinedCommandError, UnexpectedError } from "./__errors";
 import { getCommandConstructor } from "../commands/command-index";
 import type { MaybeAsyncFunction } from "../commands/__typing";
@@ -10,25 +10,25 @@ import type { MaybeAsyncFunction } from "../commands/__typing";
  * Executes whatever is passed from parser results
  * Recieves results object and a "done" callback function. This function gets executed when the execution is finishied
  */
-export function execute(results: ParserResults, done? : MaybeAsyncFunction<void>){
-    if(results.type=="variable-assignment" && results.tokens){
+export function execute(results: ParserResults, done?: MaybeAsyncFunction<void>) {
+    if (results.type == "variable-assignment" && results.tokens) {
         assignVariable(results.tokens);
         done?.();
         return;
     }
-    else if (results.type=="command" && results.command && results.tokens){
+    else if (results.type == "command" && results.command && results.tokens) {
         // fetching the class of command
         // NOTE: The names of command are case-sensitive
         const cmdConstruct = getCommandConstructor(results.command)
-        
+
         // no command found with provided name
-        if(cmdConstruct === undefined) throw new UndefinedCommandError(results.command);
-        
+        if (cmdConstruct === undefined) throw new UndefinedCommandError(results.command);
+
         const instance = new cmdConstruct();
         instance.execute(results.tokens, done);
         return;
 
-    } else{
+    } else {
         throw new UnexpectedError(results.toString());
     }
 }

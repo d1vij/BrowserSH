@@ -25,23 +25,23 @@ export function getCommandContext(tokens: Tokens): ExtractionResults {
 
     for (let idx = 0; idx < tokens.length; idx++) {
         const currTok = tokens[idx];
-        
-        if (currTok.length === 2 && currTok[0] === C_SINGLE_DASH && !test_isNumeric(currTok)){
+
+        if (currTok.length === 2 && currTok[0] === C_SINGLE_DASH && !test_isNumeric(currTok)) {
             // current token is a flag
             flags.push(currTok[1]);
         }
-        else if(currTok.length >= 3 && currTok.startsWith(C_DOUBLE_DASH, 0)){
+        else if (currTok.length >= 3 && currTok.startsWith(C_DOUBLE_DASH, 0)) {
             // current token is an option
 
             const optionName = currTok.slice(2);
-            
-            if(idx + 1 >= tokens.length) throw new IncorrectOptionUsageInCommandError(`No option provided to option ${addColor(optionName, Colors.yellow_light)}`);
 
-            
+            if (idx + 1 >= tokens.length) throw new IncorrectOptionUsageInCommandError(`No option provided to option ${addColor(optionName, Colors.yellow_light)}`);
+
+
             const nextTok = tokens[idx + 1];
-            if(nextTok.startsWith(C_DOUBLE_DASH, 0)
-                ||(nextTok.length === 2 && nextTok[0] === C_SINGLE_DASH && !test_isNumeric(nextTok))) throw new IncorrectOptionUsageInCommandError(`No option provided to option ${addColor(optionName, Colors.yellow_light)}`);
-            
+            if (nextTok.startsWith(C_DOUBLE_DASH, 0)
+                || (nextTok.length === 2 && nextTok[0] === C_SINGLE_DASH && !test_isNumeric(nextTok))) throw new IncorrectOptionUsageInCommandError(`No option provided to option ${addColor(optionName, Colors.yellow_light)}`);
+
             options[optionName] = nextTok;
             idx++; //skip the next token
 

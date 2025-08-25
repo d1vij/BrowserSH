@@ -11,11 +11,11 @@
  */
 export class VariableSystemFactory {
     public variables: Map<string, string>;
-    
+
     constructor(predefined?: Map<string, string>) {
         this.variables = predefined || new Map<string, string>();
     }
-    
+
     public get(name: string): string | undefined {
         return this.variables.get(name);
     }

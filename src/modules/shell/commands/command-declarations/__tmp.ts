@@ -5,14 +5,14 @@ import type { Tokens } from "../../core/__typing";
 import { AbstractCommand } from "../AbstractCommand";
 
 
-export class __tmp extends AbstractCommand{
+export class __tmp extends AbstractCommand {
     public name = "clear";
     public flags: string[] = []
     public options: string[] = []
 
-    protected async __execute(_: Tokens){
+    protected async __execute(_: Tokens) {
         const l = new LoaderFactory("Loading Site", 150, "line", Colors.blue_cool);
-        
+
         // const site = new EmbedExternalWebsites("https://d1vij.github.io/badui-birthday-guesser/");
         const site = new EmbedExternalWebsites("https://en.wikipedia.org/wiki/Main_Page");
         await l.startLoadingFor(1000, false);

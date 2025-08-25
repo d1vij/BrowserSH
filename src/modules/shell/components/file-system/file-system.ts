@@ -25,9 +25,6 @@ export function pathFromNodeNames(nodeNames: string[]): string {
 export const PARENT_IDENTIFIER = "..";
 export const SELF_IDENTIFIER = ".";
 
-
-
-
 export class FileSystem {
     // NON-INSTANTIABLE
     /**
@@ -116,34 +113,34 @@ export class FileSystem {
     ): FileNode {
         if (parent.type === "file") throw new NodeIsFileError(`${parent.name} is a file`);
 
-        
-        const context = typeof path === "string" ? getPathContext(path, parent) : path;
-        
-        //making a copy
-        const _path = Array.isArray(context.path) ? context.path.slice() : [...context.path]; 
 
-        
+        const context = typeof path === "string" ? getPathContext(path, parent) : path;
+
+        //making a copy
+        const _path = Array.isArray(context.path) ? context.path.slice() : [...context.path];
+
+
         let fileName: string;
         if (name) {
             fileName = name;
         } else {
             if (_path.length === 0) throw new Error("No file name specified");
-            fileName = _path.pop()!; 
+            fileName = _path.pop()!;
         }
 
-        
+
         const parentDir =
             _path.length === 0
-                ? parent 
-                : this.createDirectoryByPath({path:_path, root:parent});
+                ? parent
+                : this.createDirectoryByPath({ path: _path, root: parent });
 
         if (parentDir.type !== "directory") throw new NodeIsDirectoryError(fileName);
 
-        
+
         const nodeExists = parentDir.children.some(node => node.name === fileName);
         if (nodeExists && !overwrite) throw new NodeWithSameNameExistsError(fileName);
 
-        
+
         if (nodeExists && overwrite) {
             const idx = parentDir.children.findIndex(node => node.name === fileName);
             if (idx !== -1) parentDir.children.splice(idx, 1);

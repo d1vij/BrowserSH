@@ -1,8 +1,3 @@
-export enum OutputType {
-    terminal_output,
-    user_input_display
-}
-
 // TODO: Refactor this to somewhere
 export const Colors = {
     black: "black",
@@ -64,10 +59,4 @@ export const Colors = {
     grey_charcoal: "grey_charcoal",
     grey_coal: "grey_coal",
     slate_deep: "slate_deep",
-}
-
-export const Command = {
-    echo: "echo",
-    clear: "clear",
-    redirect: "redirect"
 }

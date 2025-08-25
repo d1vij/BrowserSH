@@ -69,7 +69,7 @@ export abstract class AbstractCommand {
         }
     }
 
-    
+
     /**
      * Private error handler to seggregate between "system-raised" errors and command specific erorrs
      */
@@ -77,7 +77,7 @@ export abstract class AbstractCommand {
         if (err instanceof IncorrectOptionUsageInCommandError) {
             TerminalOutputHandler.standardErrorOutput(err.msg)
 
-        } 
+        }
 
         // Error is command specific
         else this.handleErrors(err);

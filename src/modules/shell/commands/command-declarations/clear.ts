@@ -4,12 +4,12 @@ import { TerminalOutputHandler } from "../../../output-handler/terminal-output-h
 import { UserInputHandler } from "../../../output-handler/user-input-handler";
 
 
-export class Clear extends AbstractCommand{
+export class Clear extends AbstractCommand {
     public name = "clear";
     public flags: string[] = []
     public options: string[] = []
 
-    protected __execute(_: Tokens): void{
+    protected __execute(_: Tokens): void {
 
         TerminalOutputHandler.clearTerminal();
         UserInputHandler.clearUserInput();

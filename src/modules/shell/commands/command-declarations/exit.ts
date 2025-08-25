@@ -10,14 +10,14 @@ export class Exit extends AbstractCommand {
     public name: string = "exit";
     public flags: string[] = [];
     public options: string[] = [];
-    
 
-    protected __execute(_: Tokens): void{
+
+    protected __execute(_: Tokens): void {
         TerminalOutputHandler.printToTerminal("You can check out any time you like, but you can never leave");
         return;
     }
-    
-    public handleErrors(_: any): void {}
+
+    public handleErrors(_: any): void { }
     public info(): string[] {
         return [
             "Terminates the shell session and exits the CLI environment."
@@ -32,5 +32,5 @@ export class Exit extends AbstractCommand {
             "\t" + addColor("exit", Colors.blue_light) + " => exits the CLI"
         ];
     }
-    
+
 }

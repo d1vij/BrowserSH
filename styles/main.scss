@@ -17,7 +17,7 @@ $border-radius: 5px;
     border: 0;
 }
 
-.hidden{
+.hidden {
     display: none;
 }
 
@@ -79,17 +79,17 @@ body {
         display: flex;
         flex-direction: row;
         align-items: center;
-        
+
         justify-content: space-between;
-        
+
         transition: all 150ms ease-in-out;
-        
+
         padding-left: $inline-padding;
-        
+
         box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
         user-select: none;
 
-        
+
         border-radius: 5px;
 
         .icon {
@@ -261,6 +261,7 @@ body {
 
     background-color: $term-black;
     width: 100%;
+
     &:focus {
         outline: none;
     }

@@ -16,10 +16,10 @@ import { __tmp } from "./command-declarations/__tmp";
 import { Facts } from "./command-declarations/facts";
 import { BirthdayGuesser } from "./command-declarations/birthday-guesser";
 
-type CommandConstructor = new() => AbstractCommand;
+type CommandConstructor = new () => AbstractCommand;
 
 export const commandIndex = new Map<string, CommandConstructor>([
-    ["__tmp",__tmp],
+    ["__tmp", __tmp],
     ["birthday-guesser", BirthdayGuesser],
     ["cat", Cat],
     ["cd", Cd],
@@ -32,9 +32,9 @@ export const commandIndex = new Map<string, CommandConstructor>([
     ["ls", Ls],
     ["list", List],
     ["rm", Rm],
-    ['exit',Exit],
+    ['exit', Exit],
     ['notepad', Notepad]
-    
+
 ] as [string, CommandConstructor][]);
 
 export function getCommandConstructor(name: string) {
