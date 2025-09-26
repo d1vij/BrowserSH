@@ -1,18 +1,20 @@
-import { FileSystemFactory } from "./file-system/file-system-factory";
-import { VariableSystemFactory } from "./variables-factory";
+import { FileSystem } from "./file-system/file-system-factory";
+import { StorageSystem } from "./storage-system";
+import { VariableSystem } from "./variables-factory";
 
 /**
  * GlobalsFactory instantiates a "Globals" object which acts as a pseudo environment for the shell / terminal.
  * All other similar environment factories are also instantiated here, making this class's instance a singleton for all the other components
  */
 export class GlobalsFactory {
-    public fs: FileSystemFactory;
-    public vars: VariableSystemFactory;
+    public fs: FileSystem;
+    public vars: VariableSystem;
+    public storage: StorageSystem;
 
     constructor() {
 
         // initial root directory is empty and its name is '#' (not bash like rawrrr)
-        this.fs = new FileSystemFactory({
+        this.fs = new FileSystem({
             initialStructure: {
                 name: "@",
                 type: "directory",
@@ -21,6 +23,7 @@ export class GlobalsFactory {
             }
         });
 
-        this.vars = new VariableSystemFactory();
+        this.vars = new VariableSystem();
+        this.storage = new StorageSystem();
     }
 }

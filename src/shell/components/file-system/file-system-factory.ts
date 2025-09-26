@@ -4,7 +4,7 @@ import type { DirectoryNode, IFsFactoryConfig } from "../__typing";
 /**
  * Factory class to generate a FileSystem Object, which stores "file system" and other attributes. This is publicly exposed class to store fs data
  */
-export class FileSystemFactory {
+export class FileSystem {
     /**
      * The root node
      */

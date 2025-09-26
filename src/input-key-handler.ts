@@ -110,5 +110,6 @@ export function handleInput(event: KeyboardEvent) {
         event.preventDefault();
         TerminalOutputHandler.printToTerminal(OutputTemplates.userInputPreview(UserInputHandler.getUserInput() + "^C"), true);
         UserInputHandler.clearUserInput();
+        
     }
 }
