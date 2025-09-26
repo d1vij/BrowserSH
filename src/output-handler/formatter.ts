@@ -1,5 +1,5 @@
-import { primaryPromptCurrentDirectory, primaryPromptUsername } from "../../dom-elements";
-import { SHELL } from "../../main";
+import { primaryPromptCurrentDirectory, primaryPromptUsername } from "../dom-elements";
+import { SHELL } from "../main";
 import { FileSystem } from "../shell/components/file-system/file-system";
 
 /**

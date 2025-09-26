@@ -1,4 +1,4 @@
-import { SHELL } from "../../../main";
+import { SHELL } from "../../main";
 import type { Tokens, ParserResults } from "./__typing";
 import { varNameRegex } from "./parser";
 import { UndefinedCommandError, UnexpectedError } from "./__errors";

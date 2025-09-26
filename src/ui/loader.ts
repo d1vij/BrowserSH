@@ -1,4 +1,4 @@
-import { loaderTemplate, terminalLinesList } from "../../dom-elements";
+import { loaderTemplate, terminalLinesList } from "../dom-elements";
 
 
 /**

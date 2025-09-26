@@ -1,4 +1,4 @@
-import { notepadTemplate, terminalLinesList } from "../../dom-elements";
+import { notepadTemplate, terminalLinesList } from "../dom-elements";
 import { C_SPACE } from "../shell/core/shell";
 
 let hovertimeout: NodeJS.Timeout;

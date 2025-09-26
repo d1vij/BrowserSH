@@ -25,7 +25,7 @@ import {
     TokenContainsQuoteInMiddleErrror,
     UndefinedCommandError
 } from "./__errors"
-import { terminalInputDiv, terminalInputFeild } from "../../../dom-elements";
+import { terminalInputDiv, terminalInputFeild } from "../../dom-elements";
 
 export const C_SPACE = ' ';
 

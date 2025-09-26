@@ -1,20 +1,20 @@
 import { terminalInputFeild } from "./dom-elements";
 import { SHELL } from "./main";
-import { addColor, updatePrimaryPrompt } from "./modules/output-handler/formatter";
-import { TerminalOutputHandler } from "./modules/output-handler/terminal-output-handler";
-import { Colors } from "./modules/output-handler/typing/enums";
-import { commandIndex } from "./modules/shell/commands/command-index";
-import { FileSystem } from "./modules/shell/components/file-system/file-system";
-import { pause } from "./modules/shell/core/pause";
-import { commandInputFeildHidden } from "./modules/shell/core/shell";
-import { LoaderFactory } from "./modules/ui/loader";
-import { promptUser } from "./modules/ui/prompt-user";
+import { addColor, updatePrimaryPrompt } from "./output-handler/formatter";
+import { TerminalOutputHandler } from "./output-handler/terminal-output-handler";
+import { Colors } from "./output-handler/typing/enums";
+import { commandIndex } from "./shell/commands/command-index";
+import { FileSystem } from "./shell/components/file-system/file-system";
+import { pause } from "./shell/core/pause";
+import { commandInputFeildHidden } from "./shell/core/shell";
+import { LoaderFactory } from "./ui/loader";
+import { promptUser } from "./ui/prompt-user";
 
 const termprint = TerminalOutputHandler.printToTerminal
 
 const randomTime = () => Math.random() * (400 - 100) + 100;
 
-const debug = false;
+const debug = true;
 
 
 export async function startupConfig(cb: () => void) {
@@ -81,7 +81,10 @@ export async function startupConfig(cb: () => void) {
 
         await pause(randomTime());
     }
-
+    else {
+        SHELL.globals.vars.set("&&username", "IN_DEBUG_MODE");
+        updatePrimaryPrompt();
+    }
     // const __test_dir = FileSystem.createDirectoryByPath("/temp/content", SHELL.globals.fs.root, false);
     // const __home = FileSystem.createDirectoryByPath("/home/", SHELL.globals.fs.root, false);
     // FileSystem.createFileByPath("./info.txt", __home.parent!, "Linux Bash terminal Emulated purely on browser")

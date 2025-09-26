@@ -1,4 +1,4 @@
-import { terminalLinesList, takeUserInputTemplate } from "../../dom-elements";
+import { terminalLinesList, takeUserInputTemplate } from "../dom-elements";
 import { TerminalOutputHandler } from "../output-handler/terminal-output-handler";
 
 

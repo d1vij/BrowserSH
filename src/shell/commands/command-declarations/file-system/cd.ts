@@ -1,4 +1,4 @@
-import { SHELL } from "../../../../../main";
+import { SHELL } from "../../../../main";
 import { addColor } from "../../../../output-handler/formatter";
 import { TerminalOutputHandler } from "../../../../output-handler/terminal-output-handler";
 import { Colors } from "../../../../output-handler/typing/enums";

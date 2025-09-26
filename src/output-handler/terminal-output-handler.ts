@@ -1,6 +1,6 @@
 import { Colors } from "./typing/enums";
 import { addColor, OutputTemplates } from "./formatter";
-import { terminalContentDiv, terminalLinesList } from "../../dom-elements"
+import { terminalContentDiv, terminalLinesList } from "../dom-elements"
 
 function scrollToEnd() {
     terminalContentDiv.scrollTop = terminalContentDiv.scrollHeight + 100;

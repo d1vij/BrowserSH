@@ -1,5 +1,5 @@
 import { terminalInputFeild, unsupportedMessage, windowDiv } from "./dom-elements"
-import { Shell } from "./modules/shell/core/shell";
+import { Shell } from "./shell/core/shell";
 import { startupConfig } from "./startup";
 
 

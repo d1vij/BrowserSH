@@ -1,4 +1,4 @@
-import { SHELL } from "../../../../main";
+import { SHELL } from "../../../main";
 import type { DirectoryNode } from "../__typing"
 import { nodeNamesFrom, PARENT_IDENTIFIER, SELF_IDENTIFIER } from "./file-system";
 import { NodeNotFoundError } from "../../commands/__errors";

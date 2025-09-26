@@ -2,7 +2,7 @@
  * (semantics)
  */
 
-import { SHELL } from "../../../main";
+import { SHELL } from "../../main";
 import type { ParserResults } from "./__typing";
 import type { Tokens } from "./__typing"
 import { VariableDoesNotExistsError } from "../components/__errors";

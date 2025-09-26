@@ -1,4 +1,4 @@
-import { terminalInputFeild } from "../../dom-elements";
+import { terminalInputFeild } from "../dom-elements";
 
 export class UserInputHandler{
     public static getUserInput(){
