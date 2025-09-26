@@ -1,6 +1,6 @@
-import { FileSystem } from "./file-system/file-system-factory";
+import { FileSystem } from "./file-system/file-system";
 import { StorageSystem } from "./storage-system";
-import { VariableSystem } from "./variables-factory";
+import { VariableSystem } from "./variables-system";
 
 /**
  * GlobalsFactory instantiates a "Globals" object which acts as a pseudo environment for the shell / terminal.

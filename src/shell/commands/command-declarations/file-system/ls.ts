@@ -2,7 +2,7 @@ import { SHELL } from "../../../../main";
 import { addColor } from "../../../../output-handler/formatter";
 import { TerminalOutputHandler } from "../../../../output-handler/terminal-output-handler";
 import { Colors } from "../../../../output-handler/typing/enums";
-import { FileSystem } from "../../../components/file-system/file-system";
+import { FileSystem } from "../../../components/file-system/file-system-core";
 import type { Tokens } from "../../../core/__typing";
 import { getCommandContext } from "../../../core/extract";
 import { IncorrectArgumentsCountError, InvalidNumberError } from "../../__errors";

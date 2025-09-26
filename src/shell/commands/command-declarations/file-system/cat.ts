@@ -4,7 +4,7 @@ import { TerminalOutputHandler } from "../../../../output-handler/terminal-outpu
 import { Colors } from "../../../../output-handler/typing/enums";
 import { NodeIsDirectoryError } from "../../../components/__errors";
 import type { FileNode } from "../../../components/__typing";
-import { FileSystem } from "../../../components/file-system/file-system";
+import { FileSystem } from "../../../components/file-system/file-system-core";
 import type { Tokens } from "../../../core/__typing";
 import { getCommandContext } from "../../../core/extract";
 import { IncorrectArgumentsCountError, NodeNotFoundError } from "../../__errors";

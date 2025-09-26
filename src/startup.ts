@@ -4,7 +4,7 @@ import { addColor, updatePrimaryPrompt } from "./output-handler/formatter";
 import { TerminalOutputHandler } from "./output-handler/terminal-output-handler";
 import { Colors } from "./output-handler/typing/enums";
 import { commandIndex } from "./shell/commands/command-index";
-import { FileSystem } from "./shell/components/file-system/file-system";
+import { FileSystem } from "./shell/components/file-system/file-system-core";
 import { pause } from "./shell/core/pause";
 import { commandInputFeildHidden } from "./shell/core/shell";
 import { LoaderFactory } from "./ui/loader";

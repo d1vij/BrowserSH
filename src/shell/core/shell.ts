@@ -3,7 +3,7 @@ import { execute } from "./executor";
 import { tokenize } from "./tokenizer";
 import type { ParserResults } from "./__typing";
 import { Colors } from "../../output-handler/typing/enums";
-import { GlobalsFactory } from "../components/globals-factory";
+import { GlobalsFactory } from "../components/globals";
 import { VariableDoesNotExistsError } from "../components/__errors";
 import { UserInputHandler } from "../../output-handler/user-input-handler";
 import { TerminalOutputHandler } from "../../output-handler/terminal-output-handler";
