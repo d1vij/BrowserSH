@@ -1,4 +1,5 @@
 import { terminalInputFeild, unsupportedMessage, windowDiv } from "./dom-elements"
+import { handleInput } from "./input-key-handler";
 import { Shell } from "./shell/core/shell";
 import { startupConfig } from "./startup";
 
@@ -23,11 +24,6 @@ function start() {
     console.log("starting")
     SHELL = new Shell();
     startupConfig(()=>{
-        terminalInputFeild.addEventListener("keypress", (event: KeyboardEvent) => {
-        if (event.key == "Enter") {
-            event.preventDefault();
-            SHELL.process();
-        }
-    })
+        terminalInputFeild.addEventListener("keydown",handleInput);
     });
 }
