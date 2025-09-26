@@ -19,7 +19,10 @@ export function nodeNamesFrom(path: string): Array<string> {
     return path.split("/").filter(Boolean); //only have non empty node names
 }
 export function pathFromNodeNames(nodeNames: string[]): string {
-    return nodeNames.join('/');
+    nodeNames.forEach(name => name.split("/"))
+    return nodeNames
+            .filter(Boolean)
+            .join('/');
 }
 
 export const PARENT_IDENTIFIER = "..";

@@ -10,7 +10,6 @@ import { C_SPACE } from "./shell";
 import { VariableValueIsMultipleWords } from "./__errors";
 
 
-export const varNameRegex = /\$([^\s]+)/
 // export const escapedVariableRegex = /(?<!\\)\$(.*\b)/g
 export const escapeRegex = /\\([^\s])/g
 
@@ -56,8 +55,13 @@ export function parse(tokens: Tokens): ParserResults {
 
 // 
 
+export const varNameRegex = /\$([^\s]+)/;
 
 function insertVar(token: string) {
+    /**
+     * $name = foo
+     * echo $name \$name -> echo foo $name
+     */
     //TODO: Prolly Optimize since time complexity is o(n^2)
     const toks = token.split(C_SPACE).filter(Boolean);
 
@@ -68,7 +72,6 @@ function insertVar(token: string) {
             return value;
         })
     }
-
     return toks.join(C_SPACE);
 }
 

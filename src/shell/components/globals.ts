@@ -1,3 +1,4 @@
+import { CommandHistory } from "./command-history";
 import { FileSystem } from "./file-system/file-system";
 import { StorageSystem } from "./storage-system";
 import { VariableSystem } from "./variables-system";
@@ -10,6 +11,7 @@ export class GlobalsFactory {
     public fs: FileSystem;
     public vars: VariableSystem;
     public storage: StorageSystem;
+    public commandHistory: CommandHistory;
 
     constructor() {
 
@@ -25,5 +27,6 @@ export class GlobalsFactory {
 
         this.vars = new VariableSystem();
         this.storage = new StorageSystem();
+        this.commandHistory = new CommandHistory();
     }
 }

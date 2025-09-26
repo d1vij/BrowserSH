@@ -110,6 +110,11 @@ export function handleInput(event: KeyboardEvent) {
         event.preventDefault();
         TerminalOutputHandler.printToTerminal(OutputTemplates.userInputPreview(UserInputHandler.getUserInput() + "^C"), true);
         UserInputHandler.clearUserInput();
-        
+    } else if (event.key == Key.UpArrow){
+        event.preventDefault();
+        UserInputHandler.setUserInput(SHELL.globals.commandHistory.getPrevious());
+    } else if (event.key == Key.DownArrow){
+        event.preventDefault();
+        UserInputHandler.setUserInput(SHELL.globals.commandHistory.getNext());
     }
 }

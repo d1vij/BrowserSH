@@ -9,6 +9,11 @@ export class UserInputHandler{
         terminalInputFeild.innerText = "";
         return
     }
+    public static setUserInput(text:string){
+        terminalInputFeild.innerText = text;
+        return;
+    }
+    
 }
 
 
