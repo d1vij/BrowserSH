@@ -1,6 +1,5 @@
 // Handles the key inputs coming from terminal
 
-import { terminalInputDiv } from "./dom-elements";
 import { SHELL } from "./main";
 import { OutputTemplates } from "./output-handler/formatter";
 import { TerminalOutputHandler } from "./output-handler/terminal-output-handler";

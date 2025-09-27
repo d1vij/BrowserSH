@@ -2,7 +2,7 @@ import { terminalInputFeild } from "./dom-elements";
 import { SHELL } from "./main";
 import { addColor, updatePrimaryPrompt } from "./output-handler/formatter";
 import { TerminalOutputHandler } from "./output-handler/terminal-output-handler";
-import { Colors } from "./output-handler/typing/enums";
+import { Colors } from "./output-handler/colors";
 import { commandIndex } from "./shell/commands/command-index";
 import { FileSystem } from "./shell/components/file-system/file-system-core";
 import { pause } from "./shell/core/pause";

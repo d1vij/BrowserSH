@@ -1,0 +1,14 @@
+if command starts with quote raise CommandStartsWithQuotesError
+currentTokenStack -> For characters of currently processing token
+processedTokenStack -> Procecessed tokens
+
+tokenizer rules
+1. Words cannot contain unescaped quotes in between
+2. All quotes must be paired
+3. A token is generated with multiple words when a similar quote is found
+
+
+lastSeenQuote = " / ' / undefined
+
+for char in command
+- if (char == " or ') and lastSeenQuote == undefined

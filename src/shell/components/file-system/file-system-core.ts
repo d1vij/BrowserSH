@@ -11,8 +11,8 @@ import {
     NodeToRemoveIsADirectoryAndNoRecurseFlagIsProvidedError,
     NodeWithSameNameExistsError
 } from "../__errors";
-import { NodeNotFoundError } from "../../commands/__errors";
-import type { PathContext } from "../../commands/__typing";
+import { NodeNotFoundError } from "../../commands/errors";
+import type { PathContext } from "../../commands/typings";
 import { getPathContext } from "./getPathContext";
 
 export function nodeNamesFrom(path: string): Array<string> {

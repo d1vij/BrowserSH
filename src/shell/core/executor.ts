@@ -3,7 +3,7 @@ import type { Tokens, ParserResults } from "./__typing";
 import { varNameRegex } from "./parser";
 import { UndefinedCommandError, UnexpectedError } from "./__errors";
 import { getCommandConstructor } from "../commands/command-index";
-import type { MaybeAsyncFunction } from "../commands/__typing";
+import type { MaybeAsyncFunction } from "../commands/typings";
 
 /**
  * Executor Function

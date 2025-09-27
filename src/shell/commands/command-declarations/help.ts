@@ -5,8 +5,8 @@ import { AbstractCommand } from "../AbstractCommand";
 import { getCommandConstructor } from "../command-index";
 import { TerminalOutputHandler } from "../../../output-handler/terminal-output-handler";
 import { addColor } from "../../../output-handler/formatter";
-import { Colors } from "../../../output-handler/typing/enums";
-import { IncorrectArgumentsCountError } from "../__errors";
+import { Colors } from "../../../output-handler/colors";
+import { IncorrectArgumentsCountError } from "../errors";
 
 
 export class Help extends AbstractCommand {

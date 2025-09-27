@@ -1,4 +1,4 @@
-import { Colors } from "./typing/enums";
+import { Colors } from "./colors";
 import { addColor, OutputTemplates } from "./formatter";
 import { terminalContentDiv, terminalLinesList } from "../dom-elements"
 

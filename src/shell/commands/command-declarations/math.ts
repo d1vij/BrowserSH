@@ -1,10 +1,10 @@
 import { SHELL } from "../../../main";
 import { addColor } from "../../../output-handler/formatter";
 import { TerminalOutputHandler } from "../../../output-handler/terminal-output-handler";
-import { Colors } from "../../../output-handler/typing/enums";
+import { Colors } from "../../../output-handler/colors";
 import type { Tokens } from "../../core/__typing";
 import { getCommandContext } from "../../core/extract";
-import { IncorrectArgumentsCountError, InvalidNumberError, InvalidOperationError } from "../__errors";
+import { IncorrectArgumentsCountError, InvalidNumberError, InvalidOperationError } from "../errors";
 import { AbstractCommand } from "../AbstractCommand";
 
 // command with subcommands

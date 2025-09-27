@@ -1,7 +1,7 @@
 import { TerminalOutputHandler } from "../../output-handler/terminal-output-handler";
 import type { TCommand, TFlag, Tokens, TOption } from "../core/__typing";
-import { IncorrectOptionUsageInCommandError } from "./__errors";
-import type { MaybeAsyncFunction } from "./__typing";
+import { IncorrectOptionUsageInCommandError } from "./errors";
+import type { MaybeAsyncFunction } from "./typings";
 /**
  * The abstract class which every primary command of this terminal inherits and implements
  */

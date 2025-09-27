@@ -13,7 +13,6 @@ export class UserInputHandler{
         terminalInputFeild.innerText = text;
         return;
     }
-    
 }
 
 

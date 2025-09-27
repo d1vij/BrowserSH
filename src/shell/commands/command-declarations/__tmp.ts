@@ -1,4 +1,4 @@
-import { Colors } from "../../../output-handler/typing/enums";
+import { Colors } from "../../../output-handler/colors";
 import { EmbedExternalWebsites } from "../../../ui/embed-websites-factory";
 import { LoaderFactory } from "../../../ui/loader";
 import type { Tokens } from "../../core/__typing";

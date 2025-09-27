@@ -1,8 +1,8 @@
 import { SHELL } from "../../../main";
 import type { DirectoryNode } from "../__typing"
 import { nodeNamesFrom, PARENT_IDENTIFIER, SELF_IDENTIFIER } from "./file-system-core";
-import { NodeNotFoundError } from "../../commands/__errors";
-import type { PathContext } from "../../commands/__typing";
+import { NodeNotFoundError } from "../../commands/errors";
+import type { PathContext } from "../../commands/typings";
 
 
 

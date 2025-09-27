@@ -2,7 +2,7 @@ import { parse } from "./parser";
 import { execute } from "./executor";
 import { tokenize } from "./tokenizer";
 import type { ParserResults } from "./__typing";
-import { Colors } from "../../output-handler/typing/enums";
+import { Colors } from "../../output-handler/colors";
 import { GlobalsFactory } from "../components/globals";
 import { VariableDoesNotExistsError } from "../components/__errors";
 import { UserInputHandler } from "../../output-handler/user-input-handler";
@@ -53,7 +53,6 @@ export const C_SPACE = ' ';
  * Sources
  * * https://www.linux.org/threads/bash-03-%E2%80%93-command-line-processing.38676/
  * * https://github.com/0l1v3rr/0l1v3rr.github.io (inspiration)
- * 
  */
 export class Shell {
 
@@ -69,7 +68,7 @@ export class Shell {
 
         TerminalOutputHandler.printToTerminal(OutputTemplates.userInputPreview(sanitized_command), true);
         UserInputHandler.clearUserInput();
-        
+
         this.globals.commandHistory.append(sanitized_command);
         this.globals.commandHistory.resetPosition();
         
@@ -121,7 +120,6 @@ function sanitizeHTML(__string: string): string {
 // 
 
 export function commandInputFeildHidden(b: boolean) {
-    console.log("hiding", b)
     if (b) terminalInputDiv.style.display = "none";
     else terminalInputDiv.style.display = "flex";
 }

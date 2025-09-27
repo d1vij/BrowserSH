@@ -1,12 +1,12 @@
 import { SHELL } from "../../../../main";
 import { addColor } from "../../../../output-handler/formatter";
 import { TerminalOutputHandler } from "../../../../output-handler/terminal-output-handler";
-import { Colors } from "../../../../output-handler/typing/enums";
+import { Colors } from "../../../../output-handler/colors";
 import { NodeToRemoveIsADirectoryAndNoRecurseFlagIsProvidedError } from "../../../components/__errors";
 import { FileSystem } from "../../../components/file-system/file-system-core";
 import type { Tokens } from "../../../core/__typing";
 import { getCommandContext } from "../../../core/extract";
-import { NodeNotFoundError } from "../../__errors";
+import { NodeNotFoundError } from "../../errors";
 import { AbstractCommand } from "../../AbstractCommand";
 
 export class Rm extends AbstractCommand {

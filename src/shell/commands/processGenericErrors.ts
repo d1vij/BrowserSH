@@ -1,5 +1,5 @@
 import { TerminalOutputHandler } from "../../output-handler/terminal-output-handler";
-import { InvalidFlagError, InvalidOptionError } from "./__errors";
+import { InvalidFlagError, InvalidOptionError } from "./errors";
 
 export function processGenericErrors(err: InvalidFlagError | InvalidOptionError) {
     // processing 

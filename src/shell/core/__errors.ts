@@ -30,6 +30,13 @@ export class CommandContainsUnpairedQuoteError extends Error {
         Object.setPrototypeOf(this, new.target.prototype);
     }
 }
+export class CommandContainsUnescapedCharacters extends Error {
+    constructor(message: string) {
+        super(`CommandContainsUnescapedCharacters: ${ message }`);
+        this.name = 'CommandContainsUnescapedCharacters';
+        Object.setPrototypeOf(this, new.target.prototype);
+    }
+}
 
 //executor
 

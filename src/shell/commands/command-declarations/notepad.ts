@@ -1,7 +1,7 @@
 import { SHELL } from "../../../main";
 import { addColor } from "../../../output-handler/formatter";
 import { TerminalOutputHandler } from "../../../output-handler/terminal-output-handler";
-import { Colors } from "../../../output-handler/typing/enums";
+import { Colors } from "../../../output-handler/colors";
 import { NotepadFactory } from "../../../ui/notepad-factory";
 import { NodeIsDirectoryError, NodeWithSameNameExistsError } from "../../components/__errors";
 import type { FileNode } from "../../components/__typing";
@@ -9,7 +9,7 @@ import { FileSystem } from "../../components/file-system/file-system-core";
 import { getPathContext } from "../../components/file-system/getPathContext";
 import type { Tokens } from "../../core/__typing";
 import { getCommandContext } from "../../core/extract";
-import { IncorrectArgumentsCountError, InvalidOptionError, NodeNotFoundError } from "../__errors";
+import { IncorrectArgumentsCountError, InvalidOptionError, NodeNotFoundError } from "../errors";
 import { AbstractCommand } from "../AbstractCommand";
 
 export class Notepad extends AbstractCommand {
