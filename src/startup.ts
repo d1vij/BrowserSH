@@ -14,7 +14,7 @@ const termprint = TerminalOutputHandler.printToTerminal
 
 const randomTime = () => Math.random() * (400 - 100) + 100;
 
-const debug = true;
+const debug = false;
 
 
 export async function startupConfig(cb: () => void) {
