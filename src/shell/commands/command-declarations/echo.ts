@@ -88,7 +88,7 @@ export class Echo extends AbstractCommand {
         TerminalOutputHandler.printToTerminal(content);
         return;
     }
-    public handleErrors(err: any) {
+    protected handleErrors(err: any) {
         if (err instanceof IncorrectOptionUsageInCommandError) { console.log("CATCHED in cmd body") }
         if (err instanceof InvalidColorError) {
             TerminalOutputHandler.standardErrorOutput([

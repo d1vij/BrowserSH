@@ -15,7 +15,7 @@ export class Mkdir extends AbstractCommand {
     public flags: string[] = ['c', 'f'];
     public options: string[] = [];
 
-    public handleErrors(err: any): void {
+    protected handleErrors(err: any): void {
         if (err instanceof IncorrectArgumentsCountError) {
             TerminalOutputHandler.standardErrorOutput([
                 `IncorrectArgumentsCountError: This command only takes one argument!`,

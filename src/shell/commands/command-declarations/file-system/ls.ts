@@ -37,7 +37,7 @@ export class Ls extends AbstractCommand {
     }
 
 
-    public handleErrors(err: any): void {
+    protected handleErrors(err: any): void {
         if (err instanceof InvalidNumberError) {
 
             TerminalOutputHandler.standardErrorOutput([

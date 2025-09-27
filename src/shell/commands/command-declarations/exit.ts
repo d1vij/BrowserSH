@@ -15,7 +15,7 @@ export class Exit extends AbstractCommand {
         return;
     }
 
-    public handleErrors(_: any): void { }
+    protected handleErrors(_: any): void { }
     public info(): string[] {
         return [
             "Terminates the shell session and exits the CLI environment."

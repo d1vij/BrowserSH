@@ -17,7 +17,7 @@ export class Notepad extends AbstractCommand {
     public options: string[] = ["open", "new"];
     public flags: string[] = [];
 
-    public handleErrors(err: any): void {
+    protected handleErrors(err: any): void {
         if (err instanceof NodeIsDirectoryError) {
             TerminalOutputHandler.standardErrorOutput([
                 `Cannot open path ${addColor(err.path, Colors.yellow_light)}, path refers to a directory!`

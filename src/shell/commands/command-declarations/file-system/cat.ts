@@ -34,7 +34,7 @@ export class Cat extends AbstractCommand {
         TerminalOutputHandler.printToTerminal(content);
     }
 
-    public handleErrors(err: any): void {
+    protected handleErrors(err: any): void {
         if (err instanceof IncorrectArgumentsCountError) {
             TerminalOutputHandler.standardErrorOutput([
                 `IncorrectArgumentsCountError: This command takes ${err.expected} argument but passed were ${err.got}!`,

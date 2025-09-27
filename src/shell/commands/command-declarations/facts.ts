@@ -41,7 +41,7 @@ export class Facts extends AbstractCommand {
             `\t facts --count 10\t\t=> Fetches and displays 10 random facts`,
         ];
     }
-    public handleErrors(err: any): void {
+    protected handleErrors(err: any): void {
         TerminalOutputHandler.printToTerminal(`Error occured while fetching : ${err.name}`);
     }
     protected async __execute(tokens: Tokens): Promise<void> {

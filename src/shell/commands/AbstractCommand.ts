@@ -56,7 +56,6 @@ export abstract class AbstractCommand {
 
             // asynchronous case
             if (result instanceof Promise) {
-                console.log("is promise")
                 result
                     .catch(err => this.__handleErrors(err)) // <- ideally this call should not throw an error
                     .finally(() => done?.());
@@ -76,7 +75,6 @@ export abstract class AbstractCommand {
     private __handleErrors(err: any): void {
         if (err instanceof IncorrectOptionUsageInCommandError) {
             TerminalOutputHandler.standardErrorOutput(err.msg)
-
         }
 
         // Error is command specific
@@ -85,13 +83,13 @@ export abstract class AbstractCommand {
 
 
     /**
-     * Main command executor, not to be called from outside
+     * Main command executor. Contains the command logic. Not to be called from outside
      */
     protected abstract __execute(tokens: Tokens): void | Promise<void>;
     /**
      * Command specific error handling
      */
-    public abstract handleErrors(err: any): void;
+    protected abstract handleErrors(err: any): void;
 
     /**
      * returns info about the primary command

@@ -20,7 +20,7 @@ export class BirthdayGuesser extends AbstractCommand {
     public usage(): string[] {
         return [`usage: birthday-guesser`];
     }
-    public handleErrors(err: any): void {
+    protected handleErrors(err: any): void {
         console.log(err);
     }
 }

@@ -85,7 +85,7 @@ export class Help extends AbstractCommand {
     }
 
 
-    public handleErrors(err: any): void {
+    protected handleErrors(err: any): void {
         if (err instanceof UndefinedCommandError) {
             TerminalOutputHandler.standardErrorOutput([
                 `UndefinedCommandError: Command ${addColor(err.command, Colors.yellow_light)} does not exsits!`

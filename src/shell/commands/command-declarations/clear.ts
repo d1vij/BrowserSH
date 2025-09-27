@@ -23,7 +23,7 @@ export class Clear extends AbstractCommand {
     public usage(): string[] {
         return [`usage: clear`];
     }
-    public handleErrors(err: any): void {
+    protected handleErrors(err: any): void {
         TerminalOutputHandler.standardErrorOutput([
             `How even did this command raise an error ???`,
             err.name

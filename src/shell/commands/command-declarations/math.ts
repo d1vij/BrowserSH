@@ -112,7 +112,7 @@ export class MathCommand extends AbstractCommand {
             return;
         }
     }
-    public handleErrors(err: any): void {
+    protected handleErrors(err: any): void {
         if (err instanceof InvalidNumberError || err.name === "InvalidNumberError") {
             TerminalOutputHandler.standardErrorOutput([
                 `InvalidNumberError: Error in parsing ${addColor(err.num, Colors.yellow_light)}. Enter a valid number`

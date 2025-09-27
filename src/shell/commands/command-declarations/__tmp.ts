@@ -27,7 +27,7 @@ export class __tmp extends AbstractCommand {
     public usage(): string[] {
         return [`usage: clear`];
     }
-    public handleErrors(err: any): void {
+    protected handleErrors(err: any): void {
         console.log(err);
     }
 }

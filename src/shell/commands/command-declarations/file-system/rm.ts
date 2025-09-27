@@ -23,7 +23,7 @@ export class Rm extends AbstractCommand {
 
 
 
-    public handleErrors(err: any): void {
+    protected handleErrors(err: any): void {
         if (err instanceof NodeToRemoveIsADirectoryAndNoRecurseFlagIsProvidedError) {
             TerminalOutputHandler.standardErrorOutput([
                 `Target node is a directory and no recurse flag was used, skipping delete`,

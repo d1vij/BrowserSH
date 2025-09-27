@@ -47,7 +47,7 @@ export class List extends AbstractCommand {
         return;
     }
 
-    public handleErrors(err: any): void {
+    protected handleErrors(err: any): void {
         if (err instanceof InvalidListableItemError) {
             TerminalOutputHandler.standardErrorOutput([
                 `InvalidListableItemError: The item ${addColor(err.itemName, Colors.yellow_light)} is not listable!`,
