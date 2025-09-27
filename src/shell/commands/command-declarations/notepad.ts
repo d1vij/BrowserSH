@@ -11,7 +11,6 @@ import type { Tokens } from "../../core/typing";
 import { getCommandContext } from "../../core/extract";
 import { IncorrectArgumentsCountError, InvalidOptionError, NodeNotFoundError } from "../errors";
 import { AbstractCommand } from "../AbstractCommand";
-import { sanitizeHTML } from "../../core/shell";
 
 export class Notepad extends AbstractCommand {
     public name = "notepad";

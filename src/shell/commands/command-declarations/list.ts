@@ -1,4 +1,4 @@
-import { SHELL } from "../../../main";
+// import { SHELL } from "../../../main";
 import { addColor } from "../../../output-handler/formatter";
 import { TerminalOutputHandler } from "../../../output-handler/terminal-output-handler";
 import { Colors } from "../../../output-handler/colors";
@@ -32,7 +32,8 @@ export class List extends AbstractCommand {
                 break;
             }
             case "variables": {
-                content = SHELL.globals.vars.variables.keys().toArray();
+                content = ["TODO"];
+                // content = SHELL.globals.vars.variables.keys().toArray();
                 break;
             }
             case "colors": {
