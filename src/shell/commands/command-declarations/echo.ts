@@ -1,7 +1,7 @@
 import { addColor } from "../../../output-handler/formatter";
 import { TerminalOutputHandler } from "../../../output-handler/terminal-output-handler";
 import { Colors } from "../../../output-handler/colors";
-import type { Tokens } from "../../core/__typing";
+import type { Tokens } from "../../core/typing";
 import { getCommandContext } from "../../core/extract";
 import { IncorrectOptionUsageInCommandError, InvalidColorError, InvalidFlagError, InvalidNumberError, InvalidOptionError } from "../errors";
 import { AbstractCommand } from "../AbstractCommand";

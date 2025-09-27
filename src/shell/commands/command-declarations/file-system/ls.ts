@@ -3,7 +3,7 @@ import { addColor } from "../../../../output-handler/formatter";
 import { TerminalOutputHandler } from "../../../../output-handler/terminal-output-handler";
 import { Colors } from "../../../../output-handler/colors";
 import { FileSystem } from "../../../components/file-system/file-system-core";
-import type { Tokens } from "../../../core/__typing";
+import type { Tokens } from "../../../core/typing";
 import { getCommandContext } from "../../../core/extract";
 import { IncorrectArgumentsCountError, InvalidNumberError } from "../../errors";
 import { AbstractCommand } from "../../AbstractCommand";

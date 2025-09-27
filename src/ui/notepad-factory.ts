@@ -1,4 +1,4 @@
-import { notepadTemplate, terminalLinesList } from "../dom-elements";
+import { notepadTemplate, terminalContentDiv, terminalLinesList } from "../dom-elements";
 import { C_SPACE } from "../shell/core/shell";
 
 let hovertimeout: NodeJS.Timeout;
@@ -69,12 +69,15 @@ export class NotepadFactory {
 
         // safety to prevent double insertions
         if (this.inserted == false) {
-            terminalLinesList.appendChild(this.npdWindow);
+            terminalLinesList.classList.add("hidden");
+            terminalContentDiv.appendChild(this.npdWindow);
             this.inserted = true;
+            this.npdInput.focus();
         }
     }
     private submit = () => {
         if (this.resolveInput !== null) {
+            terminalLinesList.classList.remove("hidden");
             this.resolveInput(this.npdInput.value);
             this.resolveInput = null;
             this.inserted = false;

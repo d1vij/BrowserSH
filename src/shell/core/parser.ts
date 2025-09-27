@@ -3,11 +3,11 @@
  */
 
 import { SHELL } from "../../main";
-import type { ParserResults } from "./__typing";
-import type { Tokens } from "./__typing"
+import type { ParserResults } from "./typing";
+import type { Tokens } from "./typing"
 import { VariableDoesNotExistsError } from "../components/__errors";
 import { C_SPACE } from "./shell";
-import { VariableValueIsMultipleWords } from "./__errors";
+import { VariableValueIsMultipleWords } from "./errors";
 
 
 // export const escapedVariableRegex = /(?<!\\)\$(.*\b)/g

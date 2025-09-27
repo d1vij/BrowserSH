@@ -1,7 +1,7 @@
 import { parse } from "./parser";
 import { execute } from "./executor";
 import { tokenize } from "./tokenizer";
-import type { ParserResults } from "./__typing";
+import type { ParserResults } from "./typing";
 import { Colors } from "../../output-handler/colors";
 import { GlobalsFactory } from "../components/globals";
 import { VariableDoesNotExistsError } from "../components/__errors";
@@ -11,7 +11,7 @@ import { TerminalOutputHandler } from "../../output-handler/terminal-output-hand
 import type {
     TCommand,
     Tokens
-} from "./__typing";
+} from "./typing";
 import {
     addColor,
     OutputTemplates,
@@ -24,7 +24,7 @@ import {
     CommandStartsWithQuotesError,
     TokenContainsQuoteInMiddleErrror,
     UndefinedCommandError
-} from "./__errors"
+} from "./errors"
 import { terminalInputDiv, terminalInputFeild } from "../../dom-elements";
 
 export const C_SPACE = ' ';
@@ -111,11 +111,14 @@ export class Shell {
 }
 
 // 
-function sanitizeHTML(__string: string): string {
+export function sanitizeHTML(__string: string): string {
     // return __string;
     return __string
-        .replace('<', "&lt;")
-        .replace('>', "&gt;")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
 }
 // 
 

@@ -1,7 +1,7 @@
 import { SHELL } from "../../main";
-import type { Tokens, ParserResults } from "./__typing";
+import type { Tokens, ParserResults } from "./typing";
 import { varNameRegex } from "./parser";
-import { UndefinedCommandError, UnexpectedError } from "./__errors";
+import { UndefinedCommandError, UnexpectedError } from "./errors";
 import { getCommandConstructor } from "../commands/command-index";
 import type { MaybeAsyncFunction } from "../commands/typings";
 

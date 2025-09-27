@@ -1,5 +1,5 @@
 import { EmbedExternalWebsites } from "../../../ui/embed-websites-factory";
-import type { Tokens } from "../../core/__typing";
+import type { Tokens } from "../../core/typing";
 import { AbstractCommand } from "../AbstractCommand";
 
 

@@ -1,6 +1,6 @@
 import { embeddedSitesTemplate, terminalContentDiv, terminalLinesList } from "../dom-elements";
 import { TerminalOutputHandler } from "../output-handler/terminal-output-handler";
-import type { TMaybeDefined } from "../shell/core/__typing";
+import type { TMaybeDefined } from "../shell/core/typing";
 
 export class EmbedExternalWebsites {
     public url;

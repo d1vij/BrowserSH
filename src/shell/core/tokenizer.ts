@@ -1,5 +1,5 @@
-import { CommandContainsUnescapedCharacters, CommandContainsUnpairedQuoteError, CommandStartsWithQuotesError} from "./__errors";
-import type { TCommand, Tokens } from "./__typing";
+import { CommandContainsUnescapedCharacters, CommandContainsUnpairedQuoteError, CommandStartsWithQuotesError} from "./errors";
+import type { TCommand, Tokens } from "./typing";
 import { Characters } from "../../characters";
 /**
  * Does Syntax analysis and splitting of input command into meaningful and parsable tokens.

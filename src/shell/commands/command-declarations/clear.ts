@@ -1,4 +1,4 @@
-import type { Tokens } from "../../core/__typing";
+import type { Tokens } from "../../core/typing";
 import { AbstractCommand } from "../AbstractCommand";
 import { TerminalOutputHandler } from "../../../output-handler/terminal-output-handler";
 import { UserInputHandler } from "../../../output-handler/user-input-handler";

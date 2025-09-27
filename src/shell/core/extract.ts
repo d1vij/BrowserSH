@@ -1,7 +1,7 @@
 import { addColor } from "../../output-handler/formatter";
 import { Colors } from "../../output-handler/colors";
 import { IncorrectOptionUsageInCommandError } from "../commands/errors";
-import type { ExtractionResults, Tokens } from "./__typing";
+import type { ExtractionResults, Tokens } from "./typing";
 import { test_isNumeric } from "./checks";
 import { Characters } from "../../characters";
 // "flags" are -a -f -x that is have only 1 dash, single letter-ed, not quoted, and may appear anywhere in the command and hence have to be removed out

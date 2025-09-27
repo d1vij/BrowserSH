@@ -1,5 +1,5 @@
-import { UndefinedCommandError } from "../../core/__errors";
-import type { Tokens } from "../../core/__typing";
+import { UndefinedCommandError } from "../../core/errors";
+import type { Tokens } from "../../core/typing";
 import { getCommandContext } from "../../core/extract";
 import { AbstractCommand } from "../AbstractCommand";
 import { getCommandConstructor } from "../command-index";

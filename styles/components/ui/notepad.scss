@@ -19,16 +19,13 @@
 
 .ui-notepad-window {
     position: relative;
+    top: 0;
+    left: 0;
+    z-index: 10;
     background-color: $term-grey-ash;
-    caret-shape: block;
 
-    height: 500px;
-    width: 100%;
-    border-style:solid ;
-    border-width: 2px;
-    border-radius: 5px;
-    border-color: $term-blue-dark;
-    // width: 1000px;
+    height: 100%;
+    width: calc(100% - 10px);
     display: flex;
     flex-direction: column;
     
@@ -36,7 +33,7 @@
         border-radius: 5px;
         padding: 5px;
         @include font-settings();
-        color: $term-yellow-light;
+        color: #fff;
         background-color: $term-grey-ash;
         height: 100%;
         width: 100%;
@@ -52,7 +49,7 @@
         @include font-settings();
         height: 50px;
         background-color: $term-grey-charcoal;
-        width: 100%;
+        width: calc(100% + 10px);
         display: flex;
         flex-direction: row;
         align-items: center;
@@ -75,8 +72,8 @@
         background-color: $term-grey-charcoal;
         width: 200px;
         z-index: 100;
-
         .option {
+            cursor: pointer;
             @include navbar-button-style();
             height: 25px;
             width: 50px;
