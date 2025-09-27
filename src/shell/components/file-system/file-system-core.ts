@@ -27,7 +27,7 @@ export function pathFromNodeNames(nodeNames: string[]): string {
 
 export const PARENT_IDENTIFIER = "..";
 export const SELF_IDENTIFIER = ".";
-
+export const HOME_IDENTIFIER = "~";
 export class FileSystem {
     // NON-INSTANTIABLE
     /**
@@ -209,12 +209,16 @@ export class FileSystem {
             curr = curr?.parent;
         }
 
-        return __path
+        const pathStr = __path
             .reverse()
             .filter(Boolean)
             .join("/");
-    }
 
+        if(pathStr[0] === pathStr.at(1)){
+            return pathStr.slice(1);
+        }
+        else return pathStr;
+    }
 }
 
 function __traverse(root: DirectoryNode, maxDepth: number, __depth = 0, __output: Array<string>) {

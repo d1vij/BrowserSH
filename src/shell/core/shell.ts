@@ -69,7 +69,7 @@ export class Shell {
         TerminalOutputHandler.printToTerminal(OutputTemplates.userInputPreview(sanitized_command), true);
         UserInputHandler.clearUserInput();
 
-        this.globals.commandHistory.append(sanitized_command);
+        this.globals.commandHistory.append(command);
         this.globals.commandHistory.resetPosition();
         
         // Command input feild is hidden once command processing starts

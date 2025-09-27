@@ -15,6 +15,7 @@ import { Notepad } from "./command-declarations/notepad";
 import { __tmp } from "./command-declarations/__tmp";
 import { Facts } from "./command-declarations/facts";
 import { BirthdayGuesser } from "./command-declarations/birthday-guesser";
+import { WhoAmI } from "./command-declarations/whoami";
 
 type CommandConstructor = new () => AbstractCommand;
 
@@ -25,15 +26,16 @@ export const commandIndex = new Map<string, CommandConstructor>([
     ["cd", Cd],
     ["clear", Clear],
     ["echo", Echo],
+    ['exit', Exit],
     ["facts", Facts],
     ["help", Help],
     ["math", MathCommand],
     ["mkdir", Mkdir],
+    ['notepad', Notepad],
     ["ls", Ls],
     ["list", List],
     ["rm", Rm],
-    ['exit', Exit],
-    ['notepad', Notepad]
+    ["whoami", WhoAmI]
 
 ] as [string, CommandConstructor][]);
 

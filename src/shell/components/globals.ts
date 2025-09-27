@@ -15,10 +15,10 @@ export class GlobalsFactory {
 
     constructor() {
 
-        // initial root directory is empty and its name is '#' (not bash like rawrrr)
+        // initial root directory is empty and its name is '/'
         this.fs = new FileSystem({
             initialStructure: {
-                name: "@",
+                name: "/",
                 type: "directory",
                 parent: null,
                 children: [],

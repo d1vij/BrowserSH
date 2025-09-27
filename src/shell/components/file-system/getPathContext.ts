@@ -1,9 +1,9 @@
 import { SHELL } from "../../../main";
 import type { DirectoryNode } from "../__typing"
-import { nodeNamesFrom, PARENT_IDENTIFIER, SELF_IDENTIFIER } from "./file-system-core";
+import { HOME_IDENTIFIER, nodeNamesFrom, PARENT_IDENTIFIER, SELF_IDENTIFIER } from "./file-system-core";
 import { NodeNotFoundError } from "../../commands/errors";
 import type { PathContext } from "../../commands/typings";
-
+import { FileSystem } from "./file-system-core";
 
 
 export function getPathContext(path: string, directoryNode: DirectoryNode): PathContext {
@@ -25,6 +25,15 @@ export function getPathContext(path: string, directoryNode: DirectoryNode): Path
         path_toks.splice(0, 1);
         return {
             root: directoryNode,
+            path: path_toks
+        }
+    }
+    else if(path_toks[0] == HOME_IDENTIFIER){
+        const home = FileSystem.getNodeByPath("/home/", SHELL.globals.fs.root) as DirectoryNode;
+        if(home === undefined) throw new Error("Home directory is not defined!");
+        path_toks.splice(0,1 );
+        return {
+            root: home,
             path: path_toks
         }
     }

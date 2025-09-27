@@ -6,7 +6,7 @@ import { Colors } from "./output-handler/colors";
 import { commandIndex } from "./shell/commands/command-index";
 import { FileSystem } from "./shell/components/file-system/file-system-core";
 import { pause } from "./shell/core/pause";
-import { commandInputFeildHidden } from "./shell/core/shell";
+import { commandInputFeildHidden, sanitizeHTML } from "./shell/core/shell";
 import { LoaderFactory } from "./ui/loader";
 import { promptUser } from "./ui/prompt-user";
 
@@ -64,7 +64,9 @@ export async function startupConfig(cb: () => void) {
         username = username?.trim() === "" || username === undefined ? "guest" : username.trim();
         // eh prolly do this some other way
         if (username === "guest") termprint("No username recieved, defaulting to guest");
-        SHELL.globals.vars.set("&&username", `${username.trim()}@${detectBrowser()}`);
+        
+        SHELL.globals.vars.set("&&username", sanitizeHTML(username));
+        SHELL.globals.vars.set("&&primary_prompt", `${username}@${detectBrowser()}`);
         updatePrimaryPrompt();
 
         l.stopLoading(true);
@@ -83,6 +85,7 @@ export async function startupConfig(cb: () => void) {
     }
     else {
         SHELL.globals.vars.set("&&username", "IN_DEBUG_MODE");
+        SHELL.globals.vars.set("&&primary_prompt", "RAWR");
         updatePrimaryPrompt();
     }
     // const __test_dir = FileSystem.createDirectoryByPath("/temp/content", SHELL.globals.fs.root, false);
